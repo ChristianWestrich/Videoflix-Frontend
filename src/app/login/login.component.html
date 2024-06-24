@@ -1,0 +1,93 @@
+
+<div class="main-content">  
+    @if (!signInSig()) {
+        <div class="login-container">
+            <div class="container-header">
+                <div class="logo"><img src="/assets/img/Logo.png" alt=""></div>
+                <div class="sign-in">
+                    <p>New to Videoflix ?</p>
+                    <div class="create-acc" (click)="SignIn()">Create account</div>
+                </div>
+            </div>
+            <div class="header-container">
+                <div class="form-header">
+                    Welcome to Videoflix. Please Login
+                </div>
+            </div>
+                <form (ngSubmit)="login(form)" #form="ngForm">
+                        <input name="email" ngModel required #email="ngModel" type="text" class="input-email"
+                        placeholder="Your email address ...">
+                        @if (!email.valid && email.touched) {
+                            <div class="invalid-email">
+                                <p>*This email is invalid !</p>
+                            </div>
+                        }
+                        
+                    <input name="password" ngModel type="password" #password="ngModel" class="input-password"
+                    placeholder="Your password ..." required>
+                    @if (password.touched && !password.dirty) {
+                        <div class="invalid-password">
+                            *You have to type in your password !
+                        </div>
+                    }
+                    <div class="forgot-pw-login" (click)="forgotPw()">Forgot your password ?</div>
+                    <button [disabled]="!form.valid">Login</button>
+                </form>
+        </div>
+    }
+    
+    
+    @if (signInSig()) {
+        <div class="signin-container">
+            <div class="headline-container-signin">
+                    <img src="assets/img/arrow_back.png" class="go-back-signin" (click)="goBackToLogin()">
+                    <div class="headlines">
+                        <div class="headline-signin">Create your own account!</div>
+                        <div class="subheadline-signin">
+                            With your name and your email-adress you get your new account.
+                        </div>
+                    </div>
+
+            </div>
+            <form (ngSubmit)="onSignIn(f)" class="signin-form" #f="ngForm">
+                <input type="text" required placeholder="Name and Lastname" id="userName" name="userName" ngModel
+                #userName="ngModel" class="input-name-signin" [minLength]="4" />
+                @if (!userName.valid && userName.touched) {
+                    <div class="invalid-input-signin">
+                        *Please type in your name.
+                    </div>
+                }
+                <input type="email" required placeholder="example.@email.com" id="userEmail" name="userEmail" ngModel
+                #userEmail="ngModel" class="input-email-signin" email />
+                @if (!userEmail.valid && userEmail.touched) {
+                    <div class="invalid-input-signin">
+                        *Your email is invalid.
+                    </div>
+                }
+                <input type="password" required placeholder="Passwort" id="password" name="userPassword" ngModel
+                #userPassword="ngModel" class="input-pw-signin input-fields-signin"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+\-]).{8,16}" minlength="8" />
+                @if (!userPassword.valid && userPassword.touched) {
+                    <div class="invalid-input-signin">
+                        *Please set your password. At least 8 characters/numbers (at least 1 lower case letter, 1 upper case letter
+                        capital letter, 1 number and 1 special character)
+                    </div>
+                }
+                <input type="password" required placeholder="Repeat your password" id="password-confirm" name="confirmPassword" ngModel
+                #confirmPassword="ngModel" class="input-pw-signin input-fields-signin"
+                [ngClass]="{'valid-password': checkPassword(userPassword.value, confirmPassword.value) && confirmPassword.dirty}" />
+                <div class="btn-container-signin">
+                    <button [disabled]="!f.valid || !checkPassword(userPassword.value, confirmPassword.value)" class="login-btn-signin">
+                        Create account
+                    </button>
+                </div>
+            </form>
+        </div>
+        @if (registrationComplete) {
+            <div class="register"> Thanks for register. You can now login.</div>
+        }
+        @if (registrationError) {
+            <div class="register"> Ups. Something went wrong.</div>
+        }
+    }
+</div>

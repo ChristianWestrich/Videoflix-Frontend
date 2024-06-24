@@ -1,0 +1,57 @@
+.background {
+    background-image: url("/assets/img/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100%;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    z-index: -1
+}
+
+.movie-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0 10px; 
+    padding-top: 150px;
+  }
+
+  .movie-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    font-family: "Figtree";
+    box-shadow: (2px 2px 20px black);
+
+    .movie-thumbnail {
+        img {
+            border-radius: 8px;
+
+        }
+    }
+    .movie-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        a {
+            text-decoration: none;
+            color: rgba(255,0,0, 0.6);
+            cursor: pointer;
+        }
+    }
+  }
+
+

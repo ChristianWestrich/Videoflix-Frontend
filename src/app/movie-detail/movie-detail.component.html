@@ -1,0 +1,17 @@
+
+
+@if (movie) {
+    <div class="movie-details-container">
+        <img src="/assets/img/arrow_back.png" alt="">
+    </div>
+    <h1>{{movie.title}}</h1>
+    <div class="movie-descripton"> 
+        Description {{movie.description}}
+    </div>
+    <div class="movie-date">
+        Release-Date{{movie.releaseDate}}
+    </div>
+    @if (movie) {
+        <app-movie-player></app-movie-player>
+    }
+}

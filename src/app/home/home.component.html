@@ -1,0 +1,17 @@
+<app-header></app-header>
+ 
+<div class="background"></div>
+    <div class="movie-grid">
+        @for (movie of allMovies; track movie.id) {
+            <div class="movie-container">
+                <div class="movie-thumbnail">
+                    <img [src]="getThumbnailUrl(movie.thumbnail_file)" alt="{{ movie.title }}">
+                  </div>
+                  <div class="movie-info">
+                    <h2>{{ movie.title }}</h2>
+                    <p>{{ shortenDescription(movie.description) }}</p>
+                    <a [routerLink]="['/movie', movie.id]" class="details-link">Click for more details</a>
+                  </div>
+            </div>
+        }
+    </div>
