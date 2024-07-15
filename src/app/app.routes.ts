@@ -6,7 +6,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 
 export const routes: Routes = [
-    {path: "login", component: LoginComponent},
+    {path: "auth", component: LoginComponent},
     {path: "home", component: HomeComponent},
     {path: "pw-reset", component: PasswordResetComponent},
     {path: "movie/:id", component: MovieDetailComponent},

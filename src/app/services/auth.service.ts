@@ -7,19 +7,20 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private baseUrl: string = 'http://localhost:8000'
+  private baseUrl: string = 'http://127.0.0.1:8000'
 
   constructor(private http: HttpClient, private router: Router) { }
 
 
   logUserIn(email: string, password: string) {
-    const url = `${this.baseUrl}/login/`;
-    return this.http.post(url, { email, password })
+    const url = `${this.baseUrl}/auth/`;
+    return this.http.post(url, { username: email, password: password })
   }
 
-  registerUser(email: string, password: string) {
-    const url = `${this.baseUrl}/login/`;
-    return this.http.post(url, { email, password });
+  registerUser(email: string, password: string, username: string) {
+    const url = `${this.baseUrl}/register/`;
+    console.log(username, password, email);
+    return this.http.post(url, { email:email,password:password,username:username  });
   }
 
   logout() {
