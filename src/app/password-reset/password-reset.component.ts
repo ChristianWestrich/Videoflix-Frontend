@@ -23,6 +23,6 @@ export class PasswordResetComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl("login")
+    this.router.navigateByUrl("auth")
   }
 }

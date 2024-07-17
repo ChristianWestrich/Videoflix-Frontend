@@ -22,7 +22,7 @@ export class LoginComponent {
 
   login(form: NgForm) {
     this.authService.logUserIn(form.value.email, form.value.password).subscribe((response) => {
-      console.log(response)
+      this.router.navigateByUrl('home')
     });
   }
 
@@ -42,8 +42,9 @@ export class LoginComponent {
     this.authService.registerUser(form.value.userEmail, form.value.userPassword, form.value.userName).subscribe((response) => {
       this.registrationComplete = true
       setTimeout(() => {
-        this.signInSig.set(false);
-      }, 3000); 
+        this.signInSig.set(false)
+        this.registrationComplete = false;
+      }, 5000);
     },error => {
       this.registrationError = true})
   }

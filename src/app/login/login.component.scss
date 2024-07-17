@@ -114,11 +114,14 @@ form {
         cursor: pointer;
 
         &:focus {
-            border:2px solid red;
+            border: 2px solid red;
             outline: none;
         }
-
     }
+    .input-name-signin {
+        background-image: url('/assets/img/person_filled.png');
+    }
+
     .invalid-password, .invalid-input-signin {
         color: red;
         width: 60%;
@@ -190,27 +193,18 @@ form {
     bottom: 100px;
     left: 50%;
     transform: translate(-50% );
-    animation: glow 3s;
+    animation: glow 5s;
 }
 
 @keyframes glow {
     0% {
         opacity: 1
     }
+    10% {
+        opacity: 0
+    }
     20% {
-        opacity: 0
-    }
-    40% {
         opacity: 1
-    }
-    60% {
-        opacity: 0
-    }
-    80% {
-        opacity: 1
-    }
-    100% {
-        opacity: 0
     }
     
 }

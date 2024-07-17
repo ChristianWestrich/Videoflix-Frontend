@@ -3,7 +3,7 @@ import { HeaderComponent } from "../shared/header/header.component";
 import { Subscription } from "rxjs";
 import { MovieService } from "../services/movie.service";
 import { MovieDetailComponent } from "../movie-detail/movie-detail.component";
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-home",
@@ -72,4 +72,5 @@ export class HomeComponent {
     }
     return thumbnailPath; 
   }
+
 }
