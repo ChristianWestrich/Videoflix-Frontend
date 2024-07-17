@@ -21,3 +21,4 @@ describe('PasswordConfirmationComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

@@ -40,3 +40,4 @@ export class PasswordConfirmationComponent {
         return this.passwordIsMatching;
     }
 }
+
