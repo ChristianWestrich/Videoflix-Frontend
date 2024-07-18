@@ -1,9 +1,11 @@
-import { Component, inject } from "@angular/core";
+import {Component, ElementRef, inject, signal, ViewChild} from "@angular/core";
 import { HeaderComponent } from "../shared/header/header.component";
 import { Subscription } from "rxjs";
 import { MovieService } from "../services/movie.service";
 import { MovieDetailComponent } from "../movie-detail/movie-detail.component";
 import { RouterLink } from "@angular/router";
+import {Movie} from "../interfaces/movie";
+
 
 @Component({
   selector: "app-home",
@@ -13,64 +15,41 @@ import { RouterLink } from "@angular/router";
   imports: [HeaderComponent, MovieDetailComponent, RouterLink],
 })
 export class HomeComponent {
-  subscribe!: Subscription;
+
   movieService = inject(MovieService);
-  allMovies: any[] = [];
+  categories = ["new", "documentary", "drama", "romance"]
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef;
+  allMovies!: Movie[]
+  allMoviesSubscription!: Subscription
 
   constructor() {
-    // this.movieService.loadAllMovies().subscribe((data) => {
-    //     this.allMovies // data
-    // })
-    this.allMovies = this.movies
+    this.allMoviesSubscription = this.movieService.allMovies$.subscribe((data) => {
+      this.allMovies = data
+    })
   }
 
-  movies = [
-    {
-      title: "Der Herr der Ringe",
-      movieUrl: "test",
-      description: "Ein Fantasie-Film von J.R.Tolkien",
-      id: "1",
-      thumbnail: "test",
-      releaseDate: new Date()
-    },
-    {
-      title: "Der Herr der Ringe 2",
-      movieUrl: "test",
-      description: "Ein Fantasie-Film von J.R.Tolkien",
-      id: "2",
-      thumbnail: "test",
-      releaseDate: new Date()
-    },
-    {
-      title: "Der Herr der Ringe 3",
-      movieUrl: "test",
-      description: "Ein Fantasie-Film von J.R.Tolkien",
-      id: "3",
-      thumbnail: "test",
-      releaseDate: new Date()
-    },
-    {
-        title: "Der Herr der Ringe 3",
-        movieUrl: "test",
-        description: "Ein Fantasie-Film von J.R.Tolkien",
-        id: "3",
-        thumbnail: "test",
-        releaseDate: new Date()
-      },
-  ];
-
-  ngOnDestroy(): void {
-    // this.subscribe.unsubscribe();
+  filterMoviesByCategory(category: string) {
+    return this.allMovies.filter(movie => movie.category.includes(category))
   }
 
-  shortenDescription(description: string) {
-    return description.length > 40 ? description.substring(0,30) + "..." : description
-  }
   getThumbnailUrl(thumbnailPath: string): string {
-    if (!thumbnailPath) {
-      return 'http://via.placeholder.com/150'; 
-    }
-    return thumbnailPath; 
+    return this.movieService.getThumbnailUrl(thumbnailPath);
   }
 
+  previewVideo(movieId: number) {
+    this.videoPlayer.nativeElement.pause();
+    this.movieService.selectedMovieIdSig$.set(movieId);
+    let newMovie = this.allMovies.find(movie => movie.id === movieId)
+    if(newMovie) {
+    this.movieService.selectedMovieSig$.set(newMovie)
+    }
+    setTimeout(() => {
+      this.videoPlayer.nativeElement.load();
+      this.videoPlayer.nativeElement.play();
+    }, 100);
+  }
+
+  ngOnDestroy() {
+    this.allMoviesSubscription.unsubscribe()
+  }
 }

@@ -9,19 +9,23 @@
     font-family: "Figtree";
     color: white;
     font-size: 24px;
+    z-index: 1;
 
 }
+    .logo {
+        padding-left: 60px;
+    }
 
-.logo {
-    padding-left: 30px;
-}
+
 
 .logout {
     width: 100px;
     text-align: center;  
     position: relative;
-    padding-right: 30px;
     cursor: pointer;
+    display: flex;
+    padding-right: 120px;
+
 
     &::after {
         content: '';

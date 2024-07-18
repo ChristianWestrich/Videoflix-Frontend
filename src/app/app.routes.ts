@@ -12,7 +12,7 @@ export const routes: Routes = [
     {path: "pw-reset", component: PasswordResetComponent},
     {path: "movie/:id", component: MovieDetailComponent},
     {path: "", redirectTo: "auth", pathMatch: "full"},
-    {path: "pw-confirm/:uidb64/:token'", component: PasswordConfirmationComponent}
+    {path: "pw-confirm/:uidb64/:token", component: PasswordConfirmationComponent}
 
 
 ];

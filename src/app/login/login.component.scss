@@ -4,6 +4,10 @@
     height: 100vh;
     font-family: "Figtree";
     position: relative;
+    background-image: url("/assets/img/landingbackground.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
     .login-container,
     .signin-container {
