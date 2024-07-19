@@ -51,136 +51,6 @@ var require_document = __commonJS({
   }
 });
 
-// node_modules/keycode/index.js
-var require_keycode = __commonJS({
-  "node_modules/keycode/index.js"(exports, module) {
-    function keyCode(searchInput) {
-      if (searchInput && "object" === typeof searchInput) {
-        var hasKeyCode = searchInput.which || searchInput.keyCode || searchInput.charCode;
-        if (hasKeyCode)
-          searchInput = hasKeyCode;
-      }
-      if ("number" === typeof searchInput)
-        return names[searchInput];
-      var search = String(searchInput);
-      var foundNamedKey = codes[search.toLowerCase()];
-      if (foundNamedKey)
-        return foundNamedKey;
-      var foundNamedKey = aliases[search.toLowerCase()];
-      if (foundNamedKey)
-        return foundNamedKey;
-      if (search.length === 1)
-        return search.charCodeAt(0);
-      return void 0;
-    }
-    keyCode.isEventKey = function isEventKey(event, nameOrCode) {
-      if (event && "object" === typeof event) {
-        var keyCode2 = event.which || event.keyCode || event.charCode;
-        if (keyCode2 === null || keyCode2 === void 0) {
-          return false;
-        }
-        if (typeof nameOrCode === "string") {
-          var foundNamedKey = codes[nameOrCode.toLowerCase()];
-          if (foundNamedKey) {
-            return foundNamedKey === keyCode2;
-          }
-          var foundNamedKey = aliases[nameOrCode.toLowerCase()];
-          if (foundNamedKey) {
-            return foundNamedKey === keyCode2;
-          }
-        } else if (typeof nameOrCode === "number") {
-          return nameOrCode === keyCode2;
-        }
-        return false;
-      }
-    };
-    exports = module.exports = keyCode;
-    var codes = exports.code = exports.codes = {
-      "backspace": 8,
-      "tab": 9,
-      "enter": 13,
-      "shift": 16,
-      "ctrl": 17,
-      "alt": 18,
-      "pause/break": 19,
-      "caps lock": 20,
-      "esc": 27,
-      "space": 32,
-      "page up": 33,
-      "page down": 34,
-      "end": 35,
-      "home": 36,
-      "left": 37,
-      "up": 38,
-      "right": 39,
-      "down": 40,
-      "insert": 45,
-      "delete": 46,
-      "command": 91,
-      "left command": 91,
-      "right command": 93,
-      "numpad *": 106,
-      "numpad +": 107,
-      "numpad -": 109,
-      "numpad .": 110,
-      "numpad /": 111,
-      "num lock": 144,
-      "scroll lock": 145,
-      "my computer": 182,
-      "my calculator": 183,
-      ";": 186,
-      "=": 187,
-      ",": 188,
-      "-": 189,
-      ".": 190,
-      "/": 191,
-      "`": 192,
-      "[": 219,
-      "\\": 220,
-      "]": 221,
-      "'": 222
-    };
-    var aliases = exports.aliases = {
-      "windows": 91,
-      "⇧": 16,
-      "⌥": 18,
-      "⌃": 17,
-      "⌘": 91,
-      "ctl": 17,
-      "control": 17,
-      "option": 18,
-      "pause": 19,
-      "break": 19,
-      "caps": 20,
-      "return": 13,
-      "escape": 27,
-      "spc": 32,
-      "spacebar": 32,
-      "pgup": 33,
-      "pgdn": 34,
-      "ins": 45,
-      "del": 46,
-      "cmd": 91
-    };
-    for (i = 97; i < 123; i++)
-      codes[String.fromCharCode(i)] = i - 32;
-    for (i = 48; i < 58; i++)
-      codes[i - 48] = i;
-    var i;
-    for (i = 1; i < 13; i++)
-      codes["f" + i] = i + 111;
-    for (i = 0; i < 10; i++)
-      codes["numpad " + i] = i + 96;
-    var names = exports.names = exports.title = {};
-    for (i in codes)
-      names[codes[i]] = i;
-    for (alias in aliases) {
-      codes[alias] = aliases[alias];
-    }
-    var alias;
-  }
-});
-
 // node_modules/safe-json-parse/tuple.js
 var require_tuple = __commonJS({
   "node_modules/safe-json-parse/tuple.js"(exports, module) {
@@ -232,6 +102,222 @@ var require_is_function = __commonJS({
       return string === "[object Function]" || typeof fn === "function" && string !== "[object RegExp]" || typeof window !== "undefined" && // IE8 and below
       (fn === window.setTimeout || fn === window.alert || fn === window.confirm || fn === window.prompt);
     }
+  }
+});
+
+// node_modules/@videojs/xhr/lib/interceptors.js
+var require_interceptors = __commonJS({
+  "node_modules/@videojs/xhr/lib/interceptors.js"(exports, module) {
+    "use strict";
+    function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+      var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+      if (it)
+        return (it = it.call(o)).next.bind(it);
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it)
+          o = it;
+        var i = 0;
+        return function() {
+          if (i >= o.length)
+            return { done: true };
+          return { done: false, value: o[i++] };
+        };
+      }
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+    function _unsupportedIterableToArray(o, minLen) {
+      if (!o)
+        return;
+      if (typeof o === "string")
+        return _arrayLikeToArray(o, minLen);
+      var n = Object.prototype.toString.call(o).slice(8, -1);
+      if (n === "Object" && o.constructor)
+        n = o.constructor.name;
+      if (n === "Map" || n === "Set")
+        return Array.from(o);
+      if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+        return _arrayLikeToArray(o, minLen);
+    }
+    function _arrayLikeToArray(arr, len) {
+      if (len == null || len > arr.length)
+        len = arr.length;
+      for (var i = 0, arr2 = new Array(len); i < len; i++) {
+        arr2[i] = arr[i];
+      }
+      return arr2;
+    }
+    var InterceptorsStorage = function() {
+      function InterceptorsStorage2() {
+        this.typeToInterceptorsMap_ = /* @__PURE__ */ new Map();
+        this.enabled_ = false;
+      }
+      var _proto = InterceptorsStorage2.prototype;
+      _proto.getIsEnabled = function getIsEnabled() {
+        return this.enabled_;
+      };
+      _proto.enable = function enable() {
+        this.enabled_ = true;
+      };
+      _proto.disable = function disable() {
+        this.enabled_ = false;
+      };
+      _proto.reset = function reset2() {
+        this.typeToInterceptorsMap_ = /* @__PURE__ */ new Map();
+        this.enabled_ = false;
+      };
+      _proto.addInterceptor = function addInterceptor(type, interceptor) {
+        if (!this.typeToInterceptorsMap_.has(type)) {
+          this.typeToInterceptorsMap_.set(type, /* @__PURE__ */ new Set());
+        }
+        var interceptorsSet = this.typeToInterceptorsMap_.get(type);
+        if (interceptorsSet.has(interceptor)) {
+          return false;
+        }
+        interceptorsSet.add(interceptor);
+        return true;
+      };
+      _proto.removeInterceptor = function removeInterceptor(type, interceptor) {
+        var interceptorsSet = this.typeToInterceptorsMap_.get(type);
+        if (interceptorsSet && interceptorsSet.has(interceptor)) {
+          interceptorsSet.delete(interceptor);
+          return true;
+        }
+        return false;
+      };
+      _proto.clearInterceptorsByType = function clearInterceptorsByType(type) {
+        var interceptorsSet = this.typeToInterceptorsMap_.get(type);
+        if (!interceptorsSet) {
+          return false;
+        }
+        this.typeToInterceptorsMap_.delete(type);
+        this.typeToInterceptorsMap_.set(type, /* @__PURE__ */ new Set());
+        return true;
+      };
+      _proto.clear = function clear() {
+        if (!this.typeToInterceptorsMap_.size) {
+          return false;
+        }
+        this.typeToInterceptorsMap_ = /* @__PURE__ */ new Map();
+        return true;
+      };
+      _proto.getForType = function getForType(type) {
+        return this.typeToInterceptorsMap_.get(type) || /* @__PURE__ */ new Set();
+      };
+      _proto.execute = function execute(type, payload) {
+        var interceptors = this.getForType(type);
+        for (var _iterator = _createForOfIteratorHelperLoose(interceptors), _step; !(_step = _iterator()).done; ) {
+          var interceptor = _step.value;
+          try {
+            payload = interceptor(payload);
+          } catch (e) {
+          }
+        }
+        return payload;
+      };
+      return InterceptorsStorage2;
+    }();
+    module.exports = InterceptorsStorage;
+  }
+});
+
+// node_modules/@videojs/xhr/lib/retry.js
+var require_retry = __commonJS({
+  "node_modules/@videojs/xhr/lib/retry.js"(exports, module) {
+    "use strict";
+    var RetryManager = function() {
+      function RetryManager2() {
+        this.maxAttempts_ = 1;
+        this.delayFactor_ = 0.1;
+        this.fuzzFactor_ = 0.1;
+        this.initialDelay_ = 1e3;
+        this.enabled_ = false;
+      }
+      var _proto = RetryManager2.prototype;
+      _proto.getIsEnabled = function getIsEnabled() {
+        return this.enabled_;
+      };
+      _proto.enable = function enable() {
+        this.enabled_ = true;
+      };
+      _proto.disable = function disable() {
+        this.enabled_ = false;
+      };
+      _proto.reset = function reset2() {
+        this.maxAttempts_ = 1;
+        this.delayFactor_ = 0.1;
+        this.fuzzFactor_ = 0.1;
+        this.initialDelay_ = 1e3;
+        this.enabled_ = false;
+      };
+      _proto.getMaxAttempts = function getMaxAttempts() {
+        return this.maxAttempts_;
+      };
+      _proto.setMaxAttempts = function setMaxAttempts(maxAttempts) {
+        this.maxAttempts_ = maxAttempts;
+      };
+      _proto.getDelayFactor = function getDelayFactor() {
+        return this.delayFactor_;
+      };
+      _proto.setDelayFactor = function setDelayFactor(delayFactor) {
+        this.delayFactor_ = delayFactor;
+      };
+      _proto.getFuzzFactor = function getFuzzFactor() {
+        return this.fuzzFactor_;
+      };
+      _proto.setFuzzFactor = function setFuzzFactor(fuzzFactor) {
+        this.fuzzFactor_ = fuzzFactor;
+      };
+      _proto.getInitialDelay = function getInitialDelay() {
+        return this.initialDelay_;
+      };
+      _proto.setInitialDelay = function setInitialDelay(initialDelay) {
+        this.initialDelay_ = initialDelay;
+      };
+      _proto.createRetry = function createRetry(_temp) {
+        var _ref = _temp === void 0 ? {} : _temp, maxAttempts = _ref.maxAttempts, delayFactor = _ref.delayFactor, fuzzFactor = _ref.fuzzFactor, initialDelay = _ref.initialDelay;
+        return new Retry({
+          maxAttempts: maxAttempts || this.maxAttempts_,
+          delayFactor: delayFactor || this.delayFactor_,
+          fuzzFactor: fuzzFactor || this.fuzzFactor_,
+          initialDelay: initialDelay || this.initialDelay_
+        });
+      };
+      return RetryManager2;
+    }();
+    var Retry = function() {
+      function Retry2(options) {
+        this.maxAttempts_ = options.maxAttempts;
+        this.delayFactor_ = options.delayFactor;
+        this.fuzzFactor_ = options.fuzzFactor;
+        this.currentDelay_ = options.initialDelay;
+        this.currentAttempt_ = 1;
+      }
+      var _proto2 = Retry2.prototype;
+      _proto2.moveToNextAttempt = function moveToNextAttempt() {
+        this.currentAttempt_++;
+        var delayDelta = this.currentDelay_ * this.delayFactor_;
+        this.currentDelay_ = this.currentDelay_ + delayDelta;
+      };
+      _proto2.shouldRetry = function shouldRetry() {
+        return this.currentAttempt_ < this.maxAttempts_;
+      };
+      _proto2.getCurrentDelay = function getCurrentDelay() {
+        return this.currentDelay_;
+      };
+      _proto2.getCurrentMinPossibleDelay = function getCurrentMinPossibleDelay() {
+        return (1 - this.fuzzFactor_) * this.currentDelay_;
+      };
+      _proto2.getCurrentMaxPossibleDelay = function getCurrentMaxPossibleDelay() {
+        return (1 + this.fuzzFactor_) * this.currentDelay_;
+      };
+      _proto2.getCurrentFuzzedDelay = function getCurrentFuzzedDelay() {
+        var lowValue = this.getCurrentMinPossibleDelay();
+        var highValue = this.getCurrentMaxPossibleDelay();
+        return lowValue + Math.random() * (highValue - lowValue);
+      };
+      return Retry2;
+    }();
+    module.exports = RetryManager;
   }
 });
 
@@ -293,7 +379,12 @@ var require_lib = __commonJS({
     var window8 = require_window();
     var _extends2 = require_extends();
     var isFunction = require_is_function();
+    var InterceptorsStorage = require_interceptors();
+    var RetryManager = require_retry();
     createXHR.httpHandler = require_http_handler();
+    createXHR.requestInterceptorsStorage = new InterceptorsStorage();
+    createXHR.responseInterceptorsStorage = new InterceptorsStorage();
+    createXHR.retryManager = new RetryManager();
     var parseHeaders = function parseHeaders2(headers) {
       var result = {};
       if (!headers) {
@@ -361,6 +452,23 @@ var require_lib = __commonJS({
       if (typeof options.callback === "undefined") {
         throw new Error("callback argument missing");
       }
+      if (options.requestType && createXHR.requestInterceptorsStorage.getIsEnabled()) {
+        var requestInterceptorPayload = {
+          uri: options.uri || options.url,
+          headers: options.headers || {},
+          body: options.body,
+          metadata: options.metadata || {},
+          retry: options.retry,
+          timeout: options.timeout
+        };
+        var updatedPayload = createXHR.requestInterceptorsStorage.execute(options.requestType, requestInterceptorPayload);
+        options.uri = updatedPayload.uri;
+        options.headers = updatedPayload.headers;
+        options.body = updatedPayload.body;
+        options.metadata = updatedPayload.metadata;
+        options.retry = updatedPayload.retry;
+        options.timeout = updatedPayload.timeout;
+      }
       var called = false;
       var callback = function cbOnce(err, response, body2) {
         if (!called) {
@@ -369,7 +477,7 @@ var require_lib = __commonJS({
         }
       };
       function readystatechange() {
-        if (xhr.readyState === 4) {
+        if (xhr.readyState === 4 && !createXHR.responseInterceptorsStorage.getIsEnabled()) {
           setTimeout(loadFunc, 0);
         }
       }
@@ -390,10 +498,30 @@ var require_lib = __commonJS({
       }
       function errorFunc(evt) {
         clearTimeout(timeoutTimer);
+        clearTimeout(options.retryTimeout);
         if (!(evt instanceof Error)) {
           evt = new Error("" + (evt || "Unknown XMLHttpRequest Error"));
         }
         evt.statusCode = 0;
+        if (!aborted && createXHR.retryManager.getIsEnabled() && options.retry && options.retry.shouldRetry()) {
+          options.retryTimeout = setTimeout(function() {
+            options.retry.moveToNextAttempt();
+            options.xhr = xhr;
+            _createXHR(options);
+          }, options.retry.getCurrentFuzzedDelay());
+          return;
+        }
+        if (options.requestType && createXHR.responseInterceptorsStorage.getIsEnabled()) {
+          var responseInterceptorPayload = {
+            headers: failureResponse.headers || {},
+            body: failureResponse.body,
+            responseUrl: xhr.responseURL,
+            responseType: xhr.responseType
+          };
+          var _updatedPayload = createXHR.responseInterceptorsStorage.execute(options.requestType, responseInterceptorPayload);
+          failureResponse.body = _updatedPayload.body;
+          failureResponse.headers = _updatedPayload.headers;
+        }
         return callback(evt, failureResponse);
       }
       function loadFunc() {
@@ -401,6 +529,7 @@ var require_lib = __commonJS({
           return;
         var status;
         clearTimeout(timeoutTimer);
+        clearTimeout(options.retryTimeout);
         if (options.useXDR && xhr.status === void 0) {
           status = 200;
         } else {
@@ -422,6 +551,17 @@ var require_lib = __commonJS({
           }
         } else {
           err = new Error("Internal XMLHttpRequest Error");
+        }
+        if (options.requestType && createXHR.responseInterceptorsStorage.getIsEnabled()) {
+          var responseInterceptorPayload = {
+            headers: response.headers || {},
+            body: response.body,
+            responseUrl: xhr.responseURL,
+            responseType: xhr.responseType
+          };
+          var _updatedPayload2 = createXHR.responseInterceptorsStorage.execute(options.requestType, responseInterceptorPayload);
+          response.body = _updatedPayload2.body;
+          response.headers = _updatedPayload2.headers;
         }
         return callback(err, response, response.body);
       }
@@ -465,6 +605,7 @@ var require_lib = __commonJS({
       };
       xhr.onabort = function() {
         aborted = true;
+        clearTimeout(options.retryTimeout);
       };
       xhr.ontimeout = errorFunc;
       xhr.open(method, uri, !sync, options.username, options.password);
@@ -521,7 +662,7 @@ var require_lib = __commonJS({
 // node_modules/videojs-vtt.js/lib/vtt.js
 var require_vtt = __commonJS({
   "node_modules/videojs-vtt.js/lib/vtt.js"(exports, module) {
-    var document3 = require_document();
+    var document2 = require_document();
     var _objCreate = Object.create || /* @__PURE__ */ function() {
       function F() {
       }
@@ -739,7 +880,7 @@ var require_vtt = __commonJS({
       skipWhitespace();
       consumeCueSettings(input, cue);
     }
-    var TEXTAREA_ELEMENT = document3.createElement && document3.createElement("textarea");
+    var TEXTAREA_ELEMENT = document2.createElement && document2.createElement("textarea");
     var TAG_NAME = {
       c: "span",
       i: "i",
@@ -6708,7 +6849,6 @@ var require_clock = __commonJS({
 // node_modules/video.js/dist/video.es.js
 var import_window7 = __toESM(require_window());
 var import_document = __toESM(require_document());
-var import_keycode = __toESM(require_keycode());
 var import_tuple = __toESM(require_tuple());
 var import_xhr = __toESM(require_lib());
 var import_videojs_vtt = __toESM(require_browser_index());
@@ -10622,7 +10762,7 @@ var isLikelyFmp4MediaSegment = function isLikelyFmp4MediaSegment2(bytes) {
 
 // node_modules/video.js/dist/video.es.js
 var import_clock = __toESM(require_clock());
-var version$6 = "8.12.0";
+var version$6 = "8.16.1";
 var hooks_ = {};
 var hooks = function(type, fn) {
   hooks_[type] = hooks_[type] || [];
@@ -10707,9 +10847,9 @@ var LogByTypeFactory = (name, log2, styles) => (type, level, args) => {
 function createLogger$1(name, delimiter = ":", styles = "") {
   let level = "info";
   let logByType;
-  const log2 = function(...args) {
+  function log2(...args) {
     logByType("log", level, args);
-  };
+  }
   logByType = LogByTypeFactory(name, log2, styles);
   log2.createLogger = (subName, subDelimiter, subStyles) => {
     const resultDelimiter = subDelimiter !== void 0 ? subDelimiter : delimiter;
@@ -10852,6 +10992,7 @@ var IS_CHROMIUM = false;
 var IS_CHROME = false;
 var CHROMIUM_VERSION = null;
 var CHROME_VERSION = null;
+var IS_CHROMECAST_RECEIVER = Boolean(import_window7.default.cast && import_window7.default.cast.framework && import_window7.default.cast.framework.CastReceiverContext);
 var IE_VERSION = null;
 var IS_SAFARI = false;
 var IS_WINDOWS = false;
@@ -10956,6 +11097,7 @@ var browser = Object.freeze({
   get CHROME_VERSION() {
     return CHROME_VERSION;
   },
+  IS_CHROMECAST_RECEIVER,
   get IE_VERSION() {
     return IE_VERSION;
   },
@@ -11183,7 +11325,13 @@ function getPointerPosition(el, event) {
         translated.x += values3[12];
         translated.y += values3[13];
       }
-      item = item.parentNode;
+      if (item.assignedSlot && item.assignedSlot.parentElement && import_window7.default.WebKitCSSMatrix) {
+        const transformValue = import_window7.default.getComputedStyle(item.assignedSlot.parentElement).transform;
+        const matrix = new import_window7.default.WebKitCSSMatrix(transformValue);
+        translated.x += matrix.m41;
+        translated.y += matrix.m42;
+      }
+      item = item.parentNode || item.host;
     }
   }
   const position = {};
@@ -11245,6 +11393,9 @@ function isSingleLeftClick(event) {
     return true;
   }
   if (event.type === "mouseup" && event.button === 0 && event.buttons === 0) {
+    return true;
+  }
+  if (event.type === "mousedown" && event.button === 0 && event.buttons === 0) {
     return true;
   }
   if (event.button !== 0 || event.buttons !== 1) {
@@ -11426,8 +11577,9 @@ function fixEvent(event) {
   if (!event || !event.isPropagationStopped || !event.isImmediatePropagationStopped) {
     const old = event || import_window7.default.event;
     event = {};
+    const deprecatedProps = ["layerX", "layerY", "keyLocation", "path", "webkitMovementX", "webkitMovementY", "mozPressure", "mozInputSource"];
     for (const key in old) {
-      if (key !== "layerX" && key !== "layerY" && key !== "keyLocation" && key !== "webkitMovementX" && key !== "webkitMovementY" && key !== "path") {
+      if (!deprecatedProps.includes(key)) {
         if (!(key === "returnValue" && old.preventDefault)) {
           event[key] = old[key];
         }
@@ -12213,7 +12365,7 @@ var Component$1 = class _Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -12411,7 +12563,7 @@ var Component$1 = class _Component$1 {
   /**
    * Return the {@link Player} that the `Component` has attached to.
    *
-   * @return { import('./player').default }
+   * @return {Player}
    *         The player that this `Component` has attached to.
    */
   player() {
@@ -13204,6 +13356,43 @@ var Component$1 = class _Component$1 {
     return this.currentDimension("height");
   }
   /**
+   * Retrieves the position and size information of the component's element.
+   *
+   * @return {Object} An object with `boundingClientRect` and `center` properties.
+   *         - `boundingClientRect`: An object with properties `x`, `y`, `width`,
+   *           `height`, `top`, `right`, `bottom`, and `left`, representing
+   *           the bounding rectangle of the element.
+   *         - `center`: An object with properties `x` and `y`, representing
+   *           the center point of the element. `width` and `height` are set to 0.
+   */
+  getPositions() {
+    const rect = this.el_.getBoundingClientRect();
+    const boundingClientRect = {
+      x: rect.x,
+      y: rect.y,
+      width: rect.width,
+      height: rect.height,
+      top: rect.top,
+      right: rect.right,
+      bottom: rect.bottom,
+      left: rect.left
+    };
+    const center = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+      width: 0,
+      height: 0,
+      top: rect.top + rect.height / 2,
+      right: rect.left + rect.width / 2,
+      bottom: rect.top + rect.height / 2,
+      left: rect.left + rect.width / 2
+    };
+    return {
+      boundingClientRect,
+      center
+    };
+  }
+  /**
    * Set the focus to this component
    */
   focus() {
@@ -13224,7 +13413,7 @@ var Component$1 = class _Component$1 {
    */
   handleKeyDown(event) {
     if (this.player_) {
-      if (!import_keycode.default.isEventKey(event, "Tab")) {
+      if (event.key !== "Tab" && !(this.player_.options_.playerOptions.spatialNavigation && this.player_.options_.playerOptions.spatialNavigation.enabled)) {
         event.stopPropagation();
       }
       this.player_.handleKeyDown(event);
@@ -13581,6 +13770,104 @@ var Component$1 = class _Component$1 {
     });
   }
   /**
+    * Decide whether an element is actually disabled or not.
+    *
+    * @function isActuallyDisabled
+    * @param element {Node}
+    * @return {boolean}
+    *
+    * @see {@link https://html.spec.whatwg.org/multipage/semantics-other.html#concept-element-disabled}
+    */
+  getIsDisabled() {
+    return Boolean(this.el_.disabled);
+  }
+  /**
+    * Decide whether the element is expressly inert or not.
+    *
+    * @see {@link https://html.spec.whatwg.org/multipage/interaction.html#expressly-inert}
+    * @function isExpresslyInert
+    * @param element {Node}
+    * @return {boolean}
+    */
+  getIsExpresslyInert() {
+    return this.el_.inert && !this.el_.ownerDocument.documentElement.inert;
+  }
+  /**
+   * Determine whether or not this component can be considered as focusable component.
+   *
+   * @param {HTMLElement} el - The HTML element representing the component.
+   * @return {boolean}
+   *         If the component can be focused, will be `true`. Otherwise, `false`.
+   */
+  getIsFocusable(el) {
+    const element = el || this.el_;
+    return element.tabIndex >= 0 && !(this.getIsDisabled() || this.getIsExpresslyInert());
+  }
+  /**
+   * Determine whether or not this component is currently visible/enabled/etc...
+   *
+   * @param {HTMLElement} el - The HTML element representing the component.
+   * @return {boolean}
+   *         If the component can is currently visible & enabled, will be `true`. Otherwise, `false`.
+   */
+  getIsAvailableToBeFocused(el) {
+    function isVisibleStyleProperty(element) {
+      const elementStyle = import_window7.default.getComputedStyle(element, null);
+      const thisVisibility = elementStyle.getPropertyValue("visibility");
+      const thisDisplay = elementStyle.getPropertyValue("display");
+      const invisibleStyle = ["hidden", "collapse"];
+      return thisDisplay !== "none" && !invisibleStyle.includes(thisVisibility);
+    }
+    function isBeingRendered(element) {
+      if (!isVisibleStyleProperty(element.parentElement)) {
+        return false;
+      }
+      if (!isVisibleStyleProperty(element) || element.style.opacity === "0" || import_window7.default.getComputedStyle(element).height === "0px" || import_window7.default.getComputedStyle(element).width === "0px") {
+        return false;
+      }
+      return true;
+    }
+    function isVisible(element) {
+      if (element.offsetWidth + element.offsetHeight + element.getBoundingClientRect().height + element.getBoundingClientRect().width === 0) {
+        return false;
+      }
+      const elementCenter = {
+        x: element.getBoundingClientRect().left + element.offsetWidth / 2,
+        y: element.getBoundingClientRect().top + element.offsetHeight / 2
+      };
+      if (elementCenter.x < 0) {
+        return false;
+      }
+      if (elementCenter.x > (import_document.default.documentElement.clientWidth || import_window7.default.innerWidth)) {
+        return false;
+      }
+      if (elementCenter.y < 0) {
+        return false;
+      }
+      if (elementCenter.y > (import_document.default.documentElement.clientHeight || import_window7.default.innerHeight)) {
+        return false;
+      }
+      let pointContainer = import_document.default.elementFromPoint(elementCenter.x, elementCenter.y);
+      while (pointContainer) {
+        if (pointContainer === element) {
+          return true;
+        }
+        if (pointContainer.parentNode) {
+          pointContainer = pointContainer.parentNode;
+        } else {
+          return false;
+        }
+      }
+    }
+    if (!el) {
+      el = this.el();
+    }
+    if (isVisible(el) && isBeingRendered(el) && (!el.parentElement || el.tabIndex >= 0)) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Register a `Component` with `videojs` given the name and the component.
    *
    * > NOTE: {@link Tech}s should not be registered as a `Component`. {@link Tech}s
@@ -13842,15 +14129,15 @@ var textTrackConverter = {
 var MODAL_CLASS_NAME = "vjs-modal-dialog";
 var ModalDialog = class extends Component$1 {
   /**
-   * Create an instance of this class.
+   * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
    *        The key/value store of player options.
    *
-   * @param { import('./utils/dom').ContentDescriptor} [options.content=undefined]
+   * @param {ContentDescriptor} [options.content=undefined]
    *        Provide customized content for this modal.
    *
    * @param {string} [options.description]
@@ -14023,7 +14310,10 @@ var ModalDialog = class extends Component$1 {
     }
     this.hide();
     this.el().setAttribute("aria-hidden", "true");
-    this.trigger("modalclose");
+    this.trigger({
+      type: "modalclose",
+      bubbles: true
+    });
     this.conditionalBlur_();
     if (this.options_.temporary) {
       this.dispose();
@@ -14073,7 +14363,7 @@ var ModalDialog = class extends Component$1 {
    * @fires ModalDialog#beforemodalfill
    * @fires ModalDialog#modalfill
    *
-   * @param { import('./utils/dom').ContentDescriptor} [content]
+   * @param {ContentDescriptor} [content]
    *        The same rules apply to this as apply to the `content` option.
    */
   fillWith(content) {
@@ -14114,12 +14404,12 @@ var ModalDialog = class extends Component$1 {
    * This does not update the DOM or fill the modal, but it is called during
    * that process.
    *
-   * @param  { import('./utils/dom').ContentDescriptor} [value]
+   * @param  {ContentDescriptor} [value]
    *         If defined, sets the internal content value to be used on the
    *         next call(s) to `fill`. This value is normalized before being
    *         inserted. To "clear" the internal content value, pass `null`.
    *
-   * @return { import('./utils/dom').ContentDescriptor}
+   * @return {ContentDescriptor}
    *         The current content of the modal dialog
    */
   content(value) {
@@ -14159,13 +14449,19 @@ var ModalDialog = class extends Component$1 {
    * @listens keydown
    */
   handleKeyDown(event) {
+    this.trigger({
+      type: "modalKeydown",
+      originalEvent: event,
+      target: this,
+      bubbles: true
+    });
     event.stopPropagation();
-    if (import_keycode.default.isEventKey(event, "Escape") && this.closeable()) {
+    if (event.key === "Escape" && this.closeable()) {
       event.preventDefault();
       this.close();
       return;
     }
-    if (!import_keycode.default.isEventKey(event, "Tab")) {
+    if (event.key !== "Tab") {
       return;
     }
     const focusableEls = this.focusableEls_();
@@ -14209,7 +14505,7 @@ var TrackList = class extends EventTarget$2 {
   /**
    * Create an instance of this class
    *
-   * @param { import('./track').default[] } tracks
+   * @param { Track[] } tracks
    *        A list of tracks to initialize the list with.
    *
    * @abstract
@@ -14229,7 +14525,7 @@ var TrackList = class extends EventTarget$2 {
   /**
    * Add a {@link Track} to the `TrackList`
    *
-   * @param { import('./track').default } track
+   * @param {Track} track
    *        The audio, video, or text track to add to the list.
    *
    * @fires TrackList#addtrack
@@ -14265,7 +14561,7 @@ var TrackList = class extends EventTarget$2 {
   /**
    * Remove a {@link Track} from the `TrackList`
    *
-   * @param { import('./track').default } rtrack
+   * @param {Track} rtrack
    *        The audio, video, or text track to remove from the list.
    *
    * @fires TrackList#removetrack
@@ -14296,7 +14592,7 @@ var TrackList = class extends EventTarget$2 {
    *
    * @param {string} id - the id of the track to get
    * @method getTrackById
-   * @return { import('./track').default }
+   * @return {Track}
    * @private
    */
   getTrackById(id) {
@@ -14332,7 +14628,7 @@ var AudioTrackList = class extends TrackList {
   /**
    * Create an instance of this class.
    *
-   * @param { import('./audio-track').default[] } [tracks=[]]
+   * @param {AudioTrack[]} [tracks=[]]
    *        A list of `AudioTrack` to instantiate the list with.
    */
   constructor(tracks = []) {
@@ -14348,7 +14644,7 @@ var AudioTrackList = class extends TrackList {
   /**
    * Add an {@link AudioTrack} to the `AudioTrackList`.
    *
-   * @param { import('./audio-track').default } track
+   * @param {AudioTrack} track
    *        The AudioTrack to add to the list
    *
    * @fires TrackList#addtrack
@@ -14420,7 +14716,7 @@ var VideoTrackList = class extends TrackList {
   /**
    * Add a {@link VideoTrack} to the `VideoTrackList`.
    *
-   * @param { import('./video-track').default } track
+   * @param {VideoTrack} track
    *        The VideoTrack to add to the list
    *
    * @fires TrackList#addtrack
@@ -14456,7 +14752,7 @@ var TextTrackList = class extends TrackList {
   /**
    * Add a {@link TextTrack} to the `TextTrackList`
    *
-   * @param { import('./text-track').default } track
+   * @param {TextTrack} track
    *        The text track to add to the list.
    *
    * @fires TrackList#addtrack
@@ -14718,34 +15014,10 @@ var Track = class extends EventTarget$2 {
   }
 };
 var parseUrl = function(url) {
-  const props = ["protocol", "hostname", "port", "pathname", "search", "hash", "host"];
-  const a = import_document.default.createElement("a");
-  a.href = url;
-  const details = {};
-  for (let i = 0; i < props.length; i++) {
-    details[props[i]] = a[props[i]];
-  }
-  if (details.protocol === "http:") {
-    details.host = details.host.replace(/:80$/, "");
-  }
-  if (details.protocol === "https:") {
-    details.host = details.host.replace(/:443$/, "");
-  }
-  if (!details.protocol) {
-    details.protocol = import_window7.default.location.protocol;
-  }
-  if (!details.host) {
-    details.host = import_window7.default.location.host;
-  }
-  return details;
+  return new URL(url, import_document.default.baseURI);
 };
 var getAbsoluteURL = function(url) {
-  if (!url.match(/^https?:\/\//)) {
-    const a = import_document.default.createElement("a");
-    a.href = url;
-    url = a.href;
-  }
-  return url;
+  return new URL(url, import_document.default.baseURI).href;
 };
 var getFileExtension = function(path) {
   if (typeof path === "string") {
@@ -14758,10 +15030,7 @@ var getFileExtension = function(path) {
   return "";
 };
 var isCrossOrigin = function(url, winLoc = import_window7.default.location) {
-  const urlInfo = parseUrl(url);
-  const srcProtocol = urlInfo.protocol === ":" ? winLoc.protocol : urlInfo.protocol;
-  const crossOrigin = srcProtocol + urlInfo.host !== winLoc.protocol + winLoc.host;
-  return crossOrigin;
+  return parseUrl(url).origin !== winLoc.origin;
 };
 var Url = Object.freeze({
   __proto__: null,
@@ -14836,7 +15105,7 @@ var TextTrack = class extends Track {
    * @param {Object} options={}
    *        Object of option names and values
    *
-   * @param { import('../tech/tech').default } options.tech
+   * @param {Tech} options.tech
    *        A reference to the tech that owns this TextTrack.
    *
    * @param {TextTrack~Kind} [options.kind='subtitles']
@@ -15186,7 +15455,7 @@ var HTMLTrackElement = class _HTMLTrackElement extends EventTarget$2 {
    * @param {Object} options={}
    *        Object of option names and values
    *
-   * @param { import('../tech/tech').default } options.tech
+   * @param {Tech} options.tech
    *        A reference to the tech that owns this HTMLTrackElement.
    *
    * @param {TextTrack~Kind} [options.kind='subtitles']
@@ -15460,7 +15729,7 @@ var Tech = class _Tech extends Component$1 {
   /**
    * Get and create a `TimeRange` object for buffering.
    *
-   * @return { import('../utils/time').TimeRange }
+   * @return {TimeRange}
    *         The time range object that was created.
    */
   buffered() {
@@ -15639,7 +15908,7 @@ var Tech = class _Tech extends Component$1 {
    * > NOTE: This implementation is incomplete. It does not track the played `TimeRange`.
    *         It only checks whether the source has played at all or not.
    *
-   * @return { import('../utils/time').TimeRange }
+   * @return {TimeRange}
    *         - A single time range if this video has played
    *         - An empty set of ranges if not.
    */
@@ -16413,12 +16682,488 @@ function fixSource(src) {
   }
   return src;
 }
-var icons = '<svg xmlns="http://www.w3.org/2000/svg">\n  <defs>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-play">\n      <path d="M16 10v28l22-14z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-pause">\n      <path d="M12 38h8V10h-8v28zm16-28v28h8V10h-8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-audio">\n      <path d="M24 2C14.06 2 6 10.06 6 20v14c0 3.31 2.69 6 6 6h6V24h-8v-4c0-7.73 6.27-14 14-14s14 6.27 14 14v4h-8v16h6c3.31 0 6-2.69 6-6V20c0-9.94-8.06-18-18-18z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-captions">\n      <path d="M38 8H10c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zM22 22h-3v-1h-4v6h4v-1h3v2a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2zm14 0h-3v-1h-4v6h4v-1h3v2a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-subtitles">\n      <path d="M40 8H8c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h32c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zM8 24h8v4H8v-4zm20 12H8v-4h20v4zm12 0h-8v-4h8v4zm0-8H20v-4h20v4z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-fullscreen-enter">\n      <path d="M14 28h-4v10h10v-4h-6v-6zm-4-8h4v-6h6v-4H10v10zm24 14h-6v4h10V28h-4v6zm-6-24v4h6v6h4V10H28z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-fullscreen-exit">\n      <path d="M10 32h6v6h4V28H10v4zm6-16h-6v4h10V10h-4v6zm12 22h4v-6h6v-4H28v10zm4-22v-6h-4v10h10v-4h-6z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-play-circle">\n      <path d="M20 33l12-9-12-9v18zm4-29C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-mute">\n      <path d="M33 24c0-3.53-2.04-6.58-5-8.05v4.42l4.91 4.91c.06-.42.09-.85.09-1.28zm5 0c0 1.88-.41 3.65-1.08 5.28l3.03 3.03C41.25 29.82 42 27 42 24c0-8.56-5.99-15.72-14-17.54v4.13c5.78 1.72 10 7.07 10 13.41zM8.55 6L6 8.55 15.45 18H6v12h8l10 10V26.55l8.51 8.51c-1.34 1.03-2.85 1.86-4.51 2.36v4.13a17.94 17.94 0 0 0 7.37-3.62L39.45 42 42 39.45l-18-18L8.55 6zM24 8l-4.18 4.18L24 16.36V8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-low">\n      <path d="M14 18v12h8l10 10V8L22 18h-8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-medium">\n      <path d="M37 24c0-3.53-2.04-6.58-5-8.05v16.11c2.96-1.48 5-4.53 5-8.06zm-27-6v12h8l10 10V8L18 18h-8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-high">\n      <path d="M6 18v12h8l10 10V8L14 18H6zm27 6c0-3.53-2.04-6.58-5-8.05v16.11c2.96-1.48 5-4.53 5-8.06zM28 6.46v4.13c5.78 1.72 10 7.07 10 13.41s-4.22 11.69-10 13.41v4.13c8.01-1.82 14-8.97 14-17.54S36.01 8.28 28 6.46z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-spinner">\n      <path d="M18.8 21l9.53-16.51C26.94 4.18 25.49 4 24 4c-4.8 0-9.19 1.69-12.64 4.51l7.33 12.69.11-.2zm24.28-3c-1.84-5.85-6.3-10.52-11.99-12.68L23.77 18h19.31zm.52 2H28.62l.58 1 9.53 16.5C41.99 33.94 44 29.21 44 24c0-1.37-.14-2.71-.4-4zm-26.53 4l-7.8-13.5C6.01 14.06 4 18.79 4 24c0 1.37.14 2.71.4 4h14.98l-2.31-4zM4.92 30c1.84 5.85 6.3 10.52 11.99 12.68L24.23 30H4.92zm22.54 0l-7.8 13.51c1.4.31 2.85.49 4.34.49 4.8 0 9.19-1.69 12.64-4.51L29.31 26.8 27.46 30z"></path>\n    </symbol>\n    <symbol viewBox="0 0 24 24" id="vjs-icon-hd">\n      <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-chapters">\n      <path d="M6 26h4v-4H6v4zm0 8h4v-4H6v4zm0-16h4v-4H6v4zm8 8h28v-4H14v4zm0 8h28v-4H14v4zm0-20v4h28v-4H14z"></path>\n    </symbol>\n    <symbol viewBox="0 0 40 40" id="vjs-icon-downloading">\n      <path d="M18.208 36.875q-3.208-.292-5.979-1.729-2.771-1.438-4.812-3.729-2.042-2.292-3.188-5.229-1.146-2.938-1.146-6.23 0-6.583 4.334-11.416 4.333-4.834 10.833-5.5v3.166q-5.167.75-8.583 4.646Q6.25 14.75 6.25 19.958q0 5.209 3.396 9.104 3.396 3.896 8.562 4.646zM20 28.417L11.542 20l2.083-2.083 4.917 4.916v-11.25h2.916v11.25l4.875-4.916L28.417 20zm1.792 8.458v-3.167q1.833-.25 3.541-.958 1.709-.708 3.167-1.875l2.333 2.292q-1.958 1.583-4.25 2.541-2.291.959-4.791 1.167zm6.791-27.792q-1.541-1.125-3.25-1.854-1.708-.729-3.541-1.021V3.042q2.5.25 4.77 1.208 2.271.958 4.271 2.5zm4.584 21.584l-2.25-2.25q1.166-1.5 1.854-3.209.687-1.708.937-3.541h3.209q-.292 2.5-1.229 4.791-.938 2.292-2.521 4.209zm.541-12.417q-.291-1.833-.958-3.562-.667-1.73-1.833-3.188l2.375-2.208q1.541 1.916 2.458 4.208.917 2.292 1.167 4.75z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-file-download">\n      <path d="M10.8 40.55q-1.35 0-2.375-1T7.4 37.15v-7.7h3.4v7.7h26.35v-7.7h3.4v7.7q0 1.4-1 2.4t-2.4 1zM24 32.1L13.9 22.05l2.45-2.45 5.95 5.95V7.15h3.4v18.4l5.95-5.95 2.45 2.45z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-file-download-done">\n      <path d="M9.8 40.5v-3.45h28.4v3.45zm9.2-9.05L7.4 19.85l2.45-2.35L19 26.65l19.2-19.2 2.4 2.4z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-file-download-off">\n      <path d="M4.9 4.75L43.25 43.1 41 45.3l-4.75-4.75q-.05.05-.075.025-.025-.025-.075-.025H10.8q-1.35 0-2.375-1T7.4 37.15v-7.7h3.4v7.7h22.05l-7-7-1.85 1.8L13.9 21.9l1.85-1.85L2.7 7zm26.75 14.7l2.45 2.45-3.75 3.8-2.45-2.5zM25.7 7.15V21.1l-3.4-3.45V7.15z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-share">\n      <path d="M36 32.17c-1.52 0-2.89.59-3.93 1.54L17.82 25.4c.11-.45.18-.92.18-1.4s-.07-.95-.18-1.4l14.1-8.23c1.07 1 2.5 1.62 4.08 1.62 3.31 0 6-2.69 6-6s-2.69-6-6-6-6 2.69-6 6c0 .48.07.95.18 1.4l-14.1 8.23c-1.07-1-2.5-1.62-4.08-1.62-3.31 0-6 2.69-6 6s2.69 6 6 6c1.58 0 3.01-.62 4.08-1.62l14.25 8.31c-.1.42-.16.86-.16 1.31A5.83 5.83 0 1 0 36 32.17z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-cog">\n      <path d="M38.86 25.95c.08-.64.14-1.29.14-1.95s-.06-1.31-.14-1.95l4.23-3.31c.38-.3.49-.84.24-1.28l-4-6.93c-.25-.43-.77-.61-1.22-.43l-4.98 2.01c-1.03-.79-2.16-1.46-3.38-1.97L29 4.84c-.09-.47-.5-.84-1-.84h-8c-.5 0-.91.37-.99.84l-.75 5.3a14.8 14.8 0 0 0-3.38 1.97L9.9 10.1a1 1 0 0 0-1.22.43l-4 6.93c-.25.43-.14.97.24 1.28l4.22 3.31C9.06 22.69 9 23.34 9 24s.06 1.31.14 1.95l-4.22 3.31c-.38.3-.49.84-.24 1.28l4 6.93c.25.43.77.61 1.22.43l4.98-2.01c1.03.79 2.16 1.46 3.38 1.97l.75 5.3c.08.47.49.84.99.84h8c.5 0 .91-.37.99-.84l.75-5.3a14.8 14.8 0 0 0 3.38-1.97l4.98 2.01a1 1 0 0 0 1.22-.43l4-6.93c.25-.43.14-.97-.24-1.28l-4.22-3.31zM24 31c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-square">\n      <path d="M36 8H12c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zm0 28H12V12h24v24z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-circle">\n      <circle cx="24" cy="24" r="20"></circle>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-circle-outline">\n      <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-circle-inner-circle">\n      <path d="M24 4C12.97 4 4 12.97 4 24s8.97 20 20 20 20-8.97 20-20S35.03 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16zm6-16c0 3.31-2.69 6-6 6s-6-2.69-6-6 2.69-6 6-6 6 2.69 6 6z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-cancel">\n      <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm10 27.17L31.17 34 24 26.83 16.83 34 14 31.17 21.17 24 14 16.83 16.83 14 24 21.17 31.17 14 34 16.83 26.83 24 34 31.17z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-replay">\n      <path d="M24 10V2L14 12l10 10v-8c6.63 0 12 5.37 12 12s-5.37 12-12 12-12-5.37-12-12H8c0 8.84 7.16 16 16 16s16-7.16 16-16-7.16-16-16-16z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-repeat">\n      <path d="M14 14h20v6l8-8-8-8v6H10v12h4v-8zm20 20H14v-6l-8 8 8 8v-6h24V26h-4v8z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-replay-5">\n      <path d="M17.689 98l-8.697 8.696 8.697 8.697 2.486-2.485-4.32-4.319h1.302c4.93 0 9.071 1.722 12.424 5.165 3.352 3.443 5.029 7.638 5.029 12.584h3.55c0-2.958-.553-5.73-1.658-8.313-1.104-2.583-2.622-4.841-4.555-6.774-1.932-1.932-4.19-3.45-6.773-4.555-2.584-1.104-5.355-1.657-8.313-1.657H15.5l4.615-4.615zm-8.08 21.659v13.861h11.357v5.008H9.609V143h12.7c.834 0 1.55-.298 2.146-.894.596-.597.895-1.31.895-2.145v-7.781c0-.835-.299-1.55-.895-2.147a2.929 2.929 0 0 0-2.147-.894h-8.227v-5.096H25.35v-4.384z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-replay-10">\n      <path d="M42.315 125.63c0-4.997-1.694-9.235-5.08-12.713-3.388-3.479-7.571-5.218-12.552-5.218h-1.315l4.363 4.363-2.51 2.51-8.787-8.786L25.221 97l2.45 2.45-4.662 4.663h1.375c2.988 0 5.788.557 8.397 1.673 2.61 1.116 4.892 2.65 6.844 4.602 1.953 1.953 3.487 4.234 4.602 6.844 1.116 2.61 1.674 5.41 1.674 8.398zM8.183 142v-19.657H3.176V117.8h9.643V142zm13.63 0c-1.156 0-2.127-.393-2.912-1.178-.778-.778-1.168-1.746-1.168-2.902v-16.04c0-1.156.393-2.127 1.178-2.912.779-.779 1.746-1.168 2.902-1.168h7.696c1.156 0 2.126.392 2.911 1.177.779.78 1.168 1.747 1.168 2.903v16.04c0 1.156-.392 2.127-1.177 2.912-.779.779-1.746 1.168-2.902 1.168zm.556-4.636h6.583v-15.02H22.37z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-replay-30">\n      <path d="M26.047 97l-8.733 8.732 8.733 8.733 2.496-2.494-4.336-4.338h1.307c4.95 0 9.108 1.73 12.474 5.187 3.367 3.458 5.051 7.668 5.051 12.635h3.565c0-2.97-.556-5.751-1.665-8.346-1.109-2.594-2.633-4.862-4.574-6.802-1.94-1.941-4.208-3.466-6.803-4.575-2.594-1.109-5.375-1.664-8.345-1.664H23.85l4.634-4.634zM2.555 117.531v4.688h10.297v5.25H5.873v4.687h6.979v5.156H2.555V142H13.36c1.061 0 1.95-.395 2.668-1.186.718-.79 1.076-1.772 1.076-2.94v-16.218c0-1.168-.358-2.149-1.076-2.94-.717-.79-1.607-1.185-2.668-1.185zm22.482.14c-1.149 0-2.11.39-2.885 1.165-.78.78-1.172 1.744-1.172 2.893v15.943c0 1.149.388 2.11 1.163 2.885.78.78 1.745 1.172 2.894 1.172h7.649c1.148 0 2.11-.388 2.884-1.163.78-.78 1.17-1.745 1.17-2.894v-15.943c0-1.15-.386-2.111-1.16-2.885-.78-.78-1.746-1.172-2.894-1.172zm.553 4.518h6.545v14.93H25.59z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-forward-5">\n      <path d="M29.508 97l-2.431 2.43 4.625 4.625h-1.364c-2.965 0-5.742.554-8.332 1.66-2.589 1.107-4.851 2.629-6.788 4.566-1.937 1.937-3.458 4.2-4.565 6.788-1.107 2.59-1.66 5.367-1.66 8.331h3.557c0-4.957 1.68-9.16 5.04-12.611 3.36-3.45 7.51-5.177 12.451-5.177h1.304l-4.326 4.33 2.49 2.49 8.715-8.716zm-9.783 21.61v13.89h11.382v5.018H19.725V142h12.727a2.93 2.93 0 0 0 2.15-.896 2.93 2.93 0 0 0 .896-2.15v-7.798c0-.837-.299-1.554-.896-2.152a2.93 2.93 0 0 0-2.15-.896h-8.245V123h11.29v-4.392z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-forward-10">\n      <path d="M23.119 97l-2.386 2.383 4.538 4.538h-1.339c-2.908 0-5.633.543-8.173 1.63-2.54 1.085-4.76 2.577-6.66 4.478-1.9 1.9-3.392 4.12-4.478 6.66-1.085 2.54-1.629 5.264-1.629 8.172h3.49c0-4.863 1.648-8.986 4.944-12.372 3.297-3.385 7.368-5.078 12.216-5.078h1.279l-4.245 4.247 2.443 2.442 8.55-8.55zm-9.52 21.45v4.42h4.871V142h4.513v-23.55zm18.136 0c-1.125 0-2.066.377-2.824 1.135-.764.764-1.148 1.709-1.148 2.834v15.612c0 1.124.38 2.066 1.139 2.824.764.764 1.708 1.145 2.833 1.145h7.489c1.125 0 2.066-.378 2.824-1.136.764-.764 1.145-1.709 1.145-2.833v-15.612c0-1.125-.378-2.067-1.136-2.825-.764-.764-1.708-1.145-2.833-1.145zm.54 4.42h6.408v14.617h-6.407z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-forward-30">\n      <path d="M25.549 97l-2.437 2.434 4.634 4.635H26.38c-2.97 0-5.753.555-8.347 1.664-2.594 1.109-4.861 2.633-6.802 4.574-1.94 1.94-3.465 4.207-4.574 6.802-1.109 2.594-1.664 5.377-1.664 8.347h3.565c0-4.967 1.683-9.178 5.05-12.636 3.366-3.458 7.525-5.187 12.475-5.187h1.307l-4.335 4.338 2.495 2.494 8.732-8.732zm-11.553 20.53v4.689h10.297v5.249h-6.978v4.688h6.978v5.156H13.996V142h10.808c1.06 0 1.948-.395 2.666-1.186.718-.79 1.077-1.771 1.077-2.94v-16.217c0-1.169-.36-2.15-1.077-2.94-.718-.79-1.605-1.186-2.666-1.186zm21.174.168c-1.149 0-2.11.389-2.884 1.163-.78.78-1.172 1.745-1.172 2.894v15.942c0 1.15.388 2.11 1.162 2.885.78.78 1.745 1.17 2.894 1.17h7.649c1.149 0 2.11-.386 2.885-1.16.78-.78 1.17-1.746 1.17-2.895v-15.942c0-1.15-.387-2.11-1.161-2.885-.78-.78-1.745-1.172-2.894-1.172zm.552 4.516h6.542v14.931h-6.542z"></path>\n    </symbol>\n    <symbol viewBox="0 0 512 512" id="vjs-icon-audio-description">\n      <g fill-rule="evenodd"><path d="M227.29 381.351V162.993c50.38-1.017 89.108-3.028 117.631 17.126 27.374 19.342 48.734 56.965 44.89 105.325-4.067 51.155-41.335 94.139-89.776 98.475-24.085 2.155-71.972 0-71.972 0s-.84-1.352-.773-2.568m48.755-54.804c31.43 1.26 53.208-16.633 56.495-45.386 4.403-38.51-21.188-63.552-58.041-60.796v103.612c-.036 1.466.575 2.22 1.546 2.57"></path><path d="M383.78 381.328c13.336 3.71 17.387-11.06 23.215-21.408 12.722-22.571 22.294-51.594 22.445-84.774.221-47.594-18.343-82.517-35.6-106.182h-8.51c-.587 3.874 2.226 7.315 3.865 10.276 13.166 23.762 25.367 56.553 25.54 94.194.2 43.176-14.162 79.278-30.955 107.894"></path><path d="M425.154 381.328c13.336 3.71 17.384-11.061 23.215-21.408 12.721-22.571 22.291-51.594 22.445-84.774.221-47.594-18.343-82.517-35.6-106.182h-8.511c-.586 3.874 2.226 7.315 3.866 10.276 13.166 23.762 25.367 56.553 25.54 94.194.2 43.176-14.162 79.278-30.955 107.894"></path><path d="M466.26 381.328c13.337 3.71 17.385-11.061 23.216-21.408 12.722-22.571 22.292-51.594 22.445-84.774.221-47.594-18.343-82.517-35.6-106.182h-8.51c-.587 3.874 2.225 7.315 3.865 10.276 13.166 23.762 25.367 56.553 25.54 94.194.2 43.176-14.162 79.278-30.955 107.894M4.477 383.005H72.58l18.573-28.484 64.169-.135s.065 19.413.065 28.62h48.756V160.307h-58.816c-5.653 9.537-140.85 222.697-140.85 222.697zm152.667-145.282v71.158l-40.453-.27 40.453-70.888z"></path></g>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-next-item">\n      <path d="M12 36l17-12-17-12v24zm20-24v24h4V12h-4z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-previous-item">\n      <path d="M12 12h4v24h-4zm7 12l17 12V12z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-shuffle">\n      <path d="M21.17 18.34L10.83 8 8 10.83l10.34 10.34 2.83-2.83zM29 8l4.09 4.09L8 37.17 10.83 40l25.09-25.09L40 19V8H29zm.66 18.83l-2.83 2.83 6.26 6.26L29 40h11V29l-4.09 4.09-6.25-6.26z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-cast">\n      <path d="M42 6H6c-2.21 0-4 1.79-4 4v6h4v-6h36v28H28v4h14c2.21 0 4-1.79 4-4V10c0-2.21-1.79-4-4-4zM2 36v6h6c0-3.31-2.69-6-6-6zm0-8v4c5.52 0 10 4.48 10 10h4c0-7.73-6.27-14-14-14zm0-8v4c9.94 0 18 8.06 18 18h4c0-12.15-9.85-22-22-22z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-picture-in-picture-enter">\n      <path d="M38 22H22v11.99h16V22zm8 16V9.96C46 7.76 44.2 6 42 6H6C3.8 6 2 7.76 2 9.96V38c0 2.2 1.8 4 4 4h36c2.2 0 4-1.8 4-4zm-4 .04H6V9.94h36v28.1z"></path>\n    </symbol>\n    <symbol viewBox="0 0 22 18" id="vjs-icon-picture-in-picture-exit">\n      <path d="M18 4H4v10h14V4zm4 12V1.98C22 .88 21.1 0 20 0H2C.9 0 0 .88 0 1.98V16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zm-2 .02H2V1.97h18v14.05z"></path>\n      <path fill="none" d="M-1-3h24v24H-1z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-facebook">\n      <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759H734V905H479V609h255V391q0-186 104-288.5T1115 0q147 0 228 12z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-linkedin">\n      <path d="M477 625v991H147V625h330zm21-306q1 73-50.5 122T312 490h-2q-82 0-132-49t-50-122q0-74 51.5-122.5T314 148t133 48.5T498 319zm1166 729v568h-329v-530q0-105-40.5-164.5T1168 862q-63 0-105.5 34.5T999 982q-11 30-11 81v553H659q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5T1285 602q171 0 275 113.5t104 332.5z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-twitter">\n      <path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-tumblr">\n      <path d="M1328 1329l80 237q-23 35-111 66t-177 32q-104 2-190.5-26T787 1564t-95-106-55.5-120-16.5-118V676H452V461q72-26 129-69.5t91-90 58-102 34-99T779 12q1-5 4.5-8.5T791 0h244v424h333v252h-334v518q0 30 6.5 56t22.5 52.5 49.5 41.5 81.5 14q78-2 134-29z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-pinterest">\n      <path d="M1664 896q0 209-103 385.5T1281.5 1561 896 1664q-111 0-218-32 59-93 78-164 9-34 54-211 20 39 73 67.5t114 28.5q121 0 216-68.5t147-188.5 52-270q0-114-59.5-214T1180 449t-255-63q-105 0-196 29t-154.5 77-109 110.5-67 129.5T377 866q0 104 40 183t117 111q30 12 38-20 2-7 8-31t8-30q6-23-11-43-51-61-51-151 0-151 104.5-259.5T904 517q151 0 235.5 82t84.5 213q0 170-68.5 289T980 1220q-61 0-98-43.5T859 1072q8-35 26.5-93.5t30-103T927 800q0-50-27-83t-77-33q-62 0-105 57t-43 142q0 73 25 122l-99 418q-17 70-13 177-206-91-333-281T128 896q0-209 103-385.5T510.5 231 896 128t385.5 103T1561 510.5 1664 896z"></path>\n    </symbol>\n  </defs>\n</svg>';
+var icons = '<svg xmlns="http://www.w3.org/2000/svg">\n  <defs>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-play">\n      <path d="M16 10v28l22-14z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-pause">\n      <path d="M12 38h8V10h-8v28zm16-28v28h8V10h-8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-audio">\n      <path d="M24 2C14.06 2 6 10.06 6 20v14c0 3.31 2.69 6 6 6h6V24h-8v-4c0-7.73 6.27-14 14-14s14 6.27 14 14v4h-8v16h6c3.31 0 6-2.69 6-6V20c0-9.94-8.06-18-18-18z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-captions">\n      <path d="M38 8H10c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zM22 22h-3v-1h-4v6h4v-1h3v2a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2zm14 0h-3v-1h-4v6h4v-1h3v2a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-subtitles">\n      <path d="M40 8H8c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h32c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zM8 24h8v4H8v-4zm20 12H8v-4h20v4zm12 0h-8v-4h8v4zm0-8H20v-4h20v4z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-fullscreen-enter">\n      <path d="M14 28h-4v10h10v-4h-6v-6zm-4-8h4v-6h6v-4H10v10zm24 14h-6v4h10V28h-4v6zm-6-24v4h6v6h4V10H28z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-fullscreen-exit">\n      <path d="M10 32h6v6h4V28H10v4zm6-16h-6v4h10V10h-4v6zm12 22h4v-6h6v-4H28v10zm4-22v-6h-4v10h10v-4h-6z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-play-circle">\n      <path d="M20 33l12-9-12-9v18zm4-29C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-mute">\n      <path d="M33 24c0-3.53-2.04-6.58-5-8.05v4.42l4.91 4.91c.06-.42.09-.85.09-1.28zm5 0c0 1.88-.41 3.65-1.08 5.28l3.03 3.03C41.25 29.82 42 27 42 24c0-8.56-5.99-15.72-14-17.54v4.13c5.78 1.72 10 7.07 10 13.41zM8.55 6L6 8.55 15.45 18H6v12h8l10 10V26.55l8.51 8.51c-1.34 1.03-2.85 1.86-4.51 2.36v4.13a17.94 17.94 0 0 0 7.37-3.62L39.45 42 42 39.45l-18-18L8.55 6zM24 8l-4.18 4.18L24 16.36V8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-low">\n      <path d="M14 18v12h8l10 10V8L22 18h-8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-medium">\n      <path d="M37 24c0-3.53-2.04-6.58-5-8.05v16.11c2.96-1.48 5-4.53 5-8.06zm-27-6v12h8l10 10V8L18 18h-8z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-volume-high">\n      <path d="M6 18v12h8l10 10V8L14 18H6zm27 6c0-3.53-2.04-6.58-5-8.05v16.11c2.96-1.48 5-4.53 5-8.06zM28 6.46v4.13c5.78 1.72 10 7.07 10 13.41s-4.22 11.69-10 13.41v4.13c8.01-1.82 14-8.97 14-17.54S36.01 8.28 28 6.46z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-spinner">\n      <path d="M18.8 21l9.53-16.51C26.94 4.18 25.49 4 24 4c-4.8 0-9.19 1.69-12.64 4.51l7.33 12.69.11-.2zm24.28-3c-1.84-5.85-6.3-10.52-11.99-12.68L23.77 18h19.31zm.52 2H28.62l.58 1 9.53 16.5C41.99 33.94 44 29.21 44 24c0-1.37-.14-2.71-.4-4zm-26.53 4l-7.8-13.5C6.01 14.06 4 18.79 4 24c0 1.37.14 2.71.4 4h14.98l-2.31-4zM4.92 30c1.84 5.85 6.3 10.52 11.99 12.68L24.23 30H4.92zm22.54 0l-7.8 13.51c1.4.31 2.85.49 4.34.49 4.8 0 9.19-1.69 12.64-4.51L29.31 26.8 27.46 30z"></path>\n    </symbol>\n    <symbol viewBox="0 0 24 24" id="vjs-icon-hd">\n      <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-chapters">\n      <path d="M6 26h4v-4H6v4zm0 8h4v-4H6v4zm0-16h4v-4H6v4zm8 8h28v-4H14v4zm0 8h28v-4H14v4zm0-20v4h28v-4H14z"></path>\n    </symbol>\n    <symbol viewBox="0 0 40 40" id="vjs-icon-downloading">\n      <path d="M18.208 36.875q-3.208-.292-5.979-1.729-2.771-1.438-4.812-3.729-2.042-2.292-3.188-5.229-1.146-2.938-1.146-6.23 0-6.583 4.334-11.416 4.333-4.834 10.833-5.5v3.166q-5.167.75-8.583 4.646Q6.25 14.75 6.25 19.958q0 5.209 3.396 9.104 3.396 3.896 8.562 4.646zM20 28.417L11.542 20l2.083-2.083 4.917 4.916v-11.25h2.916v11.25l4.875-4.916L28.417 20zm1.792 8.458v-3.167q1.833-.25 3.541-.958 1.709-.708 3.167-1.875l2.333 2.292q-1.958 1.583-4.25 2.541-2.291.959-4.791 1.167zm6.791-27.792q-1.541-1.125-3.25-1.854-1.708-.729-3.541-1.021V3.042q2.5.25 4.77 1.208 2.271.958 4.271 2.5zm4.584 21.584l-2.25-2.25q1.166-1.5 1.854-3.209.687-1.708.937-3.541h3.209q-.292 2.5-1.229 4.791-.938 2.292-2.521 4.209zm.541-12.417q-.291-1.833-.958-3.562-.667-1.73-1.833-3.188l2.375-2.208q1.541 1.916 2.458 4.208.917 2.292 1.167 4.75z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-file-download">\n      <path d="M10.8 40.55q-1.35 0-2.375-1T7.4 37.15v-7.7h3.4v7.7h26.35v-7.7h3.4v7.7q0 1.4-1 2.4t-2.4 1zM24 32.1L13.9 22.05l2.45-2.45 5.95 5.95V7.15h3.4v18.4l5.95-5.95 2.45 2.45z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-file-download-done">\n      <path d="M9.8 40.5v-3.45h28.4v3.45zm9.2-9.05L7.4 19.85l2.45-2.35L19 26.65l19.2-19.2 2.4 2.4z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-file-download-off">\n      <path d="M4.9 4.75L43.25 43.1 41 45.3l-4.75-4.75q-.05.05-.075.025-.025-.025-.075-.025H10.8q-1.35 0-2.375-1T7.4 37.15v-7.7h3.4v7.7h22.05l-7-7-1.85 1.8L13.9 21.9l1.85-1.85L2.7 7zm26.75 14.7l2.45 2.45-3.75 3.8-2.45-2.5zM25.7 7.15V21.1l-3.4-3.45V7.15z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-share">\n      <path d="M36 32.17c-1.52 0-2.89.59-3.93 1.54L17.82 25.4c.11-.45.18-.92.18-1.4s-.07-.95-.18-1.4l14.1-8.23c1.07 1 2.5 1.62 4.08 1.62 3.31 0 6-2.69 6-6s-2.69-6-6-6-6 2.69-6 6c0 .48.07.95.18 1.4l-14.1 8.23c-1.07-1-2.5-1.62-4.08-1.62-3.31 0-6 2.69-6 6s2.69 6 6 6c1.58 0 3.01-.62 4.08-1.62l14.25 8.31c-.1.42-.16.86-.16 1.31A5.83 5.83 0 1 0 36 32.17z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-cog">\n      <path d="M38.86 25.95c.08-.64.14-1.29.14-1.95s-.06-1.31-.14-1.95l4.23-3.31c.38-.3.49-.84.24-1.28l-4-6.93c-.25-.43-.77-.61-1.22-.43l-4.98 2.01c-1.03-.79-2.16-1.46-3.38-1.97L29 4.84c-.09-.47-.5-.84-1-.84h-8c-.5 0-.91.37-.99.84l-.75 5.3a14.8 14.8 0 0 0-3.38 1.97L9.9 10.1a1 1 0 0 0-1.22.43l-4 6.93c-.25.43-.14.97.24 1.28l4.22 3.31C9.06 22.69 9 23.34 9 24s.06 1.31.14 1.95l-4.22 3.31c-.38.3-.49.84-.24 1.28l4 6.93c.25.43.77.61 1.22.43l4.98-2.01c1.03.79 2.16 1.46 3.38 1.97l.75 5.3c.08.47.49.84.99.84h8c.5 0 .91-.37.99-.84l.75-5.3a14.8 14.8 0 0 0 3.38-1.97l4.98 2.01a1 1 0 0 0 1.22-.43l4-6.93c.25-.43.14-.97-.24-1.28l-4.22-3.31zM24 31c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-square">\n      <path d="M36 8H12c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zm0 28H12V12h24v24z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-circle">\n      <circle cx="24" cy="24" r="20"></circle>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-circle-outline">\n      <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-circle-inner-circle">\n      <path d="M24 4C12.97 4 4 12.97 4 24s8.97 20 20 20 20-8.97 20-20S35.03 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16zm6-16c0 3.31-2.69 6-6 6s-6-2.69-6-6 2.69-6 6-6 6 2.69 6 6z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-cancel">\n      <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm10 27.17L31.17 34 24 26.83 16.83 34 14 31.17 21.17 24 14 16.83 16.83 14 24 21.17 31.17 14 34 16.83 26.83 24 34 31.17z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-replay">\n      <path d="M24 10V2L14 12l10 10v-8c6.63 0 12 5.37 12 12s-5.37 12-12 12-12-5.37-12-12H8c0 8.84 7.16 16 16 16s16-7.16 16-16-7.16-16-16-16z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-repeat">\n      <path d="M14 14h20v6l8-8-8-8v6H10v12h4v-8zm20 20H14v-6l-8 8 8 8v-6h24V26h-4v8z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-replay-5">\n      <path d="M17.689 98l-8.697 8.696 8.697 8.697 2.486-2.485-4.32-4.319h1.302c4.93 0 9.071 1.722 12.424 5.165 3.352 3.443 5.029 7.638 5.029 12.584h3.55c0-2.958-.553-5.73-1.658-8.313-1.104-2.583-2.622-4.841-4.555-6.774-1.932-1.932-4.19-3.45-6.773-4.555-2.584-1.104-5.355-1.657-8.313-1.657H15.5l4.615-4.615zm-8.08 21.659v13.861h11.357v5.008H9.609V143h12.7c.834 0 1.55-.298 2.146-.894.596-.597.895-1.31.895-2.145v-7.781c0-.835-.299-1.55-.895-2.147a2.929 2.929 0 0 0-2.147-.894h-8.227v-5.096H25.35v-4.384z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-replay-10">\n      <path d="M42.315 125.63c0-4.997-1.694-9.235-5.08-12.713-3.388-3.479-7.571-5.218-12.552-5.218h-1.315l4.363 4.363-2.51 2.51-8.787-8.786L25.221 97l2.45 2.45-4.662 4.663h1.375c2.988 0 5.788.557 8.397 1.673 2.61 1.116 4.892 2.65 6.844 4.602 1.953 1.953 3.487 4.234 4.602 6.844 1.116 2.61 1.674 5.41 1.674 8.398zM8.183 142v-19.657H3.176V117.8h9.643V142zm13.63 0c-1.156 0-2.127-.393-2.912-1.178-.778-.778-1.168-1.746-1.168-2.902v-16.04c0-1.156.393-2.127 1.178-2.912.779-.779 1.746-1.168 2.902-1.168h7.696c1.156 0 2.126.392 2.911 1.177.779.78 1.168 1.747 1.168 2.903v16.04c0 1.156-.392 2.127-1.177 2.912-.779.779-1.746 1.168-2.902 1.168zm.556-4.636h6.583v-15.02H22.37z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-replay-30">\n      <path d="M26.047 97l-8.733 8.732 8.733 8.733 2.496-2.494-4.336-4.338h1.307c4.95 0 9.108 1.73 12.474 5.187 3.367 3.458 5.051 7.668 5.051 12.635h3.565c0-2.97-.556-5.751-1.665-8.346-1.109-2.594-2.633-4.862-4.574-6.802-1.94-1.941-4.208-3.466-6.803-4.575-2.594-1.109-5.375-1.664-8.345-1.664H23.85l4.634-4.634zM2.555 117.531v4.688h10.297v5.25H5.873v4.687h6.979v5.156H2.555V142H13.36c1.061 0 1.95-.395 2.668-1.186.718-.79 1.076-1.772 1.076-2.94v-16.218c0-1.168-.358-2.149-1.076-2.94-.717-.79-1.607-1.185-2.668-1.185zm22.482.14c-1.149 0-2.11.39-2.885 1.165-.78.78-1.172 1.744-1.172 2.893v15.943c0 1.149.388 2.11 1.163 2.885.78.78 1.745 1.172 2.894 1.172h7.649c1.148 0 2.11-.388 2.884-1.163.78-.78 1.17-1.745 1.17-2.894v-15.943c0-1.15-.386-2.111-1.16-2.885-.78-.78-1.746-1.172-2.894-1.172zm.553 4.518h6.545v14.93H25.59z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-forward-5">\n      <path d="M29.508 97l-2.431 2.43 4.625 4.625h-1.364c-2.965 0-5.742.554-8.332 1.66-2.589 1.107-4.851 2.629-6.788 4.566-1.937 1.937-3.458 4.2-4.565 6.788-1.107 2.59-1.66 5.367-1.66 8.331h3.557c0-4.957 1.68-9.16 5.04-12.611 3.36-3.45 7.51-5.177 12.451-5.177h1.304l-4.326 4.33 2.49 2.49 8.715-8.716zm-9.783 21.61v13.89h11.382v5.018H19.725V142h12.727a2.93 2.93 0 0 0 2.15-.896 2.93 2.93 0 0 0 .896-2.15v-7.798c0-.837-.299-1.554-.896-2.152a2.93 2.93 0 0 0-2.15-.896h-8.245V123h11.29v-4.392z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-forward-10">\n      <path d="M23.119 97l-2.386 2.383 4.538 4.538h-1.339c-2.908 0-5.633.543-8.173 1.63-2.54 1.085-4.76 2.577-6.66 4.478-1.9 1.9-3.392 4.12-4.478 6.66-1.085 2.54-1.629 5.264-1.629 8.172h3.49c0-4.863 1.648-8.986 4.944-12.372 3.297-3.385 7.368-5.078 12.216-5.078h1.279l-4.245 4.247 2.443 2.442 8.55-8.55zm-9.52 21.45v4.42h4.871V142h4.513v-23.55zm18.136 0c-1.125 0-2.066.377-2.824 1.135-.764.764-1.148 1.709-1.148 2.834v15.612c0 1.124.38 2.066 1.139 2.824.764.764 1.708 1.145 2.833 1.145h7.489c1.125 0 2.066-.378 2.824-1.136.764-.764 1.145-1.709 1.145-2.833v-15.612c0-1.125-.378-2.067-1.136-2.825-.764-.764-1.708-1.145-2.833-1.145zm.54 4.42h6.408v14.617h-6.407z"></path>\n    </symbol>\n    <symbol viewBox="0 96 48 48" id="vjs-icon-forward-30">\n      <path d="M25.549 97l-2.437 2.434 4.634 4.635H26.38c-2.97 0-5.753.555-8.347 1.664-2.594 1.109-4.861 2.633-6.802 4.574-1.94 1.94-3.465 4.207-4.574 6.802-1.109 2.594-1.664 5.377-1.664 8.347h3.565c0-4.967 1.683-9.178 5.05-12.636 3.366-3.458 7.525-5.187 12.475-5.187h1.307l-4.335 4.338 2.495 2.494 8.732-8.732zm-11.553 20.53v4.689h10.297v5.249h-6.978v4.688h6.978v5.156H13.996V142h10.808c1.06 0 1.948-.395 2.666-1.186.718-.79 1.077-1.771 1.077-2.94v-16.217c0-1.169-.36-2.15-1.077-2.94-.718-.79-1.605-1.186-2.666-1.186zm21.174.168c-1.149 0-2.11.389-2.884 1.163-.78.78-1.172 1.745-1.172 2.894v15.942c0 1.15.388 2.11 1.162 2.885.78.78 1.745 1.17 2.894 1.17h7.649c1.149 0 2.11-.386 2.885-1.16.78-.78 1.17-1.746 1.17-2.895v-15.942c0-1.15-.387-2.11-1.161-2.885-.78-.78-1.745-1.172-2.894-1.172zm.552 4.516h6.542v14.931h-6.542z"></path>\n    </symbol>\n    <symbol viewBox="0 0 512 512" id="vjs-icon-audio-description">\n      <g fill-rule="evenodd"><path d="M227.29 381.351V162.993c50.38-1.017 89.108-3.028 117.631 17.126 27.374 19.342 48.734 56.965 44.89 105.325-4.067 51.155-41.335 94.139-89.776 98.475-24.085 2.155-71.972 0-71.972 0s-.84-1.352-.773-2.568m48.755-54.804c31.43 1.26 53.208-16.633 56.495-45.386 4.403-38.51-21.188-63.552-58.041-60.796v103.612c-.036 1.466.575 2.22 1.546 2.57"></path><path d="M383.78 381.328c13.336 3.71 17.387-11.06 23.215-21.408 12.722-22.571 22.294-51.594 22.445-84.774.221-47.594-18.343-82.517-35.6-106.182h-8.51c-.587 3.874 2.226 7.315 3.865 10.276 13.166 23.762 25.367 56.553 25.54 94.194.2 43.176-14.162 79.278-30.955 107.894"></path><path d="M425.154 381.328c13.336 3.71 17.384-11.061 23.215-21.408 12.721-22.571 22.291-51.594 22.445-84.774.221-47.594-18.343-82.517-35.6-106.182h-8.511c-.586 3.874 2.226 7.315 3.866 10.276 13.166 23.762 25.367 56.553 25.54 94.194.2 43.176-14.162 79.278-30.955 107.894"></path><path d="M466.26 381.328c13.337 3.71 17.385-11.061 23.216-21.408 12.722-22.571 22.292-51.594 22.445-84.774.221-47.594-18.343-82.517-35.6-106.182h-8.51c-.587 3.874 2.225 7.315 3.865 10.276 13.166 23.762 25.367 56.553 25.54 94.194.2 43.176-14.162 79.278-30.955 107.894M4.477 383.005H72.58l18.573-28.484 64.169-.135s.065 19.413.065 28.62h48.756V160.307h-58.816c-5.653 9.537-140.85 222.697-140.85 222.697zm152.667-145.282v71.158l-40.453-.27 40.453-70.888z"></path></g>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-next-item">\n      <path d="M12 36l17-12-17-12v24zm20-24v24h4V12h-4z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-previous-item">\n      <path d="M12 12h4v24h-4zm7 12l17 12V12z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-shuffle">\n      <path d="M21.17 18.34L10.83 8 8 10.83l10.34 10.34 2.83-2.83zM29 8l4.09 4.09L8 37.17 10.83 40l25.09-25.09L40 19V8H29zm.66 18.83l-2.83 2.83 6.26 6.26L29 40h11V29l-4.09 4.09-6.25-6.26z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-cast">\n      <path d="M42 6H6c-2.21 0-4 1.79-4 4v6h4v-6h36v28H28v4h14c2.21 0 4-1.79 4-4V10c0-2.21-1.79-4-4-4zM2 36v6h6c0-3.31-2.69-6-6-6zm0-8v4c5.52 0 10 4.48 10 10h4c0-7.73-6.27-14-14-14zm0-8v4c9.94 0 18 8.06 18 18h4c0-12.15-9.85-22-22-22z"></path>\n    </symbol>\n    <symbol viewBox="0 0 48 48" id="vjs-icon-picture-in-picture-enter">\n      <path d="M38 22H22v11.99h16V22zm8 16V9.96C46 7.76 44.2 6 42 6H6C3.8 6 2 7.76 2 9.96V38c0 2.2 1.8 4 4 4h36c2.2 0 4-1.8 4-4zm-4 .04H6V9.94h36v28.1z"></path>\n    </symbol>\n    <symbol viewBox="0 0 22 18" id="vjs-icon-picture-in-picture-exit">\n      <path d="M18 4H4v10h14V4zm4 12V1.98C22 .88 21.1 0 20 0H2C.9 0 0 .88 0 1.98V16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zm-2 .02H2V1.97h18v14.05z"></path>\n      <path fill="none" d="M-1-3h24v24H-1z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-facebook">\n      <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759H734V905H479V609h255V391q0-186 104-288.5T1115 0q147 0 228 12z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-linkedin">\n      <path d="M477 625v991H147V625h330zm21-306q1 73-50.5 122T312 490h-2q-82 0-132-49t-50-122q0-74 51.5-122.5T314 148t133 48.5T498 319zm1166 729v568h-329v-530q0-105-40.5-164.5T1168 862q-63 0-105.5 34.5T999 982q-11 30-11 81v553H659q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5T1285 602q171 0 275 113.5t104 332.5z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1200 1227" id="vjs-icon-twitter">\n      <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"/>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-tumblr">\n      <path d="M1328 1329l80 237q-23 35-111 66t-177 32q-104 2-190.5-26T787 1564t-95-106-55.5-120-16.5-118V676H452V461q72-26 129-69.5t91-90 58-102 34-99T779 12q1-5 4.5-8.5T791 0h244v424h333v252h-334v518q0 30 6.5 56t22.5 52.5 49.5 41.5 81.5 14q78-2 134-29z"></path>\n    </symbol>\n    <symbol viewBox="0 0 1792 1792" id="vjs-icon-pinterest">\n      <path d="M1664 896q0 209-103 385.5T1281.5 1561 896 1664q-111 0-218-32 59-93 78-164 9-34 54-211 20 39 73 67.5t114 28.5q121 0 216-68.5t147-188.5 52-270q0-114-59.5-214T1180 449t-255-63q-105 0-196 29t-154.5 77-109 110.5-67 129.5T377 866q0 104 40 183t117 111q30 12 38-20 2-7 8-31t8-30q6-23-11-43-51-61-51-151 0-151 104.5-259.5T904 517q151 0 235.5 82t84.5 213q0 170-68.5 289T980 1220q-61 0-98-43.5T859 1072q8-35 26.5-93.5t30-103T927 800q0-50-27-83t-77-33q-62 0-105 57t-43 142q0 73 25 122l-99 418q-17 70-13 177-206-91-333-281T128 896q0-209 103-385.5T510.5 231 896 128t385.5 103T1561 510.5 1664 896z"></path>\n    </symbol>\n  </defs>\n</svg>';
+var backKeyCode = IS_TIZEN ? 10009 : IS_WEBOS ? 461 : 8;
+var SpatialNavKeyCodes = {
+  codes: {
+    play: 415,
+    pause: 19,
+    ff: 417,
+    rw: 412,
+    back: backKeyCode
+  },
+  names: {
+    415: "play",
+    19: "pause",
+    417: "ff",
+    412: "rw",
+    [backKeyCode]: "back"
+  },
+  isEventKey(event, keyName) {
+    keyName = keyName.toLowerCase();
+    if (this.names[event.keyCode] && this.names[event.keyCode] === keyName) {
+      return true;
+    }
+    return false;
+  },
+  getEventName(event) {
+    if (this.names[event.keyCode]) {
+      return this.names[event.keyCode];
+    } else if (this.codes[event.code]) {
+      const code = this.codes[event.code];
+      return this.names[code];
+    }
+    return null;
+  }
+};
+var STEP_SECONDS$1 = 5;
+var SpatialNavigation = class extends EventTarget$2 {
+  /**
+   * Constructs a SpatialNavigation instance with initial settings.
+   * Sets up the player instance, and prepares the spatial navigation system.
+   *
+   * @class
+   * @param {Player} player - The Video.js player instance to which the spatial navigation is attached.
+   */
+  constructor(player) {
+    super();
+    this.player_ = player;
+    this.focusableComponents = [];
+    this.isListening_ = false;
+    this.isPaused_ = false;
+    this.onKeyDown_ = this.onKeyDown_.bind(this);
+    this.lastFocusedComponent_ = null;
+  }
+  /**
+   * Starts the spatial navigation by adding a keydown event listener to the video container.
+   * This method ensures that the event listener is added only once.
+   */
+  start() {
+    if (this.isListening_) {
+      return;
+    }
+    this.player_.on("keydown", this.onKeyDown_);
+    this.player_.on("modalKeydown", this.onKeyDown_);
+    this.player_.on("loadedmetadata", () => {
+      this.focus(this.updateFocusableComponents()[0]);
+    });
+    this.player_.on("modalclose", () => {
+      this.refocusComponent();
+    });
+    this.player_.on("focusin", this.handlePlayerFocus_.bind(this));
+    this.player_.on("focusout", this.handlePlayerBlur_.bind(this));
+    this.isListening_ = true;
+  }
+  /**
+   * Stops the spatial navigation by removing the keydown event listener from the video container.
+   * Also sets the `isListening_` flag to false.
+   */
+  stop() {
+    this.player_.off("keydown", this.onKeyDown_);
+    this.isListening_ = false;
+  }
+  /**
+   * Responds to keydown events for spatial navigation and media control.
+   *
+   * Determines if spatial navigation or media control is active and handles key inputs accordingly.
+   *
+   * @param {KeyboardEvent} event - The keydown event to be handled.
+   */
+  onKeyDown_(event) {
+    const actualEvent = event.originalEvent ? event.originalEvent : event;
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(actualEvent.key)) {
+      if (this.isPaused_) {
+        return;
+      }
+      actualEvent.preventDefault();
+      const direction = actualEvent.key.substring(5).toLowerCase();
+      this.move(direction);
+    } else if (SpatialNavKeyCodes.isEventKey(actualEvent, "play") || SpatialNavKeyCodes.isEventKey(actualEvent, "pause") || SpatialNavKeyCodes.isEventKey(actualEvent, "ff") || SpatialNavKeyCodes.isEventKey(actualEvent, "rw")) {
+      actualEvent.preventDefault();
+      const action = SpatialNavKeyCodes.getEventName(actualEvent);
+      this.performMediaAction_(action);
+    } else if (SpatialNavKeyCodes.isEventKey(actualEvent, "Back") && event.target && event.target.closeable()) {
+      actualEvent.preventDefault();
+      event.target.close();
+    }
+  }
+  /**
+   * Performs media control actions based on the given key input.
+   *
+   * Controls the playback and seeking functionalities of the media player.
+   *
+   * @param {string} key - The key representing the media action to be performed.
+   *   Accepted keys: 'play', 'pause', 'ff' (fast-forward), 'rw' (rewind).
+   */
+  performMediaAction_(key) {
+    if (this.player_) {
+      switch (key) {
+        case "play":
+          if (this.player_.paused()) {
+            this.player_.play();
+          }
+          break;
+        case "pause":
+          if (!this.player_.paused()) {
+            this.player_.pause();
+          }
+          break;
+        case "ff":
+          this.userSeek_(this.player_.currentTime() + STEP_SECONDS$1);
+          break;
+        case "rw":
+          this.userSeek_(this.player_.currentTime() - STEP_SECONDS$1);
+          break;
+      }
+    }
+  }
+  /**
+   * Prevent liveThreshold from causing seeks to seem like they
+   * are not happening from a user perspective.
+   *
+   * @param {number} ct
+   *        current time to seek to
+   */
+  userSeek_(ct) {
+    if (this.player_.liveTracker && this.player_.liveTracker.isLive()) {
+      this.player_.liveTracker.nextSeekedFromUser();
+    }
+    this.player_.currentTime(ct);
+  }
+  /**
+   * Pauses the spatial navigation functionality.
+   * This method sets a flag that can be used to temporarily disable the navigation logic.
+   */
+  pause() {
+    this.isPaused_ = true;
+  }
+  /**
+   * Resumes the spatial navigation functionality if it has been paused.
+   * This method resets the pause flag, re-enabling the navigation logic.
+   */
+  resume() {
+    this.isPaused_ = false;
+  }
+  /**
+   * Handles Player Blur.
+   *
+   * @param {string|Event|Object} event
+   *        The name of the event, an `Event`, or an object with a key of type set to
+   *        an event name.
+   *
+   * Calls for handling of the Player Blur if:
+   * *The next focused element is not a child of current focused element &
+   * The next focused element is not a child of the Player.
+   * *There is no next focused element
+   */
+  handlePlayerBlur_(event) {
+    const nextFocusedElement = event.relatedTarget;
+    let isChildrenOfPlayer = null;
+    const currentComponent = this.getCurrentComponent(event.target);
+    if (nextFocusedElement) {
+      isChildrenOfPlayer = Boolean(nextFocusedElement.closest(".video-js"));
+      if (nextFocusedElement.classList.contains("vjs-text-track-settings") && !this.isPaused_) {
+        this.searchForTrackSelect_();
+      }
+    }
+    if (!event.currentTarget.contains(event.relatedTarget) && !isChildrenOfPlayer || !nextFocusedElement) {
+      if (currentComponent.name() === "CloseButton") {
+        this.refocusComponent();
+      } else {
+        this.pause();
+        if (currentComponent && currentComponent.el()) {
+          this.lastFocusedComponent_ = currentComponent;
+        }
+      }
+    }
+  }
+  /**
+   * Handles the Player focus event.
+   *
+   * Calls for handling of the Player Focus if current element is focusable.
+   */
+  handlePlayerFocus_() {
+    if (this.getCurrentComponent() && this.getCurrentComponent().getIsFocusable()) {
+      this.resume();
+    }
+  }
+  /**
+   * Gets a set of focusable components.
+   *
+   * @return {Array}
+   *         Returns an array of focusable components.
+   */
+  updateFocusableComponents() {
+    const player = this.player_;
+    const focusableComponents = [];
+    function searchForChildrenCandidates(componentsArray) {
+      for (const i of componentsArray) {
+        if (i.hasOwnProperty("el_") && i.getIsFocusable() && i.getIsAvailableToBeFocused(i.el())) {
+          focusableComponents.push(i);
+        }
+        if (i.hasOwnProperty("children_") && i.children_.length > 0) {
+          searchForChildrenCandidates(i.children_);
+        }
+      }
+    }
+    player.children_.forEach((value) => {
+      if (value.hasOwnProperty("el_")) {
+        if (value.getIsFocusable && value.getIsAvailableToBeFocused && value.getIsFocusable() && value.getIsAvailableToBeFocused(value.el())) {
+          focusableComponents.push(value);
+          return;
+        } else if (value.hasOwnProperty("children_") && value.children_.length > 0) {
+          searchForChildrenCandidates(value.children_);
+        } else if (value.hasOwnProperty("items") && value.items.length > 0) {
+          searchForChildrenCandidates(value.items);
+        } else if (this.findSuitableDOMChild(value)) {
+          focusableComponents.push(value);
+        }
+      }
+    });
+    this.focusableComponents = focusableComponents;
+    return this.focusableComponents;
+  }
+  /**
+   * Finds a suitable child element within the provided component's DOM element.
+   *
+   * @param {Object} component - The component containing the DOM element to search within.
+   * @return {HTMLElement|null} Returns the suitable child element if found, or null if not found.
+   */
+  findSuitableDOMChild(component) {
+    function searchForSuitableChild(node) {
+      if (component.getIsFocusable(node) && component.getIsAvailableToBeFocused(node)) {
+        return node;
+      }
+      for (let i = 0; i < node.children.length; i++) {
+        const child = node.children[i];
+        const suitableChild = searchForSuitableChild(child);
+        if (suitableChild) {
+          return suitableChild;
+        }
+      }
+      return null;
+    }
+    return searchForSuitableChild(component.el());
+  }
+  /**
+   * Gets the currently focused component from the list of focusable components.
+   * If a target element is provided, it uses that element to find the corresponding
+   * component. If no target is provided, it defaults to using the document's currently
+   * active element.
+   *
+   * @param {HTMLElement} [target] - The DOM element to check against the focusable components.
+   *                                 If not provided, `document.activeElement` is used.
+   * @return {Component|null} - Returns the focused component if found among the focusable components,
+   *                            otherwise returns null if no matching component is found.
+   */
+  getCurrentComponent(target) {
+    this.updateFocusableComponents();
+    const curComp = target || document.activeElement;
+    if (this.focusableComponents.length) {
+      for (const i of this.focusableComponents) {
+        if (i.el() === curComp) {
+          return i;
+        }
+      }
+    }
+  }
+  /**
+   * Adds a component to the array of focusable components.
+   *
+   * @param {Component} component
+   *        The `Component` to be added.
+   */
+  add(component) {
+    const focusableComponents = [...this.focusableComponents];
+    if (component.hasOwnProperty("el_") && component.getIsFocusable() && component.getIsAvailableToBeFocused(component.el())) {
+      focusableComponents.push(component);
+    }
+    this.focusableComponents = focusableComponents;
+    this.trigger({
+      type: "focusableComponentsChanged",
+      focusableComponents: this.focusableComponents
+    });
+  }
+  /**
+   * Removes component from the array of focusable components.
+   *
+   * @param {Component} component - The component to be removed from the focusable components array.
+   */
+  remove(component) {
+    for (let i = 0; i < this.focusableComponents.length; i++) {
+      if (this.focusableComponents[i].name() === component.name()) {
+        this.focusableComponents.splice(i, 1);
+        this.trigger({
+          type: "focusableComponentsChanged",
+          focusableComponents: this.focusableComponents
+        });
+        return;
+      }
+    }
+  }
+  /**
+   * Clears array of focusable components.
+   */
+  clear() {
+    if (this.focusableComponents.length > 0) {
+      this.focusableComponents = [];
+      this.trigger({
+        type: "focusableComponentsChanged",
+        focusableComponents: this.focusableComponents
+      });
+    }
+  }
+  /**
+   * Navigates to the next focusable component based on the specified direction.
+   *
+   * @param {string} direction 'up', 'down', 'left', 'right'
+   */
+  move(direction) {
+    const currentFocusedComponent = this.getCurrentComponent();
+    if (!currentFocusedComponent) {
+      return;
+    }
+    const currentPositions = currentFocusedComponent.getPositions();
+    const candidates = this.focusableComponents.filter((component) => component !== currentFocusedComponent && this.isInDirection_(currentPositions.boundingClientRect, component.getPositions().boundingClientRect, direction));
+    const bestCandidate = this.findBestCandidate_(currentPositions.center, candidates, direction);
+    if (bestCandidate) {
+      this.focus(bestCandidate);
+    } else {
+      this.trigger({
+        type: "endOfFocusableComponents",
+        direction,
+        focusedComponent: currentFocusedComponent
+      });
+    }
+  }
+  /**
+   * Finds the best candidate on the current center position,
+   * the list of candidates, and the specified navigation direction.
+   *
+   * @param {Object} currentCenter The center position of the current focused component element.
+   * @param {Array} candidates An array of candidate components to receive focus.
+   * @param {string} direction The direction of navigation ('up', 'down', 'left', 'right').
+   * @return {Object|null} The component that is the best candidate for receiving focus.
+   */
+  findBestCandidate_(currentCenter, candidates, direction) {
+    let minDistance = Infinity;
+    let bestCandidate = null;
+    for (const candidate of candidates) {
+      const candidateCenter = candidate.getPositions().center;
+      const distance = this.calculateDistance_(currentCenter, candidateCenter, direction);
+      if (distance < minDistance) {
+        minDistance = distance;
+        bestCandidate = candidate;
+      }
+    }
+    return bestCandidate;
+  }
+  /**
+   * Determines if a target rectangle is in the specified navigation direction
+   * relative to a source rectangle.
+   *
+   * @param {Object} srcRect The bounding rectangle of the source element.
+   * @param {Object} targetRect The bounding rectangle of the target element.
+   * @param {string} direction The navigation direction ('up', 'down', 'left', 'right').
+   * @return {boolean} True if the target is in the specified direction relative to the source.
+   */
+  isInDirection_(srcRect, targetRect, direction) {
+    switch (direction) {
+      case "right":
+        return targetRect.left >= srcRect.right;
+      case "left":
+        return targetRect.right <= srcRect.left;
+      case "down":
+        return targetRect.top >= srcRect.bottom;
+      case "up":
+        return targetRect.bottom <= srcRect.top;
+      default:
+        return false;
+    }
+  }
+  /**
+   * Focus the last focused component saved before blur on player.
+   */
+  refocusComponent() {
+    if (this.lastFocusedComponent_) {
+      if (!this.player_.userActive()) {
+        this.player_.userActive(true);
+      }
+      this.updateFocusableComponents();
+      for (let i = 0; i < this.focusableComponents.length; i++) {
+        if (this.focusableComponents[i].name() === this.lastFocusedComponent_.name()) {
+          this.focus(this.focusableComponents[i]);
+          return;
+        }
+      }
+    } else {
+      this.focus(this.updateFocusableComponents()[0]);
+    }
+  }
+  /**
+   * Focuses on a given component.
+   * If the component is available to be focused, it focuses on the component.
+   * If not, it attempts to find a suitable DOM child within the component and focuses on it.
+   *
+   * @param {Component} component - The component to be focused.
+   */
+  focus(component) {
+    if (component.getIsAvailableToBeFocused(component.el())) {
+      component.focus();
+    } else if (this.findSuitableDOMChild(component)) {
+      this.findSuitableDOMChild(component).focus();
+    }
+  }
+  /**
+   * Calculates the distance between two points, adjusting the calculation based on
+   * the specified navigation direction.
+   *
+   * @param {Object} center1 The center point of the first element.
+   * @param {Object} center2 The center point of the second element.
+   * @param {string} direction The direction of navigation ('up', 'down', 'left', 'right').
+   * @return {number} The calculated distance between the two centers.
+   */
+  calculateDistance_(center1, center2, direction) {
+    const dx = Math.abs(center1.x - center2.x);
+    const dy = Math.abs(center1.y - center2.y);
+    let distance;
+    switch (direction) {
+      case "right":
+      case "left":
+        distance = dx + dy * 100;
+        break;
+      case "up":
+        distance = dy * 2 + dx * 0.5;
+        break;
+      case "down":
+        distance = dy * 5 + dx;
+        break;
+      default:
+        distance = dx + dy;
+    }
+    return distance;
+  }
+  /**
+   * This gets called by 'handlePlayerBlur_' if 'spatialNavigation' is enabled.
+   * Searches for the first 'TextTrackSelect' inside of modal to focus.
+   *
+   * @private
+   */
+  searchForTrackSelect_() {
+    const spatialNavigation = this;
+    for (const component of spatialNavigation.updateFocusableComponents()) {
+      if (component.constructor.name === "TextTrackSelect") {
+        spatialNavigation.focus(component);
+        break;
+      }
+    }
+  }
+};
 var MediaLoader = class extends Component$1 {
   /**
    * Create an instance of this class.
    *
-   * @param { import('../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should attach to.
    *
    * @param {Object} [options]
@@ -16454,7 +17199,7 @@ var ClickableComponent = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param  { import('./player').default } player
+   * @param  {Player} player
    *         The `Player` that this class should be attached to.
    *
    * @param  {Object} [options]
@@ -16644,7 +17389,7 @@ var ClickableComponent = class extends Component$1 {
    * @listens keydown
    */
   handleKeyDown(event) {
-    if (import_keycode.default.isEventKey(event, "Space") || import_keycode.default.isEventKey(event, "Enter")) {
+    if (event.key === " " || event.key === "Enter") {
       event.preventDefault();
       event.stopPropagation();
       this.trigger("click");
@@ -16658,7 +17403,7 @@ var PosterImage = class extends ClickableComponent {
   /**
    * Create an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should attach to.
    *
    * @param {Object} [options]
@@ -16827,7 +17572,7 @@ var TextTrackDisplay = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -17237,7 +17982,7 @@ var Button = class extends ClickableComponent {
    * @listens keydown
    */
   handleKeyDown(event) {
-    if (import_keycode.default.isEventKey(event, "Space") || import_keycode.default.isEventKey(event, "Enter")) {
+    if (event.key === " " || event.key === "Enter") {
       event.stopPropagation();
       return;
     }
@@ -17326,7 +18071,7 @@ var CloseButton = class extends Button {
   /**
   * Creates an instance of the this class.
   *
-  * @param  { import('./player').default } player
+  * @param  {Player} player
   *         The `Player` that this class should be attached to.
   *
   * @param  {Object} [options]
@@ -17377,7 +18122,7 @@ var CloseButton = class extends Button {
    * @listens keydown
    */
   handleKeyDown(event) {
-    if (import_keycode.default.isEventKey(event, "Esc")) {
+    if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();
       this.trigger("click");
@@ -17391,7 +18136,7 @@ var PlayToggle = class extends Button {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options={}]
@@ -17501,7 +18246,7 @@ var TimeDisplay = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -17642,7 +18387,7 @@ var DurationDisplay = class extends TimeDisplay {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -17713,7 +18458,7 @@ var RemainingTimeDisplay = class extends TimeDisplay {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -17778,7 +18523,7 @@ var LiveDisplay = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -17838,7 +18583,7 @@ var SeekToLive = class extends Button {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -17920,7 +18665,7 @@ var Slider = class extends Component$1 {
   /**
   * Create an instance of this class
   *
-  * @param { import('../player').default } player
+  * @param {Player} player
   *        The `Player` that this class should be attached to.
   *
   * @param {Object} [options]
@@ -18143,11 +18888,26 @@ var Slider = class extends Component$1 {
    * @listens keydown
    */
   handleKeyDown(event) {
-    if (import_keycode.default.isEventKey(event, "Left") || import_keycode.default.isEventKey(event, "Down")) {
+    const spatialNavOptions = this.options_.playerOptions.spatialNavigation;
+    const spatialNavEnabled = spatialNavOptions && spatialNavOptions.enabled;
+    const horizontalSeek = spatialNavOptions && spatialNavOptions.horizontalSeek;
+    if (spatialNavEnabled) {
+      if (horizontalSeek && event.key === "ArrowLeft" || !horizontalSeek && event.key === "ArrowDown") {
+        event.preventDefault();
+        event.stopPropagation();
+        this.stepBack();
+      } else if (horizontalSeek && event.key === "ArrowRight" || !horizontalSeek && event.key === "ArrowUp") {
+        event.preventDefault();
+        event.stopPropagation();
+        this.stepForward();
+      } else {
+        super.handleKeyDown(event);
+      }
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
       event.preventDefault();
       event.stopPropagation();
       this.stepBack();
-    } else if (import_keycode.default.isEventKey(event, "Right") || import_keycode.default.isEventKey(event, "Up")) {
+    } else if (event.key === "ArrowUp" || event.key === "ArrowRight") {
       event.preventDefault();
       event.stopPropagation();
       this.stepForward();
@@ -18195,7 +18955,7 @@ var LoadProgressBar = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -18287,7 +19047,7 @@ var TimeTooltip = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The {@link Player} that this class should be attached to.
    *
    * @param {Object} [options]
@@ -18397,7 +19157,7 @@ var PlayProgressBar = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The {@link Player} that this class should be attached to.
    *
    * @param {Object} [options]
@@ -18452,7 +19212,7 @@ var MouseTimeDisplay = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The {@link Player} that this class should be attached to.
    *
    * @param {Object} [options]
@@ -18501,7 +19261,7 @@ var SeekBar = class extends Slider {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -18519,7 +19279,8 @@ var SeekBar = class extends Slider {
   setEventHandlers_() {
     this.update_ = bind_(this, this.update);
     this.update = throttle(this.update_, UPDATE_REFRESH_INTERVAL);
-    this.on(this.player_, ["ended", "durationchange", "timeupdate"], this.update);
+    this.on(this.player_, ["durationchange", "timeupdate"], this.update);
+    this.on(this.player_, ["ended"], this.update_);
     if (this.player_.liveTracker) {
       this.on(this.player_.liveTracker, "liveedgechange", this.update);
     }
@@ -18807,15 +19568,15 @@ var SeekBar = class extends Slider {
    */
   handleKeyDown(event) {
     const liveTracker = this.player_.liveTracker;
-    if (import_keycode.default.isEventKey(event, "Space") || import_keycode.default.isEventKey(event, "Enter")) {
+    if (event.key === " " || event.key === "Enter") {
       event.preventDefault();
       event.stopPropagation();
       this.handleAction(event);
-    } else if (import_keycode.default.isEventKey(event, "Home")) {
+    } else if (event.key === "Home") {
       event.preventDefault();
       event.stopPropagation();
       this.userSeek_(0);
-    } else if (import_keycode.default.isEventKey(event, "End")) {
+    } else if (event.key === "End") {
       event.preventDefault();
       event.stopPropagation();
       if (liveTracker && liveTracker.isLive()) {
@@ -18823,20 +19584,20 @@ var SeekBar = class extends Slider {
       } else {
         this.userSeek_(this.player_.duration());
       }
-    } else if (/^[0-9]$/.test((0, import_keycode.default)(event))) {
+    } else if (/^[0-9]$/.test(event.key)) {
       event.preventDefault();
       event.stopPropagation();
-      const gotoFraction = (import_keycode.default.codes[(0, import_keycode.default)(event)] - import_keycode.default.codes["0"]) * 10 / 100;
+      const gotoFraction = parseInt(event.key, 10) * 0.1;
       if (liveTracker && liveTracker.isLive()) {
         this.userSeek_(liveTracker.seekableStart() + liveTracker.liveWindow() * gotoFraction);
       } else {
         this.userSeek_(this.player_.duration() * gotoFraction);
       }
-    } else if (import_keycode.default.isEventKey(event, "PgDn")) {
+    } else if (event.key === "PageDown") {
       event.preventDefault();
       event.stopPropagation();
       this.userSeek_(this.player_.currentTime() - STEP_SECONDS * PAGE_KEY_MULTIPLIER);
-    } else if (import_keycode.default.isEventKey(event, "PgUp")) {
+    } else if (event.key === "PageUp") {
       event.preventDefault();
       event.stopPropagation();
       this.userSeek_(this.player_.currentTime() + STEP_SECONDS * PAGE_KEY_MULTIPLIER);
@@ -18846,7 +19607,8 @@ var SeekBar = class extends Slider {
   }
   dispose() {
     this.disableInterval_();
-    this.off(this.player_, ["ended", "durationchange", "timeupdate"], this.update);
+    this.off(this.player_, ["durationchange", "timeupdate"], this.update);
+    this.off(this.player_, ["ended"], this.update_);
     if (this.player_.liveTracker) {
       this.off(this.player_.liveTracker, "liveedgechange", this.update);
     }
@@ -18870,7 +19632,7 @@ var ProgressControl = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -19048,7 +19810,7 @@ var PictureInPictureToggle = class extends Button {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -19161,7 +19923,7 @@ var FullscreenToggle = class extends Button {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -19258,7 +20020,7 @@ var VolumeLevelTooltip = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The {@link Player} that this class should be attached to.
    *
    * @param {Object} [options]
@@ -19366,7 +20128,7 @@ var MouseVolumeLevelDisplay = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The {@link Player} that this class should be attached to.
    *
    * @param {Object} [options]
@@ -19422,7 +20184,7 @@ var VolumeBar = class extends Slider {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -19572,7 +20334,7 @@ var VolumeControl = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options={}]
@@ -19682,7 +20444,7 @@ var MuteToggle = class extends Button {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -19791,7 +20553,7 @@ var VolumePanel = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options={}]
@@ -19883,7 +20645,7 @@ var VolumePanel = class extends Component$1 {
    * @listens keyup
    */
   handleVolumeControlKeyUp(event) {
-    if (import_keycode.default.isEventKey(event, "Esc")) {
+    if (event.key === "Escape") {
       this.muteToggle.focus();
     }
   }
@@ -19925,7 +20687,7 @@ var VolumePanel = class extends Component$1 {
    * @listens keydown | keyup
    */
   handleKeyPress(event) {
-    if (import_keycode.default.isEventKey(event, "Esc")) {
+    if (event.key === "Escape") {
       this.handleMouseOut();
     }
   }
@@ -20047,7 +20809,7 @@ var Menu = class extends Component$1 {
   /**
    * Create an instance of this class.
    *
-   * @param { import('../player').default } player
+   * @param {Player} player
    *        the player that this component should attach to
    *
    * @param {Object} [options]
@@ -20202,11 +20964,11 @@ var Menu = class extends Component$1 {
    * @listens keydown
    */
   handleKeyDown(event) {
-    if (import_keycode.default.isEventKey(event, "Left") || import_keycode.default.isEventKey(event, "Down")) {
+    if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
       event.preventDefault();
       event.stopPropagation();
       this.stepForward();
-    } else if (import_keycode.default.isEventKey(event, "Right") || import_keycode.default.isEventKey(event, "Up")) {
+    } else if (event.key === "ArrowRight" || event.key === "ArrowUp") {
       event.preventDefault();
       event.stopPropagation();
       this.stepBack();
@@ -20260,7 +21022,7 @@ var MenuButton = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options={}]
@@ -20476,15 +21238,15 @@ var MenuButton = class extends Component$1 {
    * @listens keydown
    */
   handleKeyDown(event) {
-    if (import_keycode.default.isEventKey(event, "Esc") || import_keycode.default.isEventKey(event, "Tab")) {
+    if (event.key === "Esc" || event.key === "Tab") {
       if (this.buttonPressed_) {
         this.unpressButton();
       }
-      if (!import_keycode.default.isEventKey(event, "Tab")) {
+      if (!event.key === "Tab") {
         event.preventDefault();
         this.menuButton_.focus();
       }
-    } else if (import_keycode.default.isEventKey(event, "Up") || import_keycode.default.isEventKey(event, "Down")) {
+    } else if (event.key === "Up" || event.key === "Down" && !(this.player_.options_.playerOptions.spatialNavigation && this.player_.options_.playerOptions.spatialNavigation.enabled)) {
       if (!this.buttonPressed_) {
         event.preventDefault();
         this.pressButton();
@@ -20501,7 +21263,7 @@ var MenuButton = class extends Component$1 {
    * @listens keyup
    */
   handleMenuKeyUp(event) {
-    if (import_keycode.default.isEventKey(event, "Esc") || import_keycode.default.isEventKey(event, "Tab")) {
+    if (event.key === "Esc" || event.key === "Tab") {
       this.removeClass("vjs-hover");
     }
   }
@@ -20526,11 +21288,11 @@ var MenuButton = class extends Component$1 {
    * @listens keydown
    */
   handleSubmenuKeyDown(event) {
-    if (import_keycode.default.isEventKey(event, "Esc") || import_keycode.default.isEventKey(event, "Tab")) {
+    if (event.key === "Esc" || event.key === "Tab") {
       if (this.buttonPressed_) {
         this.unpressButton();
       }
-      if (!import_keycode.default.isEventKey(event, "Tab")) {
+      if (!event.key === "Tab") {
         event.preventDefault();
         this.menuButton_.focus();
       }
@@ -20585,7 +21347,7 @@ var TrackButton = class extends MenuButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -20613,12 +21375,11 @@ var TrackButton = class extends MenuButton {
   }
 };
 Component$1.registerComponent("TrackButton", TrackButton);
-var MenuKeys = ["Tab", "Esc", "Up", "Down", "Right", "Left"];
 var MenuItem = class extends ClickableComponent {
   /**
    * Creates an instance of the this class.
    *
-   * @param { import('../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options={}]
@@ -20683,7 +21444,7 @@ var MenuItem = class extends ClickableComponent {
    * @listens keydown
    */
   handleKeyDown(event) {
-    if (!MenuKeys.some((key) => import_keycode.default.isEventKey(event, key))) {
+    if (!["Tab", "Escape", "ArrowUp", "ArrowLeft", "ArrowRight", "ArrowDown"].includes(event.key)) {
       super.handleKeyDown(event);
     }
   }
@@ -20728,7 +21489,7 @@ var TextTrackMenuItem = class extends MenuItem {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -20843,7 +21604,7 @@ var OffTextTrackMenuItem = class extends TextTrackMenuItem {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -20921,7 +21682,7 @@ var TextTrackButton = class extends TrackButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options={}]
@@ -20979,7 +21740,7 @@ var ChaptersTrackMenuItem = class extends MenuItem {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21018,7 +21779,7 @@ var ChaptersButton = class extends TextTrackButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21133,7 +21894,7 @@ var ChaptersButton = class extends TextTrackButton {
   /**
    * Create menu from chapter track
    *
-   * @return { import('../../menu/menu').default }
+   * @return {Menu}
    *         New menu for the chapter buttons
    */
   createMenu() {
@@ -21143,7 +21904,7 @@ var ChaptersButton = class extends TextTrackButton {
   /**
    * Create a menu item for each text track
    *
-   * @return  { import('./text-track-menu-item').default[] }
+   * @return  {TextTrackMenuItem[]}
    *         Array of menu items
    */
   createItems() {
@@ -21173,7 +21934,7 @@ var DescriptionsButton = class extends TextTrackButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21236,7 +21997,7 @@ var SubtitlesButton = class extends TextTrackButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21269,7 +22030,7 @@ var CaptionSettingsMenuItem = class extends TextTrackMenuItem {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21317,7 +22078,7 @@ var CaptionsButton = class extends TextTrackButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21391,7 +22152,7 @@ var SubsCapsButton = class extends TextTrackButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21447,7 +22208,7 @@ var AudioTrackMenuItem = class extends MenuItem {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21581,7 +22342,7 @@ var PlaybackRateMenuItem = class extends MenuItem {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21632,7 +22393,7 @@ var PlaybackRateMenuButton = class extends MenuButton {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../../player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21825,7 +22586,7 @@ var ErrorDisplay = class extends ModalDialog {
   /**
    * Creates an instance of this class.
    *
-   * @param  { import('./player').default } player
+   * @param  {Player} player
    *         The `Player` that this class should be attached to.
    *
    * @param  {Object} [options]
@@ -21866,6 +22627,327 @@ ErrorDisplay.prototype.options_ = Object.assign({}, ModalDialog.prototype.option
   uncloseable: true
 });
 Component$1.registerComponent("ErrorDisplay", ErrorDisplay);
+var TextTrackSelect = class extends Component$1 {
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {ContentDescriptor} [options.content=undefined]
+   *        Provide customized content for this modal.
+   *
+   * @param {string} [options.legendId]
+   *        A text with part of an string to create atribute of aria-labelledby.
+   *
+   * @param {string} [options.id]
+   *        A text with part of an string to create atribute of aria-labelledby.
+   *
+   * @param {Array} [options.SelectOptions]
+   *        Array that contains the value & textContent of for each of the
+   *        options elements.
+   */
+  constructor(player, options = {}) {
+    super(player, options);
+    this.el_.setAttribute("aria-labelledby", this.selectLabelledbyIds);
+  }
+  /**
+   * Create the `TextTrackSelect`'s DOM element
+   *
+   * @return {Element}
+   *         The DOM element that gets created.
+   */
+  createEl() {
+    this.selectLabelledbyIds = [this.options_.legendId, this.options_.labelId].join(" ").trim();
+    const selectoptions = createEl("select", {
+      id: this.options_.id
+    }, {}, this.options_.SelectOptions.map((optionText) => {
+      const optionId = (this.options_.labelId ? this.options_.labelId : `vjs-track-option-${newGUID()}`) + "-" + optionText[1].replace(/\W+/g, "");
+      const option = createEl("option", {
+        id: optionId,
+        value: this.localize(optionText[0]),
+        textContent: optionText[1]
+      });
+      option.setAttribute("aria-labelledby", `${this.selectLabelledbyIds} ${optionId}`);
+      return option;
+    }));
+    return selectoptions;
+  }
+};
+Component$1.registerComponent("TextTrackSelect", TextTrackSelect);
+var TextTrackFieldset = class extends Component$1 {
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {ContentDescriptor} [options.content=undefined]
+   *        Provide customized content for this modal.
+   *
+   * @param {string} [options.legendId]
+   *        A text with part of an string to create atribute of aria-labelledby.
+   *        It passes to 'TextTrackSelect'.
+   *
+   * @param {string} [options.id]
+   *        A text with part of an string to create atribute of aria-labelledby.
+   *        It passes to 'TextTrackSelect'.
+   *
+   * @param {string} [options.legendText]
+   *        A text to use as the text content of the legend element.
+   *
+   * @param {Array} [options.selects]
+   *        Array that contains the selects that are use to create 'selects'
+   *        components.
+   *
+   * @param {Array} [options.SelectOptions]
+   *        Array that contains the value & textContent of for each of the
+   *        options elements, it passes to 'TextTrackSelect'.
+   *
+   * @param {string} [options.type]
+   *        Conditions if some DOM elements will be added to the fieldset
+   *        component.
+   *
+   * @param {Object} [options.selectConfigs]
+   *        Object with the following properties that are the selects configurations:
+   *        backgroundColor, backgroundOpacity, color, edgeStyle, fontFamily,
+   *        fontPercent, textOpacity, windowColor, windowOpacity.
+   *        These properties are use to configure the 'TextTrackSelect' Component.
+   */
+  constructor(player, options = {}) {
+    super(player, options);
+    const legendElement = createEl("legend", {
+      textContent: this.localize(this.options_.legendText),
+      id: this.options_.legendId
+    });
+    this.el().appendChild(legendElement);
+    const selects = this.options_.selects;
+    for (const i of selects) {
+      const selectConfig = this.options_.selectConfigs[i];
+      const selectClassName = selectConfig.className;
+      const id = selectConfig.id.replace("%s", this.options_.id_);
+      let span = null;
+      const guid = `vjs_select_${newGUID()}`;
+      if (this.options_.type === "colors") {
+        span = createEl("span", {
+          className: selectClassName
+        });
+        const label = createEl("label", {
+          id,
+          className: "vjs-label",
+          textContent: selectConfig.label
+        });
+        label.setAttribute("for", guid);
+        span.appendChild(label);
+      }
+      const textTrackSelect = new TextTrackSelect(player, {
+        SelectOptions: selectConfig.options,
+        legendId: this.options_.legendId,
+        id: guid,
+        labelId: id
+      });
+      this.addChild(textTrackSelect);
+      if (this.options_.type === "colors") {
+        span.appendChild(textTrackSelect.el());
+        this.el().appendChild(span);
+      }
+    }
+  }
+  /**
+   * Create the `TextTrackFieldset`'s DOM element
+   *
+   * @return {Element}
+   *         The DOM element that gets created.
+   */
+  createEl() {
+    const el = createEl("fieldset", {
+      // Prefixing classes of elements within a player with "vjs-"
+      // is a convention used in Video.js.
+      className: this.options_.className
+    });
+    return el;
+  }
+};
+Component$1.registerComponent("TextTrackFieldset", TextTrackFieldset);
+var TextTrackSettingsColors = class extends Component$1 {
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {ContentDescriptor} [options.content=undefined]
+   *        Provide customized content for this modal.
+   *
+   * @param {Array} [options.fieldSets]
+   *        Array that contains the configurations for the selects.
+   *
+   * @param {Object} [options.selectConfigs]
+   *        Object with the following properties that are the select confugations:
+   *        backgroundColor, backgroundOpacity, color, edgeStyle, fontFamily,
+   *        fontPercent, textOpacity, windowColor, windowOpacity.
+   *        it passes to 'TextTrackFieldset'.
+   */
+  constructor(player, options = {}) {
+    super(player, options);
+    const id_ = this.options_.textTrackComponentid;
+    const ElFgColorFieldset = new TextTrackFieldset(player, {
+      id_,
+      legendId: `captions-text-legend-${id_}`,
+      legendText: this.localize("Text"),
+      className: "vjs-fg vjs-track-setting",
+      selects: this.options_.fieldSets[0],
+      selectConfigs: this.options_.selectConfigs,
+      type: "colors"
+    });
+    this.addChild(ElFgColorFieldset);
+    const ElBgColorFieldset = new TextTrackFieldset(player, {
+      id_,
+      legendId: `captions-background-${id_}`,
+      legendText: this.localize("Text Background"),
+      className: "vjs-bg vjs-track-setting",
+      selects: this.options_.fieldSets[1],
+      selectConfigs: this.options_.selectConfigs,
+      type: "colors"
+    });
+    this.addChild(ElBgColorFieldset);
+    const ElWinColorFieldset = new TextTrackFieldset(player, {
+      id_,
+      legendId: `captions-window-${id_}`,
+      legendText: this.localize("Caption Area Background"),
+      className: "vjs-window vjs-track-setting",
+      selects: this.options_.fieldSets[2],
+      selectConfigs: this.options_.selectConfigs,
+      type: "colors"
+    });
+    this.addChild(ElWinColorFieldset);
+  }
+  /**
+   * Create the `TextTrackSettingsColors`'s DOM element
+   *
+   * @return {Element}
+   *         The DOM element that gets created.
+   */
+  createEl() {
+    const el = createEl("div", {
+      className: "vjs-track-settings-colors"
+    });
+    return el;
+  }
+};
+Component$1.registerComponent("TextTrackSettingsColors", TextTrackSettingsColors);
+var TextTrackSettingsFont = class extends Component$1 {
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {ContentDescriptor} [options.content=undefined]
+   *        Provide customized content for this modal.
+   *
+   * @param {Array} [options.fieldSets]
+   *        Array that contains the configurations for the selects.
+   *
+   * @param {Object} [options.selectConfigs]
+   *        Object with the following properties that are the select confugations:
+   *        backgroundColor, backgroundOpacity, color, edgeStyle, fontFamily,
+   *        fontPercent, textOpacity, windowColor, windowOpacity.
+   *        it passes to 'TextTrackFieldset'.
+   */
+  constructor(player, options = {}) {
+    super(player, options);
+    const id_ = this.options_.textTrackComponentid;
+    const ElFgColorFieldset = new TextTrackFieldset(player, {
+      id_,
+      legendId: `captions-font-size-${id_}`,
+      legendText: "Font Size",
+      className: "vjs-font-percent vjs-track-setting",
+      selects: this.options_.fieldSets[0],
+      selectConfigs: this.options_.selectConfigs,
+      type: "font"
+    });
+    this.addChild(ElFgColorFieldset);
+    const ElBgColorFieldset = new TextTrackFieldset(player, {
+      id_,
+      legendId: `captions-edge-style-${id_}`,
+      legendText: this.localize("Text Edge Style"),
+      className: "vjs-edge-style vjs-track-setting",
+      selects: this.options_.fieldSets[1],
+      selectConfigs: this.options_.selectConfigs,
+      type: "font"
+    });
+    this.addChild(ElBgColorFieldset);
+    const ElWinColorFieldset = new TextTrackFieldset(player, {
+      id_,
+      legendId: `captions-font-family-${id_}`,
+      legendText: this.localize("Font Family"),
+      className: "vjs-font-family vjs-track-setting",
+      selects: this.options_.fieldSets[2],
+      selectConfigs: this.options_.selectConfigs,
+      type: "font"
+    });
+    this.addChild(ElWinColorFieldset);
+  }
+  /**
+   * Create the `TextTrackSettingsFont`'s DOM element
+   *
+   * @return {Element}
+   *         The DOM element that gets created.
+   */
+  createEl() {
+    const el = createEl("div", {
+      className: "vjs-track-settings-font"
+    });
+    return el;
+  }
+};
+Component$1.registerComponent("TextTrackSettingsFont", TextTrackSettingsFont);
+var TrackSettingsControls = class extends Component$1 {
+  constructor(player, options = {}) {
+    super(player, options);
+    const defaultsDescription = this.localize("restore all settings to the default values");
+    const resetButton = new Button(player, {
+      controlText: defaultsDescription,
+      className: "vjs-default-button"
+    });
+    resetButton.el().classList.remove("vjs-control", "vjs-button");
+    resetButton.el().textContent = this.localize("Reset");
+    this.addChild(resetButton);
+    const doneButton = new Button(player, {
+      controlText: defaultsDescription,
+      className: "vjs-done-button"
+    });
+    doneButton.el().classList.remove("vjs-control", "vjs-button");
+    doneButton.el().textContent = this.localize("Done");
+    this.addChild(doneButton);
+  }
+  /**
+   * Create the `TrackSettingsControls`'s DOM element
+   *
+   * @return {Element}
+   *         The DOM element that gets created.
+   */
+  createEl() {
+    const el = createEl("div", {
+      className: "vjs-track-settings-controls"
+    });
+    return el;
+  }
+};
+Component$1.registerComponent("TrackSettingsControls", TrackSettingsControls);
 var LOCAL_STORAGE_KEY$1 = "vjs-text-track-settings";
 var COLOR_BLACK = ["#000", "Black"];
 var COLOR_BLUE = ["#00F", "Blue"];
@@ -21883,35 +22965,38 @@ var selectConfigs = {
     selector: ".vjs-bg-color > select",
     id: "captions-background-color-%s",
     label: "Color",
-    options: [COLOR_BLACK, COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW, COLOR_MAGENTA, COLOR_CYAN]
+    options: [COLOR_BLACK, COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW, COLOR_MAGENTA, COLOR_CYAN],
+    className: "vjs-bg-color"
   },
   backgroundOpacity: {
     selector: ".vjs-bg-opacity > select",
     id: "captions-background-opacity-%s",
     label: "Opacity",
-    options: [OPACITY_OPAQUE, OPACITY_SEMI, OPACITY_TRANS]
+    options: [OPACITY_OPAQUE, OPACITY_SEMI, OPACITY_TRANS],
+    className: "vjs-bg-opacity vjs-opacity"
   },
   color: {
     selector: ".vjs-text-color > select",
     id: "captions-foreground-color-%s",
     label: "Color",
-    options: [COLOR_WHITE, COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW, COLOR_MAGENTA, COLOR_CYAN]
+    options: [COLOR_WHITE, COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW, COLOR_MAGENTA, COLOR_CYAN],
+    className: "vjs-text-color"
   },
   edgeStyle: {
     selector: ".vjs-edge-style > select",
-    id: "%s",
+    id: "",
     label: "Text Edge Style",
     options: [["none", "None"], ["raised", "Raised"], ["depressed", "Depressed"], ["uniform", "Uniform"], ["dropshadow", "Drop shadow"]]
   },
   fontFamily: {
     selector: ".vjs-font-family > select",
-    id: "captions-font-family-%s",
+    id: "",
     label: "Font Family",
     options: [["proportionalSansSerif", "Proportional Sans-Serif"], ["monospaceSansSerif", "Monospace Sans-Serif"], ["proportionalSerif", "Proportional Serif"], ["monospaceSerif", "Monospace Serif"], ["casual", "Casual"], ["script", "Script"], ["small-caps", "Small Caps"]]
   },
   fontPercent: {
     selector: ".vjs-font-percent > select",
-    id: "captions-font-size-%s",
+    id: "",
     label: "Font Size",
     options: [["0.50", "50%"], ["0.75", "75%"], ["1.00", "100%"], ["1.25", "125%"], ["1.50", "150%"], ["1.75", "175%"], ["2.00", "200%"], ["3.00", "300%"], ["4.00", "400%"]],
     default: 2,
@@ -21921,20 +23006,23 @@ var selectConfigs = {
     selector: ".vjs-text-opacity > select",
     id: "captions-foreground-opacity-%s",
     label: "Opacity",
-    options: [OPACITY_OPAQUE, OPACITY_SEMI]
+    options: [OPACITY_OPAQUE, OPACITY_SEMI],
+    className: "vjs-text-opacity vjs-opacity"
   },
   // Options for this object are defined below.
   windowColor: {
     selector: ".vjs-window-color > select",
     id: "captions-window-color-%s",
-    label: "Color"
+    label: "Color",
+    className: "vjs-window-color"
   },
   // Options for this object are defined below.
   windowOpacity: {
     selector: ".vjs-window-opacity > select",
     id: "captions-window-opacity-%s",
     label: "Opacity",
-    options: [OPACITY_TRANS, OPACITY_SEMI, OPACITY_OPAQUE]
+    options: [OPACITY_TRANS, OPACITY_SEMI, OPACITY_OPAQUE],
+    className: "vjs-window-opacity vjs-opacity"
   }
 };
 selectConfigs.windowColor.options = selectConfigs.backgroundColor.options;
@@ -21965,7 +23053,7 @@ var TextTrackSettings = class extends ModalDialog {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('../player').default } player
+   * @param {Player} player
    *         The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -21977,6 +23065,7 @@ var TextTrackSettings = class extends ModalDialog {
     this.updateDisplay = this.updateDisplay.bind(this);
     this.fill();
     this.hasBeenOpened_ = this.hasBeenFilled_ = true;
+    this.renderModalComponents(player);
     this.endDialog = createEl("p", {
       className: "vjs-control-text",
       textContent: this.localize("End of dialog window.")
@@ -21986,6 +23075,28 @@ var TextTrackSettings = class extends ModalDialog {
     if (options.persistTextTrackSettings === void 0) {
       this.options_.persistTextTrackSettings = this.options_.playerOptions.persistTextTrackSettings;
     }
+    this.bindFunctionsToSelectsAndButtons();
+    if (this.options_.persistTextTrackSettings) {
+      this.restoreSettings();
+    }
+  }
+  renderModalComponents(player) {
+    const textTrackSettingsColors = new TextTrackSettingsColors(player, {
+      textTrackComponentid: this.id_,
+      selectConfigs,
+      fieldSets: [["color", "textOpacity"], ["backgroundColor", "backgroundOpacity"], ["windowColor", "windowOpacity"]]
+    });
+    this.addChild(textTrackSettingsColors);
+    const textTrackSettingsFont = new TextTrackSettingsFont(player, {
+      textTrackComponentid: this.id_,
+      selectConfigs,
+      fieldSets: [["fontPercent"], ["edgeStyle"], ["fontFamily"]]
+    });
+    this.addChild(textTrackSettingsFont);
+    const trackSettingsControls = new TrackSettingsControls(player);
+    this.addChild(trackSettingsControls);
+  }
+  bindFunctionsToSelectsAndButtons() {
     this.on(this.$(".vjs-done-button"), "click", () => {
       this.saveSettings();
       this.close();
@@ -21997,122 +23108,10 @@ var TextTrackSettings = class extends ModalDialog {
     each(selectConfigs, (config) => {
       this.on(this.$(config.selector), "change", this.updateDisplay);
     });
-    if (this.options_.persistTextTrackSettings) {
-      this.restoreSettings();
-    }
   }
   dispose() {
     this.endDialog = null;
     super.dispose();
-  }
-  /**
-   * Create a <select> element with configured options.
-   *
-   * @param {string} key
-   *        Configuration key to use during creation.
-   *
-   * @param {string} [legendId]
-   *        Id of associated <legend>.
-   *
-   * @param {string} [type=label]
-   *        Type of labelling element, `label` or `legend`
-   *
-   * @return {string}
-   *         An HTML string.
-   *
-   * @private
-   */
-  createElSelect_(key, legendId = "", type = "label") {
-    const config = selectConfigs[key];
-    const id = config.id.replace("%s", this.id_);
-    const selectLabelledbyIds = [legendId, id].join(" ").trim();
-    const guid = `vjs_select_${newGUID()}`;
-    return [`<${type} id="${id}"${type === "label" ? ` for="${guid}" class="vjs-label"` : ""}>`, this.localize(config.label), `</${type}>`, `<select aria-labelledby="${selectLabelledbyIds}" id="${guid}">`].concat(config.options.map((o) => {
-      const optionId = id + "-" + o[1].replace(/\W+/g, "");
-      return [`<option id="${optionId}" value="${o[0]}" `, `aria-labelledby="${selectLabelledbyIds} ${optionId}">`, this.localize(o[1]), "</option>"].join("");
-    })).concat("</select>").join("");
-  }
-  /**
-   * Create foreground color element for the component
-   *
-   * @return {string}
-   *         An HTML string.
-   *
-   * @private
-   */
-  createElFgColor_() {
-    const legendId = `captions-text-legend-${this.id_}`;
-    return ['<fieldset class="vjs-fg vjs-track-setting">', `<legend id="${legendId}">`, this.localize("Text"), "</legend>", '<span class="vjs-text-color">', this.createElSelect_("color", legendId), "</span>", '<span class="vjs-text-opacity vjs-opacity">', this.createElSelect_("textOpacity", legendId), "</span>", "</fieldset>"].join("");
-  }
-  /**
-   * Create background color element for the component
-   *
-   * @return {string}
-   *         An HTML string.
-   *
-   * @private
-   */
-  createElBgColor_() {
-    const legendId = `captions-background-${this.id_}`;
-    return ['<fieldset class="vjs-bg vjs-track-setting">', `<legend id="${legendId}">`, this.localize("Text Background"), "</legend>", '<span class="vjs-bg-color">', this.createElSelect_("backgroundColor", legendId), "</span>", '<span class="vjs-bg-opacity vjs-opacity">', this.createElSelect_("backgroundOpacity", legendId), "</span>", "</fieldset>"].join("");
-  }
-  /**
-   * Create window color element for the component
-   *
-   * @return {string}
-   *         An HTML string.
-   *
-   * @private
-   */
-  createElWinColor_() {
-    const legendId = `captions-window-${this.id_}`;
-    return ['<fieldset class="vjs-window vjs-track-setting">', `<legend id="${legendId}">`, this.localize("Caption Area Background"), "</legend>", '<span class="vjs-window-color">', this.createElSelect_("windowColor", legendId), "</span>", '<span class="vjs-window-opacity vjs-opacity">', this.createElSelect_("windowOpacity", legendId), "</span>", "</fieldset>"].join("");
-  }
-  /**
-   * Create color elements for the component
-   *
-   * @return {Element}
-   *         The element that was created
-   *
-   * @private
-   */
-  createElColors_() {
-    return createEl("div", {
-      className: "vjs-track-settings-colors",
-      innerHTML: [this.createElFgColor_(), this.createElBgColor_(), this.createElWinColor_()].join("")
-    });
-  }
-  /**
-   * Create font elements for the component
-   *
-   * @return {Element}
-   *         The element that was created.
-   *
-   * @private
-   */
-  createElFont_() {
-    return createEl("div", {
-      className: "vjs-track-settings-font",
-      innerHTML: ['<fieldset class="vjs-font-percent vjs-track-setting">', this.createElSelect_("fontPercent", "", "legend"), "</fieldset>", '<fieldset class="vjs-edge-style vjs-track-setting">', this.createElSelect_("edgeStyle", "", "legend"), "</fieldset>", '<fieldset class="vjs-font-family vjs-track-setting">', this.createElSelect_("fontFamily", "", "legend"), "</fieldset>"].join("")
-    });
-  }
-  /**
-   * Create controls for the component
-   *
-   * @return {Element}
-   *         The element that was created.
-   *
-   * @private
-   */
-  createElControls_() {
-    const defaultsDescription = this.localize("restore all settings to the default values");
-    return createEl("div", {
-      className: "vjs-track-settings-controls",
-      innerHTML: [`<button type="button" class="vjs-default-button" title="${defaultsDescription}">`, this.localize("Reset"), `<span class="vjs-control-text"> ${defaultsDescription}</span>`, "</button>", `<button type="button" class="vjs-done-button">${this.localize("Done")}</button>`].join("")
-    });
-  }
-  content() {
-    return [this.createElColors_(), this.createElFont_(), this.createElControls_()];
   }
   label() {
     return this.localize("Caption Settings Dialog");
@@ -22200,26 +23199,12 @@ var TextTrackSettings = class extends ModalDialog {
     }
   }
   /**
-   * conditionally blur the element and refocus the captions button
-   *
-   * @private
-   */
-  conditionalBlur_() {
-    this.previouslyActiveEl_ = null;
-    const cb = this.player_.controlBar;
-    const subsCapsBtn = cb && cb.subsCapsButton;
-    const ccBtn = cb && cb.captionsButton;
-    if (subsCapsBtn) {
-      subsCapsBtn.focus();
-    } else if (ccBtn) {
-      ccBtn.focus();
-    }
-  }
-  /**
    * Repopulate dialog with new localizations on languagechange
    */
   handleLanguagechange() {
     this.fill();
+    this.renderModalComponents(this.player_);
+    this.bindFunctionsToSelectsAndButtons();
   }
 };
 Component$1.registerComponent("TextTrackSettings", TextTrackSettings);
@@ -22325,7 +23310,7 @@ var LiveTracker = class extends Component$1 {
   /**
    * Creates an instance of this class.
    *
-   * @param { import('./player').default } player
+   * @param {Player} player
    *        The `Player` that this class should be attached to.
    *
    * @param {Object} [options]
@@ -24562,6 +25547,7 @@ var Player = class _Player extends Component$1 {
     this.boundHandleTechTouchMove_ = (e) => this.handleTechTouchMove_(e);
     this.boundHandleTechTouchEnd_ = (e) => this.handleTechTouchEnd_(e);
     this.boundHandleTechTap_ = (e) => this.handleTechTap_(e);
+    this.boundUpdatePlayerHeightOnAudioOnlyMode_ = (e) => this.updatePlayerHeightOnAudioOnlyMode_(e);
     this.isFullscreen_ = false;
     this.log = createLogger(this.id_);
     this.fsApi_ = FullscreenApi;
@@ -24574,6 +25560,7 @@ var Player = class _Player extends Component$1 {
     this.audioOnlyMode_ = false;
     this.audioPosterMode_ = false;
     this.audioOnlyCache_ = {
+      controlBarHeight: null,
       playerHeight: null,
       hiddenChildren: []
     };
@@ -24665,6 +25652,10 @@ var Player = class _Player extends Component$1 {
     }
     if (this.isAudio()) {
       this.addClass("vjs-audio");
+    }
+    if (options.spatialNavigation && options.spatialNavigation.enabled) {
+      this.spatialNavigation = new SpatialNavigation(this);
+      this.addClass("vjs-spatial-navigation-enabled");
     }
     if (TOUCH_ENABLED) {
       this.addClass("vjs-touch-enabled");
@@ -24796,7 +25787,7 @@ var Player = class _Player extends Component$1 {
     tag.className = "vjs-tech";
     tag.player = el.player = this;
     this.addClass("vjs-paused");
-    const deviceClassNames = ["IS_SMART_TV", "IS_TIZEN", "IS_WEBOS", "IS_ANDROID", "IS_IPAD", "IS_IPHONE"].filter((key) => browser[key]).map((key) => {
+    const deviceClassNames = ["IS_SMART_TV", "IS_TIZEN", "IS_WEBOS", "IS_ANDROID", "IS_IPAD", "IS_IPHONE", "IS_CHROMECAST_RECEIVER"].filter((key) => browser[key]).map((key) => {
       return "vjs-device-" + key.substring(3).toLowerCase().replace(/\_/g, "-");
     });
     this.addClass(...deviceClassNames);
@@ -26061,7 +27052,7 @@ var Player = class _Player extends Component$1 {
    * Get a TimeRange object representing the current ranges of time that the user
    * has played.
    *
-   * @return { import('./utils/time').TimeRange }
+   * @return {TimeRange}
    *         A time range object that represents all the increments of time that have
    *         been played.
    */
@@ -26196,7 +27187,7 @@ var Player = class _Player extends Component$1 {
    *
    * @see [Buffered Spec]{@link http://dev.w3.org/html5/spec/video.html#dom-media-buffered}
    *
-   * @return { import('./utils/time').TimeRange }
+   * @return {TimeRange}
    *         A mock {@link TimeRanges} object (following HTML spec)
    */
   buffered() {
@@ -26212,7 +27203,7 @@ var Player = class _Player extends Component$1 {
    *
    * @see [Seekable Spec]{@link https://html.spec.whatwg.org/multipage/media.html#dom-media-seekable}
    *
-   * @return { import('./utils/time').TimeRange }
+   * @return {TimeRange}
    *         A mock {@link TimeRanges} object (following HTML spec)
    */
   seekable() {
@@ -26575,7 +27566,7 @@ var Player = class _Player extends Component$1 {
    *        Event to check for key press
    */
   fullWindowOnEscKey(event) {
-    if (import_keycode.default.isEventKey(event, "Esc")) {
+    if (event.key === "Escape") {
       if (this.isFullscreen() === true) {
         if (!this.isFullWindow) {
           this.exitFullscreen();
@@ -26766,9 +27757,9 @@ var Player = class _Player extends Component$1 {
   handleHotkeys(event) {
     const hotkeys = this.options_.userActions ? this.options_.userActions.hotkeys : {};
     const {
-      fullscreenKey = (keydownEvent) => import_keycode.default.isEventKey(keydownEvent, "f"),
-      muteKey = (keydownEvent) => import_keycode.default.isEventKey(keydownEvent, "m"),
-      playPauseKey = (keydownEvent) => import_keycode.default.isEventKey(keydownEvent, "k") || import_keycode.default.isEventKey(keydownEvent, "Space")
+      fullscreenKey = (keydownEvent) => event.key.toLowerCase() === "f",
+      muteKey = (keydownEvent) => event.key.toLowerCase() === "m",
+      playPauseKey = (keydownEvent) => event.key.toLowerCase() === "k" || event.key.toLowerCase() === " "
     } = hotkeys;
     if (fullscreenKey.call(this, event)) {
       event.preventDefault();
@@ -27597,6 +28588,14 @@ var Player = class _Player extends Component$1 {
     }
     return !!this.isAudio_;
   }
+  updatePlayerHeightOnAudioOnlyMode_() {
+    const controlBar = this.getChild("ControlBar");
+    if (!controlBar || this.audioOnlyCache_.controlBarHeight === controlBar.currentHeight()) {
+      return;
+    }
+    this.audioOnlyCache_.controlBarHeight = controlBar.currentHeight();
+    this.height(this.audioOnlyCache_.controlBarHeight);
+  }
   enableAudioOnlyUI_() {
     this.addClass("vjs-audio-only-mode");
     const playerChildren = this.children();
@@ -27612,11 +28611,14 @@ var Player = class _Player extends Component$1 {
       }
     });
     this.audioOnlyCache_.playerHeight = this.currentHeight();
+    this.audioOnlyCache_.controlBarHeight = controlBarHeight;
+    this.on("playerresize", this.boundUpdatePlayerHeightOnAudioOnlyMode_);
     this.height(controlBarHeight);
     this.trigger("audioonlymodechange");
   }
   disableAudioOnlyUI_() {
     this.removeClass("vjs-audio-only-mode");
+    this.off("playerresize", this.boundUpdatePlayerHeightOnAudioOnlyMode_);
     this.audioOnlyCache_.hiddenChildren.forEach((child) => child.show());
     this.height(this.audioOnlyCache_.playerHeight);
     this.trigger("audioonlymodechange");
@@ -27733,7 +28735,7 @@ var Player = class _Player extends Component$1 {
    *                                        from the TextTrackList and HtmlTrackElementList
    *                                        after a source change
    *
-   * @return { import('./tracks/html-track-element').default }
+   * @return {HtmlTrackElement}
    *         the HTMLTrackElement that was created and added
    *         to the HtmlTrackElementList and the remote
    *         TextTrackList
@@ -28285,6 +29287,10 @@ Player.prototype.options_ = {
   responsive: false,
   audioOnlyMode: false,
   audioPosterMode: false,
+  spatialNavigation: {
+    enabled: false,
+    horizontalSeek: false
+  },
   // Default smooth seeking to false
   enableSmoothSeeking: false
 };
@@ -28571,34 +29577,20 @@ function deprecateForMajor(major, oldName, newName, fn) {
   return deprecate(`${oldName} is deprecated and will be removed in ${major}.0; please use ${newName} instead.`, fn);
 }
 var VjsErrors = {
-  UnsupportedSidxContainer: "unsupported-sidx-container-error",
-  DashManifestSidxParsingError: "dash-manifest-sidx-parsing-error",
-  HlsPlaylistRequestError: "hls-playlist-request-error",
-  SegmentUnsupportedMediaFormat: "segment-unsupported-media-format-error",
-  UnsupportedMediaInitialization: "unsupported-media-initialization-error",
-  SegmentSwitchError: "segment-switch-error",
-  SegmentExceedsSourceBufferQuota: "segment-exceeds-source-buffer-quota-error",
-  SegmentAppendError: "segment-append-error",
-  VttLoadError: "vtt-load-error",
-  VttCueParsingError: "vtt-cue-parsing-error",
-  // Errors used in contrib-ads:
-  AdsBeforePrerollError: "ads-before-preroll-error",
-  AdsPrerollError: "ads-preroll-error",
-  AdsMidrollError: "ads-midroll-error",
-  AdsPostrollError: "ads-postroll-error",
-  AdsMacroReplacementFailed: "ads-macro-replacement-failed",
-  AdsResumeContentFailed: "ads-resume-content-failed",
-  // Errors used in contrib-eme:
-  EMEFailedToRequestMediaKeySystemAccess: "eme-failed-request-media-key-system-access",
-  EMEFailedToCreateMediaKeys: "eme-failed-create-media-keys",
-  EMEFailedToAttachMediaKeysToVideoElement: "eme-failed-attach-media-keys-to-video",
-  EMEFailedToCreateMediaKeySession: "eme-failed-create-media-key-session",
-  EMEFailedToSetServerCertificate: "eme-failed-set-server-certificate",
-  EMEFailedToGenerateLicenseRequest: "eme-failed-generate-license-request",
-  EMEFailedToUpdateSessionWithReceivedLicenseKeys: "eme-failed-update-session",
-  EMEFailedToCloseSession: "eme-failed-close-session",
-  EMEFailedToRemoveKeysFromSession: "eme-failed-remove-keys",
-  EMEFailedToLoadSessionBySessionId: "eme-failed-load-session"
+  NetworkBadStatus: "networkbadstatus",
+  NetworkRequestFailed: "networkrequestfailed",
+  NetworkRequestAborted: "networkrequestaborted",
+  NetworkRequestTimeout: "networkrequesttimeout",
+  NetworkBodyParserFailed: "networkbodyparserfailed",
+  StreamingHlsPlaylistParserError: "streaminghlsplaylistparsererror",
+  StreamingDashManifestParserError: "streamingdashmanifestparsererror",
+  StreamingContentSteeringParserError: "streamingcontentsteeringparsererror",
+  StreamingVttParserError: "streamingvttparsererror",
+  StreamingFailedToSelectNextSegment: "streamingfailedtoselectnextsegment",
+  StreamingFailedToDecryptSegment: "streamingfailedtodecryptsegment",
+  StreamingFailedToTransmuxSegment: "streamingfailedtotransmuxsegment",
+  StreamingFailedToAppendSegment: "streamingfailedtoappendsegment",
+  StreamingCodecsChangeError: "streamingcodecschangeerror"
 };
 var normalizeId = (id) => id.indexOf("#") === 0 ? id.slice(1) : id;
 function videojs(id, options, ready) {
@@ -28623,7 +29615,7 @@ function videojs(id, options, ready) {
   }
   options = options || {};
   if (options.restoreEl === true) {
-    options.restoreEl = (el.parentNode && el.parentNode.hasAttribute("data-vjs-player") ? el.parentNode : el).cloneNode(true);
+    options.restoreEl = (el.parentNode && el.parentNode.hasAttribute && el.parentNode.hasAttribute("data-vjs-player") ? el.parentNode : el).cloneNode(true);
   }
   hooks("beforesetup").forEach((hookFunction) => {
     const opts = hookFunction(el, merge$1(options));
@@ -29847,6 +30839,35 @@ var DateRangesStorage = class {
     });
   }
 };
+var QUOTA_EXCEEDED_ERR = 22;
+var getStreamingNetworkErrorMetadata = ({
+  requestType,
+  request,
+  error,
+  parseFailure
+}) => {
+  const isBadStatus = request.status < 200 || request.status > 299;
+  const isFailure = request.status >= 400 && request.status <= 499;
+  const errorMetadata = {
+    uri: request.uri,
+    requestType
+  };
+  const isBadStatusOrParseFailure = isBadStatus && !isFailure || parseFailure;
+  if (error && isFailure) {
+    errorMetadata.error = _extends({}, error);
+    errorMetadata.errorType = videojs.Error.NetworkRequestFailed;
+  } else if (request.aborted) {
+    errorMetadata.errorType = videojs.Error.NetworkRequestAborted;
+  } else if (request.timedout) {
+    errorMetadata.erroType = videojs.Error.NetworkRequestTimeout;
+  } else if (isBadStatusOrParseFailure) {
+    const errorType = parseFailure ? videojs.Error.NetworkBodyParserFailed : videojs.Error.NetworkBadStatus;
+    errorMetadata.errorType = errorType;
+    errorMetadata.status = request.status;
+    errorMetadata.headers = request.headers;
+  }
+  return errorMetadata;
+};
 var {
   EventTarget: EventTarget$1
 } = videojs;
@@ -30038,6 +31059,33 @@ var refreshDelay = (media, update) => {
   }
   return (media.partTargetDuration || media.targetDuration || 10) * 500;
 };
+var playlistMetadataPayload = (playlists, type, isLive) => {
+  if (!playlists) {
+    return;
+  }
+  const renditions = [];
+  playlists.forEach((playlist) => {
+    if (!playlist.attributes) {
+      return;
+    }
+    const {
+      BANDWIDTH,
+      RESOLUTION,
+      CODECS
+    } = playlist.attributes;
+    renditions.push({
+      id: playlist.id,
+      bandwidth: BANDWIDTH,
+      resolution: RESOLUTION,
+      codecs: CODECS
+    });
+  });
+  return {
+    type,
+    isLive,
+    renditions
+  };
+};
 var PlaylistLoader = class extends EventTarget$1 {
   constructor(src, vhs, options = {}) {
     super();
@@ -30118,9 +31166,11 @@ var PlaylistLoader = class extends EventTarget$1 {
       message: `HLS playlist request error at URL: ${uri}.`,
       responseText: xhr.responseText,
       code: xhr.status >= 500 ? 4 : 2,
-      metadata: {
-        errorType: videojs.Error.HlsPlaylistRequestError
-      }
+      metadata: getStreamingNetworkErrorMetadata({
+        requestType: xhr.requestType,
+        request: xhr,
+        error: xhr.error
+      })
     };
     this.trigger("error");
   }
@@ -30128,18 +31178,26 @@ var PlaylistLoader = class extends EventTarget$1 {
     url,
     manifestString
   }) {
-    return parseManifest({
-      onwarn: ({
-        message
-      }) => this.logger_(`m3u8-parser warn for ${url}: ${message}`),
-      oninfo: ({
-        message
-      }) => this.logger_(`m3u8-parser info for ${url}: ${message}`),
-      manifestString,
-      customTagParsers: this.customTagParsers,
-      customTagMappers: this.customTagMappers,
-      llhls: this.llhls
-    });
+    try {
+      return parseManifest({
+        onwarn: ({
+          message
+        }) => this.logger_(`m3u8-parser warn for ${url}: ${message}`),
+        oninfo: ({
+          message
+        }) => this.logger_(`m3u8-parser info for ${url}: ${message}`),
+        manifestString,
+        customTagParsers: this.customTagParsers,
+        customTagMappers: this.customTagMappers,
+        llhls: this.llhls
+      });
+    } catch (error) {
+      this.error = error;
+      this.error.metadata = {
+        errorType: videojs.Error.StreamingHlsPlaylistParserError,
+        error
+      };
+    }
   }
   /**
    * Update the playlist loader's state in response to a new or updated playlist.
@@ -30161,6 +31219,16 @@ var PlaylistLoader = class extends EventTarget$1 {
   }) {
     this.request = null;
     this.state = "HAVE_METADATA";
+    const metadata = {
+      playlistInfo: {
+        type: "media",
+        uri: url
+      }
+    };
+    this.trigger({
+      type: "playlistparsestart",
+      metadata
+    });
     const playlist = playlistObject || this.parseManifest_({
       url,
       manifestString: playlistString
@@ -30181,6 +31249,11 @@ var PlaylistLoader = class extends EventTarget$1 {
       this.trigger("playlistunchanged");
     }
     this.updateMediaUpdateTimeout_(refreshDelay(this.media(), !!update));
+    metadata.parsedPlaylist = playlistMetadataPayload(this.main.playlists, metadata.playlistInfo.type, !this.media_.endList);
+    this.trigger({
+      type: "playlistparsecomplete",
+      metadata
+    });
     this.trigger("loadedplaylist");
   }
   /**
@@ -30275,6 +31348,16 @@ var PlaylistLoader = class extends EventTarget$1 {
       this.trigger("mediachanging");
     }
     this.pendingMedia_ = playlist;
+    const metadata = {
+      playlistInfo: {
+        type: "media",
+        uri: playlist.uri
+      }
+    };
+    this.trigger({
+      type: "playlistrequeststart",
+      metadata
+    });
     this.request = this.vhs_.xhr({
       uri: playlist.resolvedUri,
       withCredentials: this.withCredentials,
@@ -30288,6 +31371,10 @@ var PlaylistLoader = class extends EventTarget$1 {
       if (error) {
         return this.playlistRequestError(this.request, playlist, startingState);
       }
+      this.trigger({
+        type: "playlistrequestcomplete",
+        metadata
+      });
       this.haveMetadata({
         playlistString: req.responseText,
         url: playlist.uri,
@@ -30378,6 +31465,16 @@ var PlaylistLoader = class extends EventTarget$1 {
       }, 0);
       return;
     }
+    const metadata = {
+      playlistInfo: {
+        type: "multivariant",
+        uri: this.src
+      }
+    };
+    this.trigger({
+      type: "playlistrequeststart",
+      metadata
+    });
     this.request = this.vhs_.xhr({
       uri: this.src,
       withCredentials: this.withCredentials,
@@ -30394,19 +31491,34 @@ var PlaylistLoader = class extends EventTarget$1 {
           responseText: req.responseText,
           // MEDIA_ERR_NETWORK
           code: 2,
-          metadata: {
-            errorType: videojs.Error.HlsPlaylistRequestError
-          }
+          metadata: getStreamingNetworkErrorMetadata({
+            requestType: req.requestType,
+            request: req,
+            error
+          })
         };
         if (this.state === "HAVE_NOTHING") {
           this.started = false;
         }
         return this.trigger("error");
       }
+      this.trigger({
+        type: "playlistrequestcomplete",
+        metadata
+      });
       this.src = resolveManifestRedirect(this.src, req);
+      this.trigger({
+        type: "playlistparsestart",
+        metadata
+      });
       const manifest = this.parseManifest_({
         manifestString: req.responseText,
         url: this.src
+      });
+      metadata.parsedPlaylist = playlistMetadataPayload(manifest.playlists, metadata.playlistInfo.type, false);
+      this.trigger({
+        type: "playlistparsecomplete",
+        metadata
       });
       this.setupInitialPlaylist(manifest);
     });
@@ -30744,6 +31856,7 @@ var xhrFactory = function() {
       return originalAbort.apply(request, arguments);
     };
     request.uri = options.uri;
+    request.requestType = options.requestType;
     request.requestTime = Date.now();
     return request;
   };
@@ -31054,7 +32167,7 @@ var callbackOnCompleted = (request, cb) => {
   }
   return;
 };
-var containerRequest = (uri, xhr, cb) => {
+var containerRequest = (uri, xhr, cb, requestType) => {
   let bytes = [];
   let id3Offset;
   let finished = false;
@@ -31068,6 +32181,11 @@ var containerRequest = (uri, xhr, cb) => {
       return;
     }
     if (error) {
+      error.metadata = getStreamingNetworkErrorMetadata({
+        requestType,
+        request: request2,
+        error
+      });
       return endRequestAndCallback(error, request2, "", bytes);
     }
     const newPart = request2.responseText.substring(bytes && bytes.byteLength || 0, request2.responseText.length);
@@ -31320,13 +32438,18 @@ var DashPlaylistLoader = class extends EventTarget {
         return;
       }
       const sidxMapping = this.mainPlaylistLoader_.sidxMapping_;
+      const {
+        requestType
+      } = request;
       let sidx;
       try {
         sidx = (0, import_parse_sidx.default)(toUint8(request.response).subarray(8));
       } catch (e) {
-        e.metadata = {
-          errorType: videojs.Error.DashManifestSidxParsingError
-        };
+        e.metadata = getStreamingNetworkErrorMetadata({
+          requestType,
+          request,
+          parseFailure: true
+        });
         this.requestErrored_(e, request, startingState);
         return;
       }
@@ -31337,6 +32460,7 @@ var DashPlaylistLoader = class extends EventTarget {
       addSidxSegmentsToPlaylist$1(playlist, sidx, playlist.sidx.resolvedUri);
       return cb(true);
     };
+    const REQUEST_TYPE = "dash-sidx";
     this.request = containerRequest(uri, this.vhs_.xhr, (err, request, container, bytes) => {
       if (err) {
         return fin(err, request);
@@ -31353,11 +32477,7 @@ var DashPlaylistLoader = class extends EventTarget {
           internal: true,
           playlistExclusionDuration: Infinity,
           // MEDIA_ERR_NETWORK
-          code: 2,
-          metadata: {
-            errorType: videojs.Error.UnsupportedSidxContainer,
-            sidxContainer
-          }
+          code: 2
         }, request);
       }
       const {
@@ -31374,11 +32494,12 @@ var DashPlaylistLoader = class extends EventTarget {
       this.request = this.vhs_.xhr({
         uri,
         responseType: "arraybuffer",
+        requestType: "dash-sidx",
         headers: segmentXhrHeaders({
           byterange: playlist.sidx.byterange
         })
       }, fin);
-    });
+    }, REQUEST_TYPE);
   }
   dispose() {
     this.trigger("dispose");
@@ -31511,17 +32632,40 @@ var DashPlaylistLoader = class extends EventTarget {
     });
   }
   requestMain_(cb) {
+    const metadata = {
+      manifestInfo: {
+        uri: this.mainPlaylistLoader_.srcUrl
+      }
+    };
+    this.trigger({
+      type: "manifestrequeststart",
+      metadata
+    });
     this.request = this.vhs_.xhr({
       uri: this.mainPlaylistLoader_.srcUrl,
       withCredentials: this.withCredentials,
       requestType: "dash-manifest"
     }, (error, req) => {
+      if (error) {
+        const {
+          requestType
+        } = req;
+        error.metadata = getStreamingNetworkErrorMetadata({
+          requestType,
+          request: req,
+          error
+        });
+      }
       if (this.requestErrored_(error, req)) {
         if (this.state === "HAVE_NOTHING") {
           this.started = false;
         }
         return;
       }
+      this.trigger({
+        type: "manifestrequestcomplete",
+        metadata
+      });
       const mainChanged = req.responseText !== this.mainPlaylistLoader_.mainXml_;
       this.mainPlaylistLoader_.mainXml_ = req.responseText;
       if (req.responseHeaders && req.responseHeaders.date) {
@@ -31567,6 +32711,14 @@ var DashPlaylistLoader = class extends EventTarget {
         return;
       }
       if (error) {
+        const {
+          requestType
+        } = req;
+        this.error.metadata = getStreamingNetworkErrorMetadata({
+          requestType,
+          request: req,
+          error
+        });
         this.mainPlaylistLoader_.clientOffset_ = this.mainLoaded_ - Date.now();
         return done();
       }
@@ -31595,13 +32747,32 @@ var DashPlaylistLoader = class extends EventTarget {
   handleMain_() {
     this.mediaRequest_ = null;
     const oldMain = this.mainPlaylistLoader_.main;
-    let newMain = parseMainXml({
-      mainXml: this.mainPlaylistLoader_.mainXml_,
-      srcUrl: this.mainPlaylistLoader_.srcUrl,
-      clientOffset: this.mainPlaylistLoader_.clientOffset_,
-      sidxMapping: this.mainPlaylistLoader_.sidxMapping_,
-      previousManifest: oldMain
+    const metadata = {
+      manifestInfo: {
+        uri: this.mainPlaylistLoader_.srcUrl
+      }
+    };
+    this.trigger({
+      type: "manifestparsestart",
+      metadata
     });
+    let newMain;
+    try {
+      newMain = parseMainXml({
+        mainXml: this.mainPlaylistLoader_.mainXml_,
+        srcUrl: this.mainPlaylistLoader_.srcUrl,
+        clientOffset: this.mainPlaylistLoader_.clientOffset_,
+        sidxMapping: this.mainPlaylistLoader_.sidxMapping_,
+        previousManifest: oldMain
+      });
+    } catch (error) {
+      this.error = error;
+      this.error.metadata = {
+        errorType: videojs.Error.StreamingDashManifestParserError,
+        error
+      };
+      this.trigger("error");
+    }
     if (oldMain) {
       newMain = updateMain(oldMain, newMain, this.mainPlaylistLoader_.sidxMapping_);
     }
@@ -31614,6 +32785,31 @@ var DashPlaylistLoader = class extends EventTarget {
       this.updateMinimumUpdatePeriodTimeout_();
     }
     this.addEventStreamToMetadataTrack_(newMain);
+    if (newMain) {
+      const {
+        duration: duration2,
+        endList
+      } = newMain;
+      const renditions = [];
+      newMain.playlists.forEach((playlist) => {
+        renditions.push({
+          id: playlist.id,
+          bandwidth: playlist.attributes.BANDWIDTH,
+          resolution: playlist.attributes.RESOLUTION,
+          codecs: playlist.attributes.CODECS
+        });
+      });
+      const parsedManifest = {
+        duration: duration2,
+        isLive: !endList,
+        renditions
+      };
+      metadata.parsedManifest = parsedManifest;
+      this.trigger({
+        type: "manifestparsecomplete",
+        metadata
+      });
+    }
     return Boolean(newMain);
   }
   updateMinimumUpdatePeriodTimeout_() {
@@ -38330,7 +39526,9 @@ var processTransmux = (options) => {
     onDone,
     onEndedTimeline,
     onTransmuxerLog,
-    isEndOfTimeline
+    isEndOfTimeline,
+    segment,
+    triggerSegmentEventFn
   } = options;
   const transmuxedData = {
     buffer: []
@@ -38387,7 +39585,20 @@ var processTransmux = (options) => {
     });
     dequeue(transmuxer);
   };
+  const handleError = () => {
+    const error = {
+      message: "Received an error message from the transmuxer worker",
+      metadata: {
+        errorType: videojs.Error.StreamingFailedToTransmuxSegment,
+        segmentInfo: segmentInfoPayload({
+          segment
+        })
+      }
+    };
+    onDone(null, error);
+  };
   transmuxer.onmessage = handleMessage;
+  transmuxer.onerror = handleError;
   if (audioAppendStart) {
     transmuxer.postMessage({
       action: "setAudioAppendStart",
@@ -38409,6 +39620,10 @@ var processTransmux = (options) => {
   if (bytes.byteLength) {
     const buffer = bytes instanceof ArrayBuffer ? bytes : bytes.buffer;
     const byteOffset = bytes instanceof ArrayBuffer ? 0 : bytes.byteOffset;
+    triggerSegmentEventFn({
+      type: "segmenttransmuxingstart",
+      segment
+    });
     transmuxer.postMessage({
       action: "push",
       // Send the typed-array of data as an ArrayBuffer so that
@@ -38554,12 +39769,21 @@ var getProgressStats = (progressEvent) => {
   return stats;
 };
 var handleErrors = (error, request) => {
+  const {
+    requestType
+  } = request;
+  const metadata = getStreamingNetworkErrorMetadata({
+    requestType,
+    request,
+    error
+  });
   if (request.timedout) {
     return {
       status: request.status,
       message: "HLS request timed-out at URL: " + request.uri,
       code: REQUEST_ERRORS.TIMEOUT,
-      xhr: request
+      xhr: request,
+      metadata
     };
   }
   if (request.aborted) {
@@ -38567,7 +39791,8 @@ var handleErrors = (error, request) => {
       status: request.status,
       message: "HLS request aborted at URL: " + request.uri,
       code: REQUEST_ERRORS.ABORTED,
-      xhr: request
+      xhr: request,
+      metadata
     };
   }
   if (error) {
@@ -38575,7 +39800,8 @@ var handleErrors = (error, request) => {
       status: request.status,
       message: "HLS request errored at URL: " + request.uri,
       code: REQUEST_ERRORS.FAILURE,
-      xhr: request
+      xhr: request,
+      metadata
     };
   }
   if (request.responseType === "arraybuffer" && request.response.byteLength === 0) {
@@ -38583,12 +39809,13 @@ var handleErrors = (error, request) => {
       status: request.status,
       message: "Empty HLS response at URL: " + request.uri,
       code: REQUEST_ERRORS.FAILURE,
-      xhr: request
+      xhr: request,
+      metadata
     };
   }
   return null;
 };
-var handleKeyResponse = (segment, objects, finishProcessingFn) => (error, request) => {
+var handleKeyResponse = (segment, objects, finishProcessingFn, triggerSegmentEventFn) => (error, request) => {
   const response = request.response;
   const errorObj = handleErrors(error, request);
   if (errorObj) {
@@ -38607,6 +39834,14 @@ var handleKeyResponse = (segment, objects, finishProcessingFn) => (error, reques
   for (let i = 0; i < objects.length; i++) {
     objects[i].bytes = bytes;
   }
+  const keyInfo = {
+    uri: request.uri
+  };
+  triggerSegmentEventFn({
+    type: "segmentkeyloadcomplete",
+    segment,
+    keyInfo
+  });
   return finishProcessingFn(null, segment);
 };
 var parseInitSegment = (segment, callback) => {
@@ -38619,7 +39854,6 @@ var parseInitSegment = (segment, callback) => {
       message: `Found unsupported ${mediaType} container for initialization segment at URL: ${uri}`,
       code: REQUEST_ERRORS.FAILURE,
       metadata: {
-        errorType: videojs.Error.UnsupportedMediaInitialization,
         mediaType
       }
     });
@@ -38650,13 +39884,18 @@ var parseInitSegment = (segment, callback) => {
 };
 var handleInitSegmentResponse = ({
   segment,
-  finishProcessingFn
+  finishProcessingFn,
+  triggerSegmentEventFn
 }) => (error, request) => {
   const errorObj = handleErrors(error, request);
   if (errorObj) {
     return finishProcessingFn(errorObj, segment);
   }
   const bytes = new Uint8Array(request.response);
+  triggerSegmentEventFn({
+    type: "segmentloaded",
+    segment
+  });
   if (segment.map.key) {
     segment.map.encryptedBytes = bytes;
     return finishProcessingFn(null, segment);
@@ -38674,12 +39913,17 @@ var handleInitSegmentResponse = ({
 var handleSegmentResponse = ({
   segment,
   finishProcessingFn,
-  responseType
+  responseType,
+  triggerSegmentEventFn
 }) => (error, request) => {
   const errorObj = handleErrors(error, request);
   if (errorObj) {
     return finishProcessingFn(errorObj, segment);
   }
+  triggerSegmentEventFn({
+    type: "segmentloaded",
+    segment
+  });
   const newBytes = (
     // although responseText "should" exist, this guard serves to prevent an error being
     // thrown for two primary cases:
@@ -38709,7 +39953,8 @@ var transmuxAndNotify = ({
   endedTimelineFn,
   dataFn,
   doneFn,
-  onTransmuxerLog
+  onTransmuxerLog,
+  triggerSegmentEventFn
 }) => {
   const fmp4Tracks = segment.map && segment.map.tracks || {};
   const isMuxed2 = Boolean(fmp4Tracks.audio && fmp4Tracks.video);
@@ -38754,9 +39999,39 @@ var transmuxAndNotify = ({
       }
     },
     onVideoSegmentTimingInfo: (videoSegmentTimingInfo) => {
+      const timingInfo = {
+        pts: {
+          start: videoSegmentTimingInfo.start.presentation,
+          end: videoSegmentTimingInfo.end.presentation
+        },
+        dts: {
+          start: videoSegmentTimingInfo.start.decode,
+          end: videoSegmentTimingInfo.end.decode
+        }
+      };
+      triggerSegmentEventFn({
+        type: "segmenttransmuxingtiminginfoavailable",
+        segment,
+        timingInfo
+      });
       videoSegmentTimingInfoFn(videoSegmentTimingInfo);
     },
     onAudioSegmentTimingInfo: (audioSegmentTimingInfo) => {
+      const timingInfo = {
+        pts: {
+          start: audioSegmentTimingInfo.start.pts,
+          end: audioSegmentTimingInfo.end.pts
+        },
+        dts: {
+          start: audioSegmentTimingInfo.start.dts,
+          end: audioSegmentTimingInfo.end.dts
+        }
+      };
+      triggerSegmentEventFn({
+        type: "segmenttransmuxingtiminginfoavailable",
+        segment,
+        timingInfo
+      });
       audioSegmentTimingInfoFn(audioSegmentTimingInfo);
     },
     onId3: (id3Frames, dispatchType) => {
@@ -38770,13 +40045,19 @@ var transmuxAndNotify = ({
       endedTimelineFn();
     },
     onTransmuxerLog,
-    onDone: (result) => {
+    onDone: (result, error) => {
       if (!doneFn) {
         return;
       }
       result.type = result.type === "combined" ? "video" : result.type;
-      doneFn(null, segment, result);
-    }
+      triggerSegmentEventFn({
+        type: "segmenttransmuxingcomplete",
+        segment
+      });
+      doneFn(error, segment, result);
+    },
+    segment,
+    triggerSegmentEventFn
   });
   workerCallback({
     action: "probeTs",
@@ -38811,7 +40092,8 @@ var handleSegmentBytes = ({
   endedTimelineFn,
   dataFn,
   doneFn,
-  onTransmuxerLog
+  onTransmuxerLog,
+  triggerSegmentEventFn
 }) => {
   let bytesAsUint8Array = new Uint8Array(bytes);
   if (isLikelyFmp4MediaSegment(bytesAsUint8Array)) {
@@ -38931,14 +40213,17 @@ var handleSegmentBytes = ({
     endedTimelineFn,
     dataFn,
     doneFn,
-    onTransmuxerLog
+    onTransmuxerLog,
+    triggerSegmentEventFn
   });
 };
 var decrypt = function({
   id,
   key,
   encryptedBytes,
-  decryptionWorker
+  decryptionWorker,
+  segment,
+  doneFn
 }, callback) {
   const decryptionHandler = (event) => {
     if (event.data.source === id) {
@@ -38946,6 +40231,24 @@ var decrypt = function({
       const decrypted = event.data.decrypted;
       callback(new Uint8Array(decrypted.bytes, decrypted.byteOffset, decrypted.byteLength));
     }
+  };
+  decryptionWorker.onerror = () => {
+    const message = "An error occurred in the decryption worker";
+    const segmentInfo = segmentInfoPayload({
+      segment
+    });
+    const decryptError = {
+      message,
+      metadata: {
+        error: new Error(message),
+        errorType: videojs.Error.StreamingFailedToDecryptSegment,
+        segmentInfo,
+        keyInfo: {
+          uri: segment.key.resolvedUri || segment.map.key.resolvedUri
+        }
+      }
+    };
+    doneFn(decryptError, segment);
   };
   decryptionWorker.addEventListener("message", decryptionHandler);
   let keyBytes;
@@ -38974,15 +40277,25 @@ var decryptSegment = ({
   endedTimelineFn,
   dataFn,
   doneFn,
-  onTransmuxerLog
+  onTransmuxerLog,
+  triggerSegmentEventFn
 }) => {
+  triggerSegmentEventFn({
+    type: "segmentdecryptionstart"
+  });
   decrypt({
     id: segment.requestId,
     key: segment.key,
     encryptedBytes: segment.encryptedBytes,
-    decryptionWorker
+    decryptionWorker,
+    segment,
+    doneFn
   }, (decryptedBytes) => {
     segment.bytes = decryptedBytes;
+    triggerSegmentEventFn({
+      type: "segmentdecryptioncomplete",
+      segment
+    });
     handleSegmentBytes({
       segment,
       bytes: segment.bytes,
@@ -38996,7 +40309,8 @@ var decryptSegment = ({
       endedTimelineFn,
       dataFn,
       doneFn,
-      onTransmuxerLog
+      onTransmuxerLog,
+      triggerSegmentEventFn
     });
   });
 };
@@ -39013,7 +40327,8 @@ var waitForCompletion = ({
   endedTimelineFn,
   dataFn,
   doneFn,
-  onTransmuxerLog
+  onTransmuxerLog,
+  triggerSegmentEventFn
 }) => {
   let count = 0;
   let didError = false;
@@ -39043,7 +40358,8 @@ var waitForCompletion = ({
             endedTimelineFn,
             dataFn,
             doneFn,
-            onTransmuxerLog
+            onTransmuxerLog,
+            triggerSegmentEventFn
           });
         }
         handleSegmentBytes({
@@ -39059,11 +40375,16 @@ var waitForCompletion = ({
           endedTimelineFn,
           dataFn,
           doneFn,
-          onTransmuxerLog
+          onTransmuxerLog,
+          triggerSegmentEventFn
         });
       };
       segment.endOfAllRequests = Date.now();
       if (segment.map && segment.map.encryptedBytes && !segment.map.bytes) {
+        triggerSegmentEventFn({
+          type: "segmentdecryptionstart",
+          segment
+        });
         return decrypt({
           decryptionWorker,
           // add -init to the "id" to differentiate between segment
@@ -39071,9 +40392,15 @@ var waitForCompletion = ({
           // at the same time at some point in the future.
           id: segment.requestId + "-init",
           encryptedBytes: segment.map.encryptedBytes,
-          key: segment.map.key
+          key: segment.map.key,
+          segment,
+          doneFn
         }, (decryptedBytes) => {
           segment.map.bytes = decryptedBytes;
+          triggerSegmentEventFn({
+            type: "segmentdecryptioncomplete",
+            segment
+          });
           parseInitSegment(segment, (parseError) => {
             if (parseError) {
               abortAll(activeXhrs);
@@ -39137,7 +40464,8 @@ var mediaSegmentRequest = ({
   endedTimelineFn,
   dataFn,
   doneFn,
-  onTransmuxerLog
+  onTransmuxerLog,
+  triggerSegmentEventFn
 }) => {
   const activeXhrs = [];
   const finishProcessingFn = waitForCompletion({
@@ -39153,7 +40481,8 @@ var mediaSegmentRequest = ({
     endedTimelineFn,
     dataFn,
     doneFn,
-    onTransmuxerLog
+    onTransmuxerLog,
+    triggerSegmentEventFn
   });
   if (segment.key && !segment.key.bytes) {
     const objects = [segment.key];
@@ -39165,7 +40494,15 @@ var mediaSegmentRequest = ({
       responseType: "arraybuffer",
       requestType: "segment-key"
     });
-    const keyRequestCallback = handleKeyResponse(segment, objects, finishProcessingFn);
+    const keyRequestCallback = handleKeyResponse(segment, objects, finishProcessingFn, triggerSegmentEventFn);
+    const keyInfo = {
+      uri: segment.key.resolvedUri
+    };
+    triggerSegmentEventFn({
+      type: "segmentkeyloadstart",
+      segment,
+      keyInfo
+    });
     const keyXhr = xhr(keyRequestOptions, keyRequestCallback);
     activeXhrs.push(keyXhr);
   }
@@ -39177,7 +40514,15 @@ var mediaSegmentRequest = ({
         responseType: "arraybuffer",
         requestType: "segment-key"
       });
-      const mapKeyRequestCallback = handleKeyResponse(segment, [segment.map.key], finishProcessingFn);
+      const mapKeyRequestCallback = handleKeyResponse(segment, [segment.map.key], finishProcessingFn, triggerSegmentEventFn);
+      const keyInfo = {
+        uri: segment.map.key.resolvedUri
+      };
+      triggerSegmentEventFn({
+        type: "segmentkeyloadstart",
+        segment,
+        keyInfo
+      });
       const mapKeyXhr = xhr(mapKeyRequestOptions, mapKeyRequestCallback);
       activeXhrs.push(mapKeyXhr);
     }
@@ -39189,7 +40534,12 @@ var mediaSegmentRequest = ({
     });
     const initSegmentRequestCallback = handleInitSegmentResponse({
       segment,
-      finishProcessingFn
+      finishProcessingFn,
+      triggerSegmentEventFn
+    });
+    triggerSegmentEventFn({
+      type: "segmentloadstart",
+      segment
     });
     const initSegmentXhr = xhr(initSegmentOptions, initSegmentRequestCallback);
     activeXhrs.push(initSegmentXhr);
@@ -39203,7 +40553,12 @@ var mediaSegmentRequest = ({
   const segmentRequestCallback = handleSegmentResponse({
     segment,
     finishProcessingFn,
-    responseType: segmentRequestOptions.responseType
+    responseType: segmentRequestOptions.responseType,
+    triggerSegmentEventFn
+  });
+  triggerSegmentEventFn({
+    type: "segmentloadstart",
+    segment
   });
   const segmentXhr = xhr(segmentRequestOptions, segmentRequestCallback);
   segmentXhr.addEventListener("progress", handleProgress({
@@ -39848,7 +41203,6 @@ var shallowEqual = function(a, b) {
   }
   return true;
 };
-var QUOTA_EXCEEDED_ERR = 22;
 var getSyncSegmentCandidate = function(currentTimeline, segments, targetTime) {
   segments = segments || [];
   const timelineSegments = [];
@@ -40034,6 +41388,25 @@ var getTroublesomeSegmentDurationMessage = (segmentInfo, sourceType) => {
   }
   return null;
 };
+var segmentInfoPayload = ({
+  type,
+  segment
+}) => {
+  if (!segment) {
+    return;
+  }
+  const isEncrypted = Boolean(segment.key || segment.map && segment.map.ke);
+  const isMediaInitialization = Boolean(segment.map && !segment.map.bytes);
+  const start = segment.startOfSegment === void 0 ? segment.start : segment.startOfSegment;
+  return {
+    type: type || segment.type,
+    uri: segment.resolvedUri || segment.uri,
+    start,
+    duration: segment.duration,
+    isEncrypted,
+    isMediaInitialization
+  };
+};
 var SegmentLoader = class extends videojs.EventTarget {
   constructor(settings, options = {}) {
     super();
@@ -40143,6 +41516,11 @@ var SegmentLoader = class extends videojs.EventTarget {
         this.processCallQueue_();
       }
     });
+    this.sourceUpdater_.on("codecschange", (metadata) => {
+      this.trigger(_extends({
+        type: "codecschange"
+      }, metadata));
+    });
     if (this.loaderType_ === "main") {
       this.timelineChangeController_.on("pendingtimelinechange", () => {
         if (this.hasEnoughInfoToAppend_()) {
@@ -40151,7 +41529,10 @@ var SegmentLoader = class extends videojs.EventTarget {
       });
     }
     if (this.loaderType_ === "audio") {
-      this.timelineChangeController_.on("timelinechange", () => {
+      this.timelineChangeController_.on("timelinechange", (metadata) => {
+        this.trigger(_extends({
+          type: "timelinechange"
+        }, metadata));
         if (this.hasEnoughInfoToLoad_()) {
           this.processLoadQueue_();
         }
@@ -40673,6 +42054,16 @@ bufferedEnd: ${lastBufferedEnd(this.buffered_())}
     if (!segmentInfo) {
       return;
     }
+    const metadata = {
+      segmentInfo: segmentInfoPayload({
+        type: this.loaderType_,
+        segment: segmentInfo
+      })
+    };
+    this.trigger({
+      type: "segmentselected",
+      metadata
+    });
     if (typeof segmentInfo.timestampOffset === "number") {
       this.isPendingTimestampOffset_ = false;
       this.timelineChangeController_.pendingTimelineChange({
@@ -40753,6 +42144,14 @@ Fetch At Buffer: ${this.fetchAtBuffer_}
       if (this.mediaSequenceSync_ && this.mediaSequenceSync_.isReliable) {
         const syncInfo = this.getSyncInfoFromMediaSequenceSync_(targetTime);
         if (!syncInfo) {
+          const message = "No sync info found while using media sequence sync";
+          this.error({
+            message,
+            metadata: {
+              errorType: videojs.Error.StreamingFailedToSelectNextSegment,
+              error: new Error(message)
+            }
+          });
           this.logger_("chooseNextRequest_ - no sync info found using media sequence sync");
           return null;
         }
@@ -40988,6 +42387,24 @@ Fetch At Buffer: ${this.fetchAtBuffer_}
     this.trigger("progress");
   }
   handleTrackInfo_(simpleSegment, trackInfo) {
+    const {
+      hasAudio,
+      hasVideo
+    } = trackInfo;
+    const metadata = {
+      segmentInfo: segmentInfoPayload({
+        type: this.loaderType_,
+        segment: simpleSegment
+      }),
+      trackInfo: {
+        hasAudio,
+        hasVideo
+      }
+    };
+    this.trigger({
+      type: "segmenttransmuxingtrackinfoavailable",
+      metadata
+    });
     this.earlyAbortWhenNeeded_(simpleSegment.stats);
     if (this.checkForAbort_(simpleSegment.requestId)) {
       return;
@@ -41315,10 +42732,7 @@ Fetch At Buffer: ${this.fetchAtBuffer_}
       this.logger_(`On QUOTA_EXCEEDED_ERR, single segment too large to append to buffer, triggering an error. Appended byte length: ${bytes.byteLength}, audio buffer: ${timeRangesToArray(audioBuffered).join(", ")}, video buffer: ${timeRangesToArray(videoBuffered).join(", ")}, `);
       this.error({
         message: "Quota exceeded error with append of a single segment of content",
-        excludeUntil: Infinity,
-        metadata: {
-          errorType: videojs.Error.SegmentExceedsSourceBufferQuota
-        }
+        excludeUntil: Infinity
       });
       this.trigger("error");
       return;
@@ -41362,7 +42776,7 @@ Fetch At Buffer: ${this.fetchAtBuffer_}
     this.error({
       message: `${type} append of ${bytes.length}b failed for segment #${segmentInfo.mediaIndex} in playlist ${segmentInfo.playlist.id}`,
       metadata: {
-        errorType: videojs.Error.SegmentAppendError
+        errorType: videojs.Error.StreamingFailedToAppendSegment
       }
     });
     this.trigger("appenderror");
@@ -41386,6 +42800,16 @@ Fetch At Buffer: ${this.fetchAtBuffer_}
         segments
       });
     }
+    const metadata = {
+      segmentInfo: segmentInfoPayload({
+        type: this.loaderType_,
+        segment: segmentInfo
+      })
+    };
+    this.trigger({
+      type: "segmentappendstart",
+      metadata
+    });
     this.sourceUpdater_.appendBuffer({
       segmentInfo,
       type,
@@ -41520,6 +42944,33 @@ ${segmentInfoString(segmentInfo)}`);
         stream
       }) => {
         this.logger_(`${segmentInfoString(segmentInfo)} logged from transmuxer stream ${stream} as a ${level}: ${message}`);
+      },
+      triggerSegmentEventFn: ({
+        type,
+        segment,
+        keyInfo,
+        trackInfo,
+        timingInfo
+      }) => {
+        const segInfo = segmentInfoPayload({
+          segment
+        });
+        const metadata = {
+          segmentInfo: segInfo
+        };
+        if (keyInfo) {
+          metadata.keyInfo = keyInfo;
+        }
+        if (trackInfo) {
+          metadata.trackInfo = trackInfo;
+        }
+        if (timingInfo) {
+          metadata.timingInfo = timingInfo;
+        }
+        this.trigger({
+          type,
+          metadata
+        });
       }
     });
   }
@@ -41549,6 +43000,8 @@ ${segmentInfoString(segmentInfo)}`);
   createSimplifiedSegmentObj_(segmentInfo) {
     const segment = segmentInfo.segment;
     const part = segmentInfo.part;
+    const isEncrypted = segmentInfo.segment.key || segmentInfo.segment.map && segmentInfo.segment.map.key;
+    const isMediaInitialization = segmentInfo.segment.map && !segmentInfo.segment.map.bytes;
     const simpleSegment = {
       resolvedUri: part ? part.resolvedUri : segment.resolvedUri,
       byterange: part ? part.byterange : segment.byterange,
@@ -41556,7 +43009,12 @@ ${segmentInfoString(segmentInfo)}`);
       transmuxer: segmentInfo.transmuxer,
       audioAppendStart: segmentInfo.audioAppendStart,
       gopsToAlignWith: segmentInfo.gopsToAlignWith,
-      part: segmentInfo.part
+      part: segmentInfo.part,
+      type: this.loaderType_,
+      start: segmentInfo.startOfSegment,
+      duration: segmentInfo.duration,
+      isEncrypted,
+      isMediaInitialization
     };
     const previousSegment = segmentInfo.playlist.segments[segmentInfo.mediaIndex - 1];
     if (previousSegment && previousSegment.timeline === segment.timeline) {
@@ -41589,6 +43047,16 @@ ${segmentInfoString(segmentInfo)}`);
       this.logger_(`Ignoring segment's bandwidth because its duration of ${duration2} is less than the min to record ${MIN_SEGMENT_DURATION_TO_SAVE_STATS}`);
       return;
     }
+    const metadata = {
+      bandwidthInfo: {
+        from: this.bandwidth,
+        to: stats.bandwidth
+      }
+    };
+    this.trigger({
+      type: "bandwidthupdated",
+      metadata
+    });
     this.bandwidth = stats.bandwidth;
     this.roundTrip = stats.roundTripTime;
   }
@@ -41695,10 +43163,7 @@ ${segmentInfoString(segmentInfo)}`);
     if (!trackInfo) {
       this.error({
         message: "No starting media returned, likely due to an unsupported media format.",
-        playlistExclusionDuration: Infinity,
-        metadata: {
-          errorType: videojs.Error.SegmentUnsupportedMediaFormat
-        }
+        playlistExclusionDuration: Infinity
       });
       this.trigger("error");
       return;
@@ -41753,10 +43218,7 @@ ${segmentInfoString(segmentInfo)}`);
     if (illegalMediaSwitchError) {
       this.error({
         message: illegalMediaSwitchError,
-        playlistExclusionDuration: Infinity,
-        metadata: {
-          errorType: videojs.Error.SegmentSwitchError
-        }
+        playlistExclusionDuration: Infinity
       });
       this.trigger("error");
       return true;
@@ -41830,7 +43292,16 @@ ${segmentInfoString(segmentInfo)}`);
    */
   handleAppendsDone_() {
     if (this.pendingSegment_) {
-      this.trigger("appendsdone");
+      const metadata = {
+        segmentInfo: segmentInfoPayload({
+          type: this.loaderType_,
+          segment: this.pendingSegment_
+        })
+      };
+      this.trigger({
+        type: "appendsdone",
+        metadata
+      });
     }
     if (!this.pendingSegment_) {
       this.state = "READY";
@@ -42161,11 +43632,26 @@ var actions = {
     if (oldCodecBase === newCodecBase) {
       return;
     }
-    sourceUpdater.logger_(`changing ${type}Buffer codec from ${sourceUpdater.codecs[type]} to ${codec}`);
+    const metadata = {
+      codecsChangeInfo: {
+        from: oldCodec,
+        to: codec
+      }
+    };
+    sourceUpdater.trigger({
+      type: "codecschange",
+      metadata
+    });
+    sourceUpdater.logger_(`changing ${type}Buffer codec from ${oldCodec} to ${codec}`);
     try {
       sourceBuffer.changeType(mime);
       sourceUpdater.codecs[type] = codec;
     } catch (e) {
+      metadata.errorType = videojs.Error.StreamingCodecsChangeError;
+      metadata.error = e;
+      e.metadata = metadata;
+      sourceUpdater.error_ = e;
+      sourceUpdater.trigger("error");
       videojs.log.warn(`Failed to changeType on ${type}Buffer`, e);
     }
   }
@@ -42871,10 +44357,7 @@ var VTTSegmentLoader = class extends SegmentLoader {
     if (typeof import_window7.default.WebVTT !== "function" && typeof this.loadVttJs === "function") {
       this.state = "WAITING_ON_VTTJS";
       this.loadVttJs().then(() => this.segmentRequestFinished_(error, simpleSegment, result), () => this.stopForError({
-        message: "Error loading vtt.js",
-        metadata: {
-          errorType: videojs.Error.VttLoadError
-        }
+        message: "Error loading vtt.js"
       }));
       return;
     }
@@ -42885,7 +44368,8 @@ var VTTSegmentLoader = class extends SegmentLoader {
       this.stopForError({
         message: e.message,
         metadata: {
-          errorType: videojs.Error.VttCueParsingError
+          errorType: videojs.Error.StreamingVttParserError,
+          error: e
         }
       });
       return;
@@ -43235,6 +44719,9 @@ var MediaSequenceSync = class {
     }
     return null;
   }
+  getSyncInfoForMediaSequence(mediaSequence) {
+    return this.storage_.get(mediaSequence);
+  }
   updateStorage_(segments, startingMediaSequence, startingTime) {
     const newStorage = /* @__PURE__ */ new Map();
     let newDiagnostics = "\n";
@@ -43292,6 +44779,22 @@ var MediaSequenceSync = class {
   }
   isReliablePlaylist_(mediaSequence, segments) {
     return mediaSequence !== void 0 && mediaSequence !== null && Array.isArray(segments) && segments.length;
+  }
+};
+var DependantMediaSequenceSync = class extends MediaSequenceSync {
+  constructor(parent) {
+    super();
+    this.parent_ = parent;
+  }
+  calculateBaseTime_(mediaSequence, fallback) {
+    if (!this.storage_.size) {
+      const info = this.parent_.getSyncInfoForMediaSequence(mediaSequence);
+      if (info) {
+        return info.segmentSyncInfo.start;
+      }
+      return 0;
+    }
+    return super.calculateBaseTime_(mediaSequence, fallback);
   }
 };
 var MAX_MEDIA_SEQUENCE_DIFF_FOR_SYNC = 86400;
@@ -43470,10 +44973,13 @@ var SyncController = class extends videojs.EventTarget {
     this.timelines = [];
     this.discontinuities = [];
     this.timelineToDatetimeMappings = {};
+    const main = new MediaSequenceSync();
+    const audio = new DependantMediaSequenceSync(main);
+    const vtt2 = new DependantMediaSequenceSync(main);
     this.mediaSequenceStorage_ = {
-      main: new MediaSequenceSync(),
-      audio: new MediaSequenceSync(),
-      vtt: new MediaSequenceSync()
+      main,
+      audio,
+      vtt: vtt2
     };
     this.logger_ = logger("SyncController");
   }
@@ -43860,7 +45366,16 @@ var TimelineChangeController = class extends videojs.EventTarget {
         to
       };
       delete this.pendingTimelineChanges_[type];
-      this.trigger("timelinechange");
+      const metadata = {
+        timelineChangeInfo: {
+          from: from2,
+          to
+        }
+      };
+      this.trigger({
+        type: "timelinechange",
+        metadata
+      });
     }
     return this.lastTimelineChanges_[type];
   }
@@ -45007,6 +46522,15 @@ var ContentSteeringController = class extends videojs.EventTarget {
       this.dispose();
       return;
     }
+    const metadata = {
+      contentSteeringInfo: {
+        uri
+      }
+    };
+    this.trigger({
+      type: "contentsteeringloadstart",
+      metadata
+    });
     this.request_ = this.xhr_({
       uri,
       requestType: "content-steering-manifest"
@@ -45029,8 +46553,36 @@ var ContentSteeringController = class extends videojs.EventTarget {
         this.startTTLTimeout_();
         return;
       }
-      const steeringManifestJson = JSON.parse(this.request_.responseText);
+      this.trigger({
+        type: "contentsteeringloadcomplete",
+        metadata
+      });
+      let steeringManifestJson;
+      try {
+        steeringManifestJson = JSON.parse(this.request_.responseText);
+      } catch (parseError) {
+        const errorMetadata = {
+          errorType: videojs.Error.StreamingContentSteeringParserError,
+          error: parseError
+        };
+        this.trigger({
+          type: "error",
+          metadata: errorMetadata
+        });
+      }
       this.assignSteeringProperties_(steeringManifestJson);
+      const parsedMetadata = {
+        contentSteeringInfo: metadata.contentSteeringInfo,
+        contentSteeringManifest: {
+          version: this.steeringManifest.version,
+          reloadUri: this.steeringManifest.reloadUri,
+          priority: this.steeringManifest.priority
+        }
+      };
+      this.trigger({
+        type: "contentsteeringparsed",
+        metadata: parsedMetadata
+      });
       this.startTTLTimeout_();
     });
   }
@@ -45327,6 +46879,7 @@ var PlaylistController = class extends videojs.EventTarget {
     this.withCredentials = withCredentials;
     this.tech_ = tech;
     this.vhs_ = tech.vhs;
+    this.player_ = options.player_;
     this.sourceType_ = sourceType;
     this.useCueTags_ = useCueTags;
     this.playlistExclusionDuration = playlistExclusionDuration;
@@ -45487,6 +47040,19 @@ var PlaylistController = class extends videojs.EventTarget {
     const newId = playlist && (playlist.id || playlist.uri);
     if (oldId && oldId !== newId) {
       this.logger_(`switch media ${oldId} -> ${newId} from ${cause}`);
+      const metadata = {
+        renditionInfo: {
+          id: newId,
+          bandwidth: playlist.attributes.BANDWIDTH,
+          resolution: playlist.attributes.RESOLUTION,
+          codecs: playlist.attributes.CODECS
+        },
+        cause
+      };
+      this.trigger({
+        type: "renditionselected",
+        metadata
+      });
       this.tech_.trigger({
         type: "usage",
         name: `vhs-rendition-change-${cause}`
@@ -45726,6 +47292,12 @@ var PlaylistController = class extends videojs.EventTarget {
         name: "vhs-rendition-enabled"
       });
     });
+    const playlistLoaderEvents = ["manifestrequeststart", "manifestrequestcomplete", "manifestparsestart", "manifestparsecomplete", "playlistrequeststart", "playlistrequestcomplete", "playlistparsestart", "playlistparsecomplete", "renditiondisabled", "renditionenabled"];
+    playlistLoaderEvents.forEach((eventName) => {
+      this.mainPlaylistLoader_.on(eventName, (metadata) => {
+        this.player_.trigger(_extends({}, metadata));
+      });
+    });
   }
   /**
    * Given an updated media playlist (whether it was loaded for the first time, or
@@ -45916,6 +47488,18 @@ var PlaylistController = class extends videojs.EventTarget {
     this.audioSegmentLoader_.on("ended", () => {
       this.logger_("audioSegmentLoader ended");
       this.onEndOfStream();
+    });
+    const segmentLoaderEvents = ["segmentselected", "segmentloadstart", "segmentloaded", "segmentkeyloadstart", "segmentkeyloadcomplete", "segmentdecryptionstart", "segmentdecryptioncomplete", "segmenttransmuxingstart", "segmenttransmuxingcomplete", "segmenttransmuxingtrackinfoavailable", "segmenttransmuxingtiminginfoavailable", "segmentappendstart", "appendsdone", "bandwidthupdated", "timelinechange", "codecschange"];
+    segmentLoaderEvents.forEach((eventName) => {
+      this.mainSegmentLoader_.on(eventName, (metadata) => {
+        this.player_.trigger(_extends({}, metadata));
+      });
+      this.audioSegmentLoader_.on(eventName, (metadata) => {
+        this.player_.trigger(_extends({}, metadata));
+      });
+      this.subtitleSegmentLoader_.on(eventName, (metadata) => {
+        this.player_.trigger(_extends({}, metadata));
+      });
     });
   }
   mediaSecondsLoaded_() {
@@ -46352,6 +47936,13 @@ var PlaylistController = class extends videojs.EventTarget {
       }
     }
     this.logger_(`seekable updated [${printableRange(this.seekable_)}]`);
+    const metadata = {
+      seekableRanges: this.seekable_
+    };
+    this.trigger({
+      type: "seekablerangeschanged",
+      metadata
+    });
     this.tech_.trigger("seekablechanged");
   }
   /**
@@ -46448,6 +48039,7 @@ var PlaylistController = class extends videojs.EventTarget {
     }
     return true;
   }
+  // find from and to for codec switch event
   getCodecsOrExclude_() {
     const media = {
       main: this.mainSegmentLoader_.getCurrentMediaInfo_() || {},
@@ -46738,6 +48330,12 @@ var PlaylistController = class extends videojs.EventTarget {
    */
   attachContentSteeringListeners_() {
     this.contentSteeringController_.on("content-steering", this.excludeThenChangePathway_.bind(this));
+    const contentSteeringEvents = ["contentsteeringloadstart", "contentsteeringloadcomplete", "contentsteeringparsed"];
+    contentSteeringEvents.forEach((eventName) => {
+      this.contentSteeringController_.on(eventName, (metadata) => {
+        this.trigger(_extends({}, metadata));
+      });
+    });
     if (this.sourceType_ === "dash") {
       this.mainPlaylistLoader_.on("loadedplaylist", () => {
         const main = this.main();
@@ -46985,12 +48583,27 @@ var enableFunction = (loader, playlistID, changePlaylistFn) => (enable) => {
   } else {
     playlist.disabled = true;
   }
+  const metadata = {
+    renditionInfo: {
+      id: playlistID,
+      bandwidth: playlist.attributes.BANDWIDTH,
+      resolution: playlist.attributes.RESOLUTION,
+      codecs: playlist.attributes.CODECS
+    },
+    cause: "fast-quality"
+  };
   if (enable !== currentlyEnabled && !incompatible) {
     changePlaylistFn(playlist);
     if (enable) {
-      loader.trigger("renditionenabled");
+      loader.trigger({
+        type: "renditionenabled",
+        metadata
+      });
     } else {
-      loader.trigger("renditiondisabled");
+      loader.trigger({
+        type: "renditiondisabled",
+        metadata
+      });
     }
   }
   return enable;
@@ -47025,7 +48638,7 @@ var renditionSelectionMixin = function(vhsHandler) {
   };
 };
 var timerCancelEvents = ["seeking", "seeked", "pause", "playing", "error"];
-var PlaybackWatcher = class {
+var PlaybackWatcher = class extends videojs.EventTarget {
   /**
    * Represents an PlaybackWatcher object.
    *
@@ -47033,12 +48646,14 @@ var PlaybackWatcher = class {
    * @param {Object} options an object that includes the tech and settings
    */
   constructor(options) {
+    super();
     this.playlistController_ = options.playlistController;
     this.tech_ = options.tech;
     this.seekable = options.seekable;
     this.allowSeeksWithinUnsafeLiveWindow = options.allowSeeksWithinUnsafeLiveWindow;
     this.liveRangeSafeTimeDelta = options.liveRangeSafeTimeDelta;
     this.media = options.media;
+    this.playedRanges_ = [];
     this.consecutiveUpdates = 0;
     this.lastRecordedTime = null;
     this.checkCurrentTimeTimeout_ = null;
@@ -47150,6 +48765,13 @@ var PlaybackWatcher = class {
     const isBufferedDifferent = isRangeDifferent(this[`${type}Buffered_`], buffered);
     this[`${type}Buffered_`] = buffered;
     if (isBufferedDifferent) {
+      const metadata = {
+        bufferedRanges: buffered
+      };
+      pc.trigger({
+        type: "bufferedrangeschanged",
+        metadata
+      });
       this.resetSegmentDownloads_(type);
       return;
     }
@@ -47199,6 +48821,14 @@ var PlaybackWatcher = class {
     } else if (currentTime === this.lastRecordedTime) {
       this.consecutiveUpdates++;
     } else {
+      this.playedRanges_.push(createTimeRanges([this.lastRecordedTime, currentTime]));
+      const metadata = {
+        playedRanges: this.playedRanges_
+      };
+      this.playlistController_.trigger({
+        type: "playedrangeschanged",
+        metadata
+      });
       this.consecutiveUpdates = 0;
       this.lastRecordedTime = currentTime;
     }
@@ -47408,6 +49038,16 @@ var PlaybackWatcher = class {
     }
     this.logger_("skipTheGap_:", "currentTime:", currentTime, "scheduled currentTime:", scheduledCurrentTime, "nextRange start:", nextRange.start(0));
     this.tech_.setCurrentTime(nextRange.start(0) + TIME_FUDGE_FACTOR);
+    const metadata = {
+      gapInfo: {
+        from: currentTime,
+        to: nextRange.start(0)
+      }
+    };
+    this.playlistController_.trigger({
+      type: "gapjumped",
+      metadata
+    });
     this.tech_.trigger({
       type: "usage",
       name: "vhs-gap-skip"
@@ -47497,7 +49137,7 @@ var initPlugin = function(player, options) {
 var reloadSourceOnError = function(options) {
   initPlugin(this, options);
 };
-var version$4 = "3.12.1";
+var version$4 = "3.13.1";
 var version$3 = "7.0.3";
 var version$2 = "1.3.0";
 var version$1 = "7.1.0";
@@ -47904,6 +49544,7 @@ var VhsHandler = class extends Component {
     this.options_.seekTo = (time) => {
       this.tech_.setCurrentTime(time);
     };
+    this.options_.player_ = this.player_;
     this.playlistController_ = new PlaylistController(this.options_);
     const playbackWatcherOptions = merge2({
       liveRangeSafeTimeDelta: SAFE_TIME_DELTA
@@ -47913,6 +49554,7 @@ var VhsHandler = class extends Component {
       playlistController: this.playlistController_
     });
     this.playbackWatcher_ = new PlaybackWatcher(playbackWatcherOptions);
+    this.attachStreamingEventListeners_();
     this.playlistController_.on("error", () => {
       const player = videojs.players[this.tech_.options_.playerId];
       let error = this.playlistController_.error;
@@ -48141,10 +49783,7 @@ var VhsHandler = class extends Component {
       this.logger_("error while creating EME key session", err);
       this.player_.error({
         message: "Failed to initialize media keys for EME",
-        code: 3,
-        metadata: {
-          errorType: videojs.Error.EMEKeySessionCreationError
-        }
+        code: 3
       });
     });
   }
@@ -48306,6 +49945,20 @@ var VhsHandler = class extends Component {
     };
     this.player_.trigger("xhr-hooks-ready");
   }
+  attachStreamingEventListeners_() {
+    const playlistControllerEvents = ["seekablerangeschanged", "bufferedrangeschanged", "contentsteeringloadstart", "contentsteeringloadcomplete", "contentsteeringparsed"];
+    const playbackWatcher = ["gapjumped", "playedrangeschanged"];
+    playlistControllerEvents.forEach((eventName) => {
+      this.playlistController_.on(eventName, (metadata) => {
+        this.player_.trigger(_extends({}, metadata));
+      });
+    });
+    playbackWatcher.forEach((eventName) => {
+      this.playbackWatcher_.on(eventName, (metadata) => {
+        this.player_.trigger(_extends({}, metadata));
+      });
+    });
+  }
 };
 var VhsSourceHandler = {
   name: "videojs-http-streaming",
@@ -48364,11 +50017,6 @@ export {
 };
 /*! Bundled license information:
 
-keycode/index.js:
-  (*!
-   * Programatically add the following
-   *)
-
 @videojs/xhr/lib/index.js:
   (**
    * @license
@@ -48387,7 +50035,7 @@ mpd-parser/dist/mpd-parser.es.js:
 video.js/dist/video.es.js:
   (**
    * @license
-   * Video.js 8.12.0 <http://videojs.com/>
+   * Video.js 8.16.1 <http://videojs.com/>
    * Copyright Brightcove, Inc. <https://www.brightcove.com/>
    * Available under Apache License Version 2.0
    * <https://github.com/videojs/video.js/blob/main/LICENSE>
@@ -48397,7 +50045,7 @@ video.js/dist/video.es.js:
    * <https://github.com/mozilla/vtt.js/blob/main/LICENSE>
    *)
   (*! @name videojs-contrib-quality-levels @version 4.1.0 @license Apache-2.0 *)
-  (*! @name @videojs/http-streaming @version 3.12.1 @license Apache-2.0 *)
+  (*! @name @videojs/http-streaming @version 3.13.1 @license Apache-2.0 *)
   (*! @name pkcs7 @version 1.0.4 @license Apache-2.0 *)
   (*! @name aes-decrypter @version 4.0.1 @license Apache-2.0 *)
 */

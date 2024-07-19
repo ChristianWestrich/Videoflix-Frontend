@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable, tap} from "rxjs";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,23 +33,37 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     this.router.navigate(['auth']);
   }
 
   pwResetRequest(email: string) {
-    const url = `${this.baseUrl}/pw_reset/`;
-    return this.http.post(url, { email });
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'}),
+      observe: 'response' as const
+    };
+    const url = `${this.baseUrl}/password_reset/`;
+    return this.http.post(url, { email }, httpOptions );
   }
 
   pwConfirmRequest( uidb64: string | null,
         token: string | null,
         newPassword: string,
   ) {
-      const url = `${this.baseUrl}/password_reset/confirm/${uidb64}/${token}/`;
-      return this.http.post(url, { newPassword });
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'}),
+      observe: 'response' as const
+    };
+    if (uidb64) {
+      uidb64 = uidb64.split('=')[1];
     }
-
+    if (token) {
+      token = token.split('=')[1];
+    }
+      const url = `${this.baseUrl}/password_confirm/${uidb64}/${token}/`;
+      return this.http.post(url, { "new_password": newPassword }, httpOptions);
+    }
 }
 

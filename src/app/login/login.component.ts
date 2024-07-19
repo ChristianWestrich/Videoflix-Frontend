@@ -27,7 +27,7 @@ export class LoginComponent {
   }
 
   forgotPw() {
-    this.router.navigateByUrl("pw-reset");
+    this.router.navigateByUrl("password-reset");
   }
 
   SignIn() {

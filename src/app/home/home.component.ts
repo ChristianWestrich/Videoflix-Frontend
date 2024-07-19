@@ -2,7 +2,6 @@ import {Component, ElementRef, inject, signal, ViewChild} from "@angular/core";
 import { HeaderComponent } from "../shared/header/header.component";
 import { Subscription } from "rxjs";
 import { MovieService } from "../services/movie.service";
-import { MovieDetailComponent } from "../movie-detail/movie-detail.component";
 import { RouterLink } from "@angular/router";
 import {Movie} from "../interfaces/movie";
 
@@ -12,7 +11,7 @@ import {Movie} from "../interfaces/movie";
   standalone: true,
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
-  imports: [HeaderComponent, MovieDetailComponent, RouterLink],
+  imports: [HeaderComponent, RouterLink],
 })
 export class HomeComponent {
 
