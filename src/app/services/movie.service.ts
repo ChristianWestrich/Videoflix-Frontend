@@ -11,7 +11,7 @@ export class MovieService {
 
   selectedMovieSig$ = signal({
     title: "Breakout",
-    movieUrl: "/assets/-3cae-4a03-9fec-35b85b56c003.mp4",
+    movieUrl: "/assets/breakout.mp4",
     description: "In a high-security prison, a wrongly convicted man\n" +
         "            formulates a meticulous plan to break out an prove his\n" +
         "            innocence. He must navigate a weg of alliances and betrayals to reclaim his freedom and expose the truth",
@@ -20,7 +20,7 @@ export class MovieService {
     releaseDate: new Date(),
     category: ["drama"]
   })
-  selectedMovieIdSig$ = signal(3)
+  selectedMovieIdSig$ = signal(8)
     allMovies$: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([])
 
   constructor(private http: HttpClient) {
@@ -109,7 +109,7 @@ export class MovieService {
     },
     {
       title: "Breakout",
-      movieUrl: "/assets/-3cae-4a03-9fec-35b85b56c003.mp4",
+      movieUrl: "/assets/breakout.mp4",
       description: "In a high-security prison, a wrongly convicted man\n" +
           "            formulates a meticulous plan to break out an prove his\n" +
           "            innocence. He must navigate a weg of alliances and betrayals to reclaim his freedom and expose the truth",

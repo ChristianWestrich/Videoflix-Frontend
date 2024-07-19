@@ -1,7 +1,28 @@
 <div class="movie-container">
-    <select  class="resolution-select">
-      <option value="480p">480p</option>
-      <option value="720p">720p</option>
-    </select>
-    <video #videoPlayerElement [id]="movieId" class="video-js vjs-default-skin" controls preload="auto"></video>
-  </div>
+    <div class="resolution-box">
+        <div class="goBackBtn" (click)="goBack()">
+            <img src="/assets/img/arrow_back.png" alt="">
+        </div>
+        <div>
+            <label for="resolution-select">
+                Change your resolution here:
+            </label>
+            <select  class="resolution-select" id="resolution-select">
+                <option value="480p">480p</option>
+                <option value="720p">720p</option>
+                <option value="1080p">1080p</option>
+            </select>
+        </div>
+        <img src="/assets/img/Logo.png" alt="">
+    </div>
+    <video #videoPlayerElement [id]="movieId" class="video-js vjs-theme-city vjs-big-play-centered" controls ></video>
+</div>
+
+<link
+        href="https://unpkg.com/video.js@7/dist/video-js.min.css"
+        rel="stylesheet"
+/>
+<link
+        href="https://unpkg.com/@videojs/themes@1/dist/city/index.css"
+        rel="stylesheet"
+/>
