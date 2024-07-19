@@ -4,6 +4,7 @@ import {CommonModule, NgClass} from "@angular/common";
 import {AuthService} from "../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {catchError, tap} from "rxjs/operators";
+import {FooterComponent} from "../shared/footer/footer.component";
 
 
 @Component({
@@ -12,7 +13,8 @@ import {catchError, tap} from "rxjs/operators";
     imports: [
         FormsModule,
         NgClass,
-        CommonModule
+        CommonModule,
+        FooterComponent
     ],
   templateUrl: './password-confirmation.component.html',
   styleUrl: './password-confirmation.component.scss'

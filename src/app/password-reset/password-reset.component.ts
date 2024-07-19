@@ -3,11 +3,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { catchError, tap } from 'rxjs/operators';
+import {FooterComponent} from "../shared/footer/footer.component";
 
 @Component({
   selector: 'app-password-reset',
   standalone: true,
-  imports: [FormsModule],
+    imports: [FormsModule, FooterComponent],
   templateUrl: './password-reset.component.html',
   styleUrl: './password-reset.component.scss'
 })

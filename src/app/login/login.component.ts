@@ -3,11 +3,12 @@ import {  FormsModule, NgForm } from "@angular/forms";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import {FooterComponent} from "../shared/footer/footer.component";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [FormsModule, CommonModule],
+    imports: [FormsModule, CommonModule, FooterComponent],
   templateUrl: "./login.component.html",
   styleUrl: "./login.component.scss",
 })
@@ -47,6 +48,9 @@ export class LoginComponent {
       }, 5000);
     },error => {
       this.registrationError = true})
+    setTimeout(() => {
+      this.registrationError = false;
+    },3000)
   }
 
   checkPassword(password: string, confirmPassword: string): boolean {

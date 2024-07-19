@@ -154,7 +154,7 @@ form {
     }
 }
 .valid-password {
-    border: 2px solid green !important;
+    background-color: rgba(0, 255, 0, 1) !important;
   }
 
 .go-back-signin {
@@ -187,17 +187,18 @@ form {
 }
 
 .register {
-    color: red;
+    color: white;
     font-size: 24px;
     font-weight: 700;
-    border: 2px solid red;
+    border: 2px solid white;
     border-radius: 10px;
     text-align: center;
     position: absolute;
-    bottom: 100px;
+    bottom: 50px;
     left: 50%;
     transform: translate(-50% );
     animation: glow 5s;
+    background-color: red;
 }
 
 @keyframes glow {
@@ -211,4 +212,12 @@ form {
         opacity: 1
     }
     
+}
+
+.footer {
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
 }
