@@ -1,37 +1,43 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import videojs from 'video.js';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Movie} from "../interfaces/movie";
-import {MovieService} from "../services/movie.service";
+import { Component, ElementRef, Input, ViewChild } from "@angular/core";
+import videojs from "video.js";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Movie } from "../interfaces/movie";
+import { MovieService } from "../services/movie.service";
 
 @Component({
-  selector: 'app-movie-player',
+  selector: "app-movie-player",
   standalone: true,
   imports: [],
-  templateUrl: './movie-player.component.html',
-  styleUrl: './movie-player.component.scss'
+  templateUrl: "./movie-player.component.html",
+  styleUrl: "./movie-player.component.scss",
 })
 export class MoviePlayerComponent {
-  movieId: string | null = ''
-  videoUrl480p: string = '';
-  videoUrl720p: string = '';
-  videoUrl1080p: string = '';
-  @ViewChild('videoPlayerElement', { static: true }) videoPlayerElement!: ElementRef;
+  movieId: string | null = "";
+  videoUrl480p: string = "";
+  videoUrl720p: string = "";
+  videoUrl1080p: string = "";
+  @ViewChild("videoPlayerElement", { static: true })
+  videoPlayerElement!: ElementRef;
   videoPlayer = videojs.players;
 
-  currentMovie?: Movie
+  currentMovie?: Movie;
 
-  constructor(private route: ActivatedRoute,private movieService: MovieService, private router: Router) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private movieService: MovieService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.movieId = this.route.snapshot.paramMap.get("id");
-    this.currentMovie = this.movieService.movies.find(movie => movie.id.toString() === this.movieId);
+    this.currentMovie = this.movieService.movies.find(
+      (movie) => movie.id.toString() === this.movieId,
+    );
     this.videoPlayer = videojs(this.videoPlayerElement.nativeElement, {
       controls: true,
       autoplay: false,
-      preload: 'auto',
-      sources: [{ src: this.currentMovie?.movieUrl, type: 'video/mp4' }],
+      preload: "auto",
+      sources: [{ src: this.currentMovie?.movieUrl, type: "video/mp4" }],
     });
   }
 
@@ -42,10 +48,8 @@ export class MoviePlayerComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('home')
+    this.router.navigateByUrl("home");
   }
-
-
 
   // switchResolution(event: Event): void {
   //   const target = event.target as HTMLSelectElement;
@@ -75,4 +79,3 @@ export class MoviePlayerComponent {
   //   return resolutionUrl;
   // }
 }
-

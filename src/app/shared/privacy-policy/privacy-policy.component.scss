@@ -1,0 +1,23 @@
+.privacy-policy {
+  background-color: black;
+  padding: 60px;
+  font-family: "figtree";
+  color: white;
+
+  a {
+    text-decoration: none;
+    color: red;
+  }
+
+  img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: red;
+    border-radius: 50%;
+    padding: 10px;
+    &:hover {
+      scale: 1.3;
+    }
+  }
+}

@@ -1,36 +1,36 @@
-import { HttpClient } from '@angular/common/http';
-import {Injectable, signal} from '@angular/core';
-import {Movie} from "../interfaces/movie";
-import {BehaviorSubject} from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Injectable, signal } from "@angular/core";
+import { Movie } from "../interfaces/movie";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class MovieService {
-  private url = 'http://localhost:8000/home/movies/';
+  private url = "http://localhost:8000/home/movies/";
 
   selectedMovieSig$ = signal({
     title: "Breakout",
     movieUrl: "/assets/breakout.mp4",
-    description: "In a high-security prison, a wrongly convicted man\n" +
-        "            formulates a meticulous plan to break out an prove his\n" +
-        "            innocence. He must navigate a weg of alliances and betrayals to reclaim his freedom and expose the truth",
+    description:
+      "In a high-security prison, a wrongly convicted man\n" +
+      "            formulates a meticulous plan to break out an prove his\n" +
+      "            innocence. He must navigate a weg of alliances and betrayals to reclaim his freedom and expose the truth",
     id: 8,
     thumbnail: "/assets/img/Frame172.png",
     releaseDate: new Date(),
-    category: ["drama"]
-  })
-  selectedMovieIdSig$ = signal(8)
-    allMovies$: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([])
+    category: ["drama"],
+  });
+  selectedMovieIdSig$ = signal(8);
+  allMovies$: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([]);
 
   constructor(private http: HttpClient) {
-    this.allMovies$.next(this.movies)
+    this.allMovies$.next(this.movies);
   }
-
 
   getThumbnailUrl(thumbnailPath: string): string {
     if (!thumbnailPath) {
-      return 'http://via.placeholder.com/150';
+      return "http://via.placeholder.com/150";
     }
     return thumbnailPath;
   }
@@ -60,7 +60,7 @@ export class MovieService {
       id: 2,
       thumbnail: "/assets/img/Frame165.png",
       releaseDate: new Date(),
-      category: ["new", "drama"]
+      category: ["new", "drama"],
     },
     {
       title: "Der Herr der Ringe 3",
@@ -69,7 +69,7 @@ export class MovieService {
       id: 3,
       thumbnail: "/assets/img/Frame167.png",
       releaseDate: new Date(),
-      category: ["new", "documentary"]
+      category: ["new", "documentary"],
     },
     {
       title: "Der Herr der Ringe 3",
@@ -78,7 +78,7 @@ export class MovieService {
       id: 4,
       thumbnail: "/assets/img/Frame168.png",
       releaseDate: new Date(),
-      category: ["new", "drama"]
+      category: ["new", "drama"],
     },
     {
       title: "Der Herr der Ringe 3",
@@ -87,7 +87,7 @@ export class MovieService {
       id: 5,
       thumbnail: "/assets/img/Frame169.png",
       releaseDate: new Date(),
-      category: ["new", "documentary"]
+      category: ["new", "documentary"],
     },
     {
       title: "Der Herr der Ringe 3",
@@ -96,7 +96,7 @@ export class MovieService {
       id: 6,
       thumbnail: "/assets/img/Frame170.png",
       releaseDate: new Date(),
-      category: ["new", "drama"]
+      category: ["new", "drama"],
     },
     {
       title: "Der Herr der Ringe 3",
@@ -105,27 +105,28 @@ export class MovieService {
       id: 7,
       thumbnail: "/assets/img/Frame171.png",
       releaseDate: new Date(),
-      category: ["drama"]
+      category: ["drama"],
     },
     {
       title: "Breakout",
       movieUrl: "/assets/breakout.mp4",
-      description: "In a high-security prison, a wrongly convicted man\n" +
-          "            formulates a meticulous plan to break out an prove his\n" +
-          "            innocence. He must navigate a weg of alliances and betrayals to reclaim his freedom and expose the truth",
+      description:
+        "In a high-security prison, a wrongly convicted man\n" +
+        "            formulates a meticulous plan to break out an prove his\n" +
+        "            innocence. He must navigate a weg of alliances and betrayals to reclaim his freedom and expose the truth",
       id: 8,
       thumbnail: "/assets/img/Frame172.png",
       releaseDate: new Date(),
-      category: ["drama"]
+      category: ["drama"],
     },
     {
       title: "Der Herr der Ringe 3",
       movieUrl: "test",
       description: "Ein Fantasie-Film von J.R.Tolkien",
-      id:9,
+      id: 9,
       thumbnail: "/assets/img/Frame173.png",
       releaseDate: new Date(),
-      category: ["romance"]
+      category: ["romance"],
     },
     {
       title: "Der Herr der Ringe 3",
@@ -134,10 +135,7 @@ export class MovieService {
       id: 10,
       thumbnail: "/assets/img/Frame174.png",
       releaseDate: new Date(),
-      category: ["romance"]
+      category: ["romance"],
     },
   ];
 }
-
-
-

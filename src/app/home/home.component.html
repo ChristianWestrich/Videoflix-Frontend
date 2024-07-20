@@ -1,33 +1,49 @@
 <app-header></app-header>
 
 <div class="main-content">
-    <div class="preview">
-        <video #videoPlayer loop autoplay muted>
-            <source src="{{this.movieService.selectedMovieSig$().movieUrl}}" type="video/mp4">
-        </video>
-        <div class="preview-box">
-            <div class="box-headline">{{this.movieService.selectedMovieSig$().title}}</div>
-            <p>{{this.movieService.selectedMovieSig$().description}}</p>
-            <a [routerLink]="['/movie', this.movieService.selectedMovieIdSig$()]"><div class="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="black">
-                <path d="M 8 17.175 V 6.825 C 8 6.54166 8.1 6.30416 8.3 6.1125 C 8.5 5.92083 8.73333 5.825 9 5.825 C 9.08333 5.825 9.17083 5.8375 9.2625 5.8625 C 9.35417 5.8875 9.44167 5.925 9.525 5.975 L 17.675 11.15 C 17.825 11.25 17.9375 11.375 18.0125 11.525 C 18.0875 11.675 18.125 11.8333 18.125 12 C 18.125 12.1667 18.0875 12.325 18.0125 12.475 C 17.9375 12.625 17.825 12.75 17.675 12.85 L 9.525 18.025 C 9.44167 18.075 9.35417 18.1125 9.2625 18.1375 C 9.17083 18.1625 9.08333 18.175 9 18.175 C 8.73333 18.175 8.5 18.0792 8.3 17.8875 C 8.1 17.6958 8 17.4583 8 17.175 Z"/>
-            </svg>Play</div> </a>
+  <div class="preview">
+    <video #videoPlayer loop autoplay muted>
+      <source
+        src="{{ this.movieService.selectedMovieSig$().movieUrl }}"
+        type="video/mp4"
+      />
+    </video>
+    <div class="preview-box">
+      <div class="box-headline">
+        {{ this.movieService.selectedMovieSig$().title }}
+      </div>
+      <p>{{ this.movieService.selectedMovieSig$().description }}</p>
+      <a [routerLink]="['/movie', this.movieService.selectedMovieIdSig$()]">
+        <div class="button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="black"
+          >
+            <path
+              d="M 8 17.175 V 6.825 C 8 6.54166 8.1 6.30416 8.3 6.1125 C 8.5 5.92083 8.73333 5.825 9 5.825 C 9.08333 5.825 9.17083 5.8375 9.2625 5.8625 C 9.35417 5.8875 9.44167 5.925 9.525 5.975 L 17.675 11.15 C 17.825 11.25 17.9375 11.375 18.0125 11.525 C 18.0875 11.675 18.125 11.8333 18.125 12 C 18.125 12.1667 18.0875 12.325 18.0125 12.475 C 17.9375 12.625 17.825 12.75 17.675 12.85 L 9.525 18.025 C 9.44167 18.075 9.35417 18.1125 9.2625 18.1375 C 9.17083 18.1625 9.08333 18.175 9 18.175 C 8.73333 18.175 8.5 18.0792 8.3 17.8875 C 8.1 17.6958 8 17.4583 8 17.175 Z"
+            />
+          </svg>
+          Play
         </div>
+      </a>
     </div>
-    <div class="movie-grid">
-        @for (category of categories; track category) {
-
-            <h2>{{ category.charAt(0).toUpperCase() + category.slice(1) }}</h2>
-
-                <div class="category">
-                    @for (movie of filterMoviesByCategory(category); track movie) {
-                        <div class="movie-container" (click)="previewVideo(movie.id)">
-                                <div class="movie-thumbnail">
-                                    <img [src]="getThumbnailUrl(movie.thumbnail)">
-                                </div>
-                        </div>
-                    }
-                </div>
-            <div class="divider"></div>
+  </div>
+  <div class="movie-grid">
+    @for (category of categories; track category) {
+      <h2>{{ category.charAt(0).toUpperCase() + category.slice(1) }}</h2>
+      <div class="category">
+        @for (movie of filterMoviesByCategory(category); track movie) {
+          <div class="movie-container" (click)="previewVideo(movie.id)">
+            <div class="movie-thumbnail">
+              <img [src]="getThumbnailUrl(movie.thumbnail)" />
+            </div>
+          </div>
         }
-    </div>
+      </div>
+      <div class="divider"></div>
+    }
+  </div>
 </div>

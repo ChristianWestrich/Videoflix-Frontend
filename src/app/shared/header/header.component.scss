@@ -1,44 +1,40 @@
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    height: 100px;
-    width: 100vw;
-    background-color: black;
-    font-family: "Figtree";
-    color: white;
-    font-size: 24px;
-    z-index: 1;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  height: 100px;
+  width: 100vw;
+  background-color: black;
+  font-family: "Figtree";
+  color: white;
+  font-size: 24px;
+  z-index: 1;
 }
-    .logo {
-        padding-left: 60px;
-    }
-
-
+.logo {
+  padding-left: 60px;
+}
 
 .logout {
-    width: 100px;
-    text-align: center;  
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    padding-right: 120px;
+  width: 100px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  padding-right: 120px;
 
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: red;
+    transition: width 0.3s ease-in-out;
+  }
 
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        height: 3px;
-        width: 0;
-        background: red;
-        transition: width 0.3s ease-in-out;
-    }
-
-    &:hover::after {
-        width: 80%;
-    }
+  &:hover::after {
+    width: 80%;
+  }
 }
