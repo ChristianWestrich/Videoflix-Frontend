@@ -6,12 +6,17 @@ import { PasswordConfirmationComponent } from "./password-confirmation/password-
 import { MoviePlayerComponent } from "./movie-player/movie-player.component";
 import { PrivacyPolicyComponent } from "./shared/privacy-policy/privacy-policy.component";
 import { DisclaimerComponent } from "./shared/disclaimer/disclaimer.component";
+import { AuthGuard } from "./auth.guard";
 
 export const routes: Routes = [
   { path: "auth", component: LoginComponent },
-  { path: "home", component: HomeComponent },
+  { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
   { path: "password-reset", component: PasswordResetComponent },
-  { path: "movie/:id", component: MoviePlayerComponent },
+  {
+    path: "movie/:id",
+    component: MoviePlayerComponent,
+    canActivate: [AuthGuard],
+  },
   { path: "", redirectTo: "auth", pathMatch: "full" },
   {
     path: "password_confirm/:uidb64/:token",

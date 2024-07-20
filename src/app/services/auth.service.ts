@@ -76,4 +76,8 @@ export class AuthService {
     const url = `${this.baseUrl}/password_confirm/${uidb64}/${token}/`;
     return this.http.post(url, { new_password: newPassword }, httpOptions);
   }
+
+  isActivated() {
+    return localStorage.getItem("token") !== null;
+  }
 }
