@@ -13,9 +13,6 @@ import { MovieService } from "../services/movie.service";
 })
 export class MoviePlayerComponent {
   movieId: string | null = "";
-  videoUrl480p: string = "";
-  videoUrl720p: string = "";
-  videoUrl1080p: string = "";
   @ViewChild("videoPlayerElement", { static: true })
   videoPlayerElement!: ElementRef;
   videoPlayer = videojs.players;
@@ -30,14 +27,14 @@ export class MoviePlayerComponent {
 
   ngOnInit(): void {
     this.movieId = this.route.snapshot.paramMap.get("id");
-    this.currentMovie = this.movieService.movies.find(
+    this.currentMovie = this.movieService.allMovies.find(
       (movie) => movie.id.toString() === this.movieId,
     );
     this.videoPlayer = videojs(this.videoPlayerElement.nativeElement, {
       controls: true,
       autoplay: false,
       preload: "auto",
-      sources: [{ src: this.currentMovie?.movieUrl, type: "video/mp4" }],
+      sources: [{ src: this.currentMovie?.video_file, type: "video/mp4" }],
     });
   }
 
@@ -51,31 +48,28 @@ export class MoviePlayerComponent {
     this.router.navigateByUrl("home");
   }
 
-  // switchResolution(event: Event): void {
-  //   const target = event.target as HTMLSelectElement;
-  //   const resolution = target?.value;
-  //   const newSource = findResolution(resolution)
-  //   this.player.src({ src: newSource, type: 'video/mp4' });
-  //   this.player.load();
-  //   this.player.play();
-  // }
-  //
-  // findResolution(resolution: string): string {
-  //   let resolutionUrl = '';
-  //   switch (resolution) {
-  //     case '480p':
-  //       resolutionUrl = this.currentMovie?.movieUrl480p;
-  //       break;
-  //     case '720p':
-  //       resolutionUrl = this.currentMovie?.movieUrl720p;
-  //       break;
-  //     case '1080p':
-  //       resolutionUrl = this.currentMovie?.movieUrl1080p;
-  //       break;
-  //     default:
-  //       resolutionUrl = this.currentMovie?.movieUrl480p;
-  //       break;
-  //   }
-  //   return resolutionUrl;
-  // }
+  switchResolution(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const resolution = target?.value;
+    const newSource: string = this.findResolution(resolution);
+    this.videoPlayer.src({ src: newSource, type: "video/mp4" });
+    this.videoPlayer.load();
+    this.videoPlayer.play();
+  }
+
+  findResolution(resolution: string): string {
+    let resolutionUrl: string = this.currentMovie!.video_480p;
+    switch (resolution) {
+      case "480p":
+        resolutionUrl = this.currentMovie!.video_480p;
+        break;
+      case "720p":
+        resolutionUrl = this.currentMovie!.video_720p;
+        break;
+      case "1080p":
+        resolutionUrl = this.currentMovie!.video_1080p;
+        break;
+    }
+    return resolutionUrl;
+  }
 }

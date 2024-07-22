@@ -1,41 +1,25 @@
-import {
-  Component,
-  ElementRef,
-  inject,
-  signal,
-  ViewChild,
-} from "@angular/core";
+import { Component, ElementRef, inject, ViewChild } from "@angular/core";
 import { HeaderComponent } from "../shared/header/header.component";
-import { Subscription } from "rxjs";
 import { MovieService } from "../services/movie.service";
 import { RouterLink } from "@angular/router";
 import { Movie } from "../interfaces/movie";
+import { Subscription } from "rxjs";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: "app-home",
   standalone: true,
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
-  imports: [HeaderComponent, RouterLink],
+  imports: [HeaderComponent, RouterLink, AsyncPipe],
 })
 export class HomeComponent {
-  movieService = inject(MovieService);
-  categories = ["new", "documentary", "drama", "romance"];
   @ViewChild("videoPlayer") videoPlayer!: ElementRef;
-  allMovies!: Movie[];
+
   allMoviesSubscription!: Subscription;
+  movieService = inject(MovieService);
 
-  constructor() {
-    this.allMoviesSubscription = this.movieService.allMovies$.subscribe(
-      (data) => {
-        this.allMovies = data;
-      },
-    );
-  }
-
-  filterMoviesByCategory(category: string) {
-    return this.allMovies.filter((movie) => movie.category.includes(category));
-  }
+  constructor() {}
 
   getThumbnailUrl(thumbnailPath: string): string {
     return this.movieService.getThumbnailUrl(thumbnailPath);
@@ -44,7 +28,9 @@ export class HomeComponent {
   previewVideo(movieId: number) {
     this.videoPlayer.nativeElement.pause();
     this.movieService.selectedMovieIdSig$.set(movieId);
-    let newMovie = this.allMovies.find((movie) => movie.id === movieId);
+    let newMovie = this.movieService.allMovies.find(
+      (movie) => movie.id === movieId,
+    );
     if (newMovie) {
       this.movieService.selectedMovieSig$.set(newMovie);
     }

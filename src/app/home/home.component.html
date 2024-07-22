@@ -2,18 +2,19 @@
 
 <div class="main-content">
   <div class="preview">
+      @if(this.movieService.currentMovie && this.movieService.allMovies.length > 0) {
     <video #videoPlayer loop autoplay muted>
       <source
-        src="{{ this.movieService.selectedMovieSig$().movieUrl }}"
+        src="{{ this.movieService.currentMovie.video_file}}"
         type="video/mp4"
       />
     </video>
     <div class="preview-box">
       <div class="box-headline">
-        {{ this.movieService.selectedMovieSig$().title }}
+        {{ this.movieService.currentMovie.title }}
       </div>
-      <p>{{ this.movieService.selectedMovieSig$().description }}</p>
-      <a [routerLink]="['/movie', this.movieService.selectedMovieIdSig$()]">
+      <p>{{ this.movieService.currentMovie.description }}</p>
+      <a [routerLink]="['/movie', this.movieService.selectedMovieIdSig$()]" (click)="this.movieService.loadSingleMovie(this.movieService.selectedMovieIdSig$())">
         <div class="button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -30,19 +31,20 @@
         </div>
       </a>
     </div>
+      }
   </div>
   <div class="movie-grid">
-    @for (category of categories; track category) {
-      <h2>{{ category.charAt(0).toUpperCase() + category.slice(1) }}</h2>
-      <div class="category">
-        @for (movie of filterMoviesByCategory(category); track movie) {
-          <div class="movie-container" (click)="previewVideo(movie.id)">
-            <div class="movie-thumbnail">
-              <img [src]="getThumbnailUrl(movie.thumbnail)" />
-            </div>
+        @for (category of this.movieService.categories; track category) {
+          <h2>{{ category }}</h2>
+          <div class="category">
+            @for (movie of this.movieService.filterMoviesByCategory(category) ; track movie) {
+              <div class="movie-container" (click)="previewVideo(movie.id)">
+                <div class="movie-thumbnail">
+                  <img [src]="getThumbnailUrl(movie.thumbnail)" />
+                </div>
+              </div>
+            }
           </div>
-        }
-      </div>
       <div class="divider"></div>
     }
   </div>
