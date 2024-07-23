@@ -32,12 +32,11 @@ export class HomeComponent {
     );
     if (newMovie) {
       this.movieService.selectedMovieSig$.set(newMovie);
+      this.movieService.currentMovie = newMovie;
     }
     setTimeout(() => {
       this.videoPlayer.nativeElement.load();
       this.videoPlayer.nativeElement.play();
     }, 100);
   }
-
-
 }

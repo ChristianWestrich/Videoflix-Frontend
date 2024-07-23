@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 export class MovieService {
   private url = "http://localhost:8000/movies/";
   categories = ["New", "Documentary", "Drama", "Romance"];
-  selectedMovieSig$: any;
+  selectedMovieSig$ = signal(new Movie({}));
   selectedMovieIdSig$ = signal(0);
   allMovies: Movie[] = [];
   movieSub;
@@ -19,7 +19,8 @@ export class MovieService {
     this.movieSub = this.loadAllMovies().subscribe((data: Movie[]) => {
       this.allMovies = data;
       this.currentMovie = new Movie(data[0]);
-      this.selectedMovieIdSig$.set(this.allMovies[0].id)
+      this.selectedMovieIdSig$.set(this.allMovies[0].id);
+      console.log(this.allMovies);
     });
   }
 
@@ -43,9 +44,10 @@ export class MovieService {
     return this.http.get<Movie[]>(this.url, { headers: httpHeaders });
   }
 
-  loadSingleMovie(id: number) {
-    return this.http.get<Movie>(`${this.url}${id}/`);
+  loadSingleMovie(id: any): Observable<Movie> {
+    let httpHeaders = new HttpHeaders({
+      Authorization: "Token " + localStorage.getItem("token"),
+    });
+    return this.http.get<Movie>(`${this.url}${+id}/`, { headers: httpHeaders });
   }
-
-
 }

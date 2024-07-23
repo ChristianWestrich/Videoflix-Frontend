@@ -7,12 +7,15 @@ import { Observable, tap } from "rxjs";
   providedIn: "root",
 })
 export class AuthService {
+  token: string | null = null;
   private baseUrl: string = "http://127.0.0.1:8000";
 
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) {
+    this.token = localStorage.getItem("token");
+  }
 
   logUserIn(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/auth/`;
@@ -78,6 +81,6 @@ export class AuthService {
   }
 
   isActivated() {
-    return localStorage.getItem("token") !== null;
+    return this.token !== null;
   }
 }
