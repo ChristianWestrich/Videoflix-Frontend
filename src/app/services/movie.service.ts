@@ -19,6 +19,7 @@ export class MovieService {
     this.movieSub = this.loadAllMovies().subscribe((data: Movie[]) => {
       this.allMovies = data;
       this.currentMovie = new Movie(data[0]);
+      this.selectedMovieIdSig$.set(this.allMovies[0].id)
     });
   }
 
@@ -46,7 +47,5 @@ export class MovieService {
     return this.http.get<Movie>(`${this.url}${id}/`);
   }
 
-  ngOnDestroy() {
-    this.movieSub.unsubscribe();
-  }
+
 }

@@ -16,7 +16,6 @@ import { AsyncPipe } from "@angular/common";
 export class HomeComponent {
   @ViewChild("videoPlayer") videoPlayer!: ElementRef;
 
-  allMoviesSubscription!: Subscription;
   movieService = inject(MovieService);
 
   constructor() {}
@@ -40,7 +39,5 @@ export class HomeComponent {
     }, 100);
   }
 
-  ngOnDestroy() {
-    this.allMoviesSubscription.unsubscribe();
-  }
+
 }
