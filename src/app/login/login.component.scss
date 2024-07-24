@@ -13,6 +13,7 @@
   .signin-container {
     width: 800px;
     display: flex;
+
     position: absolute;
     top: 50%;
     left: 50%;
@@ -42,6 +43,7 @@
           color: white;
           text-shadow: 5px 5px 10px red;
           position: relative;
+          cursor: pointer;
 
           &::after {
             content: "";
@@ -59,7 +61,6 @@
           }
         }
 
-        cursor: pointer;
       }
     }
   }
@@ -86,7 +87,6 @@ form {
     border-radius: 30px;
     padding: 20px 10px 20px 50px;
     width: 60%;
-    height: 20px;
     background-image: url("/assets/img/mail.png");
     background-repeat: no-repeat;
     background-position: 20px 50%;
@@ -140,7 +140,7 @@ form {
   }
 
   .forgot-pw-login {
-    margin: 20px 0px;
+    margin: 20px 0;
     font-size: 18px;
     font-weight: 400;
     cursor: pointer;
@@ -221,9 +221,51 @@ form {
 }
 
 .footer {
-  position: absolute;
-  bottom: 150px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 20px;
   width: 100%;
+}
+
+@media(max-width: 900px) {
+  .login-container{
+    width: 500px !important;
+    paddint-right: 0;
+  }
+  .footer {
+    padding: 0;
+  }
+  .signin-container {
+    width: 500px !important;
+    text-align: center;
+
+    .headline-signin {
+      font-size: 36px;
+    }
+    .subheadline-signin {
+      font-size: 18px;
+    }
+  }
+
+}
+@media(max-width: 550px) {
+  .login-container {
+    width: 310px !important;
+  }
+  .container-header {
+    flex-direction: column;
+  }
+  .header-container {
+    font-size: 18px;
+  }
+  .signin-container {
+    width: 310px !important;
+
+    .headline-signin {
+      font-size: 28px;
+    }
+    .subheadline-signin {
+      font-size: 18px;
+    }
+  }
 }

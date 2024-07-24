@@ -1,27 +1,22 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   position: fixed;
   height: 100px;
-  width: 100vw;
+  width: 100%;
   background-color: black;
   font-family: "Figtree";
   color: white;
   font-size: 24px;
   z-index: 1;
 }
-.logo {
-  padding-left: 60px;
-}
 
 .logout {
-  width: 100px;
   text-align: center;
   position: relative;
   cursor: pointer;
   display: flex;
-  padding-right: 120px;
 
   &::after {
     content: "";
@@ -35,6 +30,12 @@
   }
 
   &:hover::after {
-    width: 80%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .logout-text {
+    display: none;
   }
 }

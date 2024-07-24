@@ -137,3 +137,66 @@ a {
 .active:first-child {
   border: 2px solid red;
 }
+
+
+@media (max-width: 800px) {
+  .preview {
+    padding-top: 100px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60%;
+
+    video {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      height: 60vh;
+    }
+
+    .preview-box {
+      height: 150px !important;
+      width: 200px !important;
+
+      .box-headline {
+        font-size: 28px;
+        padding-bottom: 30px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+
+      .button {
+        padding: 10px 10px 10px 10px;
+        border-radius: 10px;
+        width: 150px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        border: 1px solid white;
+        color: black;
+        background-color: white;
+
+        &:hover {
+          background-color: red;
+          color: white;
+
+          svg {
+            fill: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .divider {
+    width: 60vw;
+  }
+}

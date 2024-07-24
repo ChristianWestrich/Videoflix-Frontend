@@ -104,7 +104,7 @@ export class MoviePlayerComponent {
   switchResolution(event: Event) {
     const target = event.target as HTMLSelectElement;
     const resolution = target?.value;
-    const newSource: string = this.url + this.findResolution(resolution);
+    const newSource: string = this.findResolution(resolution);
     this.videoPlayer.src({ src: newSource, type: "video/mp4" });
     this.videoPlayer.load();
     this.videoPlayer.play();
@@ -119,14 +119,17 @@ export class MoviePlayerComponent {
     let resolutionUrl: string = this.currentMovie.video_480p;
 
     switch (resolution) {
+      case "full":
+        resolutionUrl = this.currentMovie.video_file;
+            break
       case "480p":
-        resolutionUrl = this.currentMovie.video_480p;
+        resolutionUrl = this.url + this.currentMovie.video_480p;
         break;
       case "720p":
-        resolutionUrl = this.currentMovie.video_720p;
+        resolutionUrl = this.url +  this.currentMovie.video_720p;
         break;
       case "1080p":
-        resolutionUrl = this.currentMovie.video_1080p;
+        resolutionUrl =this.url + this.currentMovie.video_1080p;
         break;
     }
     return resolutionUrl;

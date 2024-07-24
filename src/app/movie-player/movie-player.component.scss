@@ -39,6 +39,8 @@
     background-position: right 1px center;
     background-size: 12px;
   }
+
+
   .goBackBtn {
     z-index: 10;
 
@@ -51,5 +53,11 @@
       height: 30px;
       cursor: pointer;
     }
+  }
+}
+
+@media (max-width: 900px) {
+  .logo-name {
+    display: none;
   }
 }
