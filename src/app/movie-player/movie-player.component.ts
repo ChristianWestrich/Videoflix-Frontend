@@ -119,7 +119,7 @@ export class MoviePlayerComponent {
     let resolutionUrl: string = this.currentMovie.video_480p;
 
     switch (resolution) {
-      case "full":
+      case "Orig":
         resolutionUrl = this.currentMovie.video_file;
             break
       case "480p":
