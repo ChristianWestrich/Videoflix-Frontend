@@ -77,14 +77,13 @@ export class MoviePlayerComponent {
     if (!this.currentMovie) {
       return;
     }
-
     const playerOptions = {
       controls: true,
       autoplay: false,
       preload: "auto",
       sources: [
         {
-          src: this.currentMovie.video_480p,
+          src: this.url + this.currentMovie.video_480p,
           type: "application/x-mpegURL",
         },
       ],
