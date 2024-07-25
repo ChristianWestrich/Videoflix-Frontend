@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { Movie } from "../interfaces/movie";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -13,18 +13,17 @@ export class MovieService {
   selectedMovieIdSig$ = signal(0);
   allMovies: Movie[] = [];
   movieSub;
-  currentMovie!: Movie;
+  currentMovie?: Movie;
 
   constructor(private http: HttpClient) {
     this.movieSub = this.loadAllMovies().subscribe((data: Movie[]) => {
       this.allMovies = data;
       this.currentMovie = new Movie(data[0]);
       this.selectedMovieIdSig$.set(this.allMovies[0].id);
-      console.log(this.allMovies);
     });
   }
 
-  filterMoviesByCategory(category: string) {
+  filterMoviesByCategory(category: string): Movie[] {
     return this.allMovies.filter(
       (movie: Movie) => movie.categories && movie.categories.includes(category),
     );
@@ -44,10 +43,10 @@ export class MovieService {
     return this.http.get<Movie[]>(this.url, { headers: httpHeaders });
   }
 
-  loadSingleMovie(id: any): Observable<Movie> {
+  loadSingleMovie(id: number): Observable<Movie> {
     let httpHeaders = new HttpHeaders({
       Authorization: "Token " + localStorage.getItem("token"),
     });
-    return this.http.get<Movie>(`${this.url}${+id}/`, { headers: httpHeaders });
+    return this.http.get<Movie>(`${this.url}${id}/`, { headers: httpHeaders });
   }
 }

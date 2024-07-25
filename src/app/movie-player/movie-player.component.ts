@@ -19,7 +19,7 @@ export class MoviePlayerComponent {
   authService = inject(AuthService);
   currentMovie?: Movie;
 
-  private url = "http://localhost:8000/media/";
+  private url = "http://localhost:8000/media";
 
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +30,6 @@ export class MoviePlayerComponent {
   ngOnInit() {
     this.movieId = this.getMovieIdFromRoute();
     this.currentMovie = this.getMovieFromMemory();
-
     if (!this.currentMovie) {
       this.getMovieFromAPI();
     }
@@ -83,7 +82,12 @@ export class MoviePlayerComponent {
       controls: true,
       autoplay: false,
       preload: "auto",
-      sources: [{ src: this.currentMovie.video_file, type: "video/mp4" }],
+      sources: [
+        {
+          src: this.currentMovie.video_480p,
+          type: "application/x-mpegURL",
+        },
+      ],
     };
 
     this.videoPlayer = videojs(
@@ -104,10 +108,16 @@ export class MoviePlayerComponent {
   switchResolution(event: Event) {
     const target = event.target as HTMLSelectElement;
     const resolution = target?.value;
-    const newSource: string = this.findResolution(resolution);
-    this.videoPlayer.src({ src: newSource, type: "video/mp4" });
-    this.videoPlayer.load();
-    this.videoPlayer.play();
+    const newSource = this.findResolution(resolution);
+
+    if (this.videoPlayer) {
+      this.videoPlayer.src({
+        src: newSource,
+        type: "application/x-mpegURL",
+      });
+      this.videoPlayer.load();
+      this.videoPlayer.play();
+    }
   }
 
   findResolution(resolution: string): string {
@@ -116,21 +126,20 @@ export class MoviePlayerComponent {
       return "";
     }
 
-    let resolutionUrl: string = this.currentMovie.video_480p;
+    let resolutionUrl: string;
 
     switch (resolution) {
-      case "Orig":
-        resolutionUrl = this.currentMovie.video_file;
-            break
       case "480p":
         resolutionUrl = this.url + this.currentMovie.video_480p;
         break;
       case "720p":
-        resolutionUrl = this.url +  this.currentMovie.video_720p;
+        resolutionUrl = this.url + this.currentMovie.video_720p;
         break;
       case "1080p":
-        resolutionUrl =this.url + this.currentMovie.video_1080p;
+        resolutionUrl = this.url + this.currentMovie.video_1080p;
         break;
+      default:
+        resolutionUrl = this.url + this.currentMovie.video_480p;
     }
     return resolutionUrl;
   }

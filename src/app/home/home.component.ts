@@ -3,18 +3,17 @@ import { HeaderComponent } from "../shared/header/header.component";
 import { MovieService } from "../services/movie.service";
 import { RouterLink } from "@angular/router";
 import { Movie } from "../interfaces/movie";
-import { Subscription } from "rxjs";
 import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: "app-home",
   standalone: true,
   templateUrl: "./home.component.html",
-  styleUrl: "./home.component.scss",
+  styleUrls: ["./home.component.scss"],
   imports: [HeaderComponent, RouterLink, AsyncPipe],
 })
 export class HomeComponent {
-  @ViewChild("videoPlayer") videoPlayer!: ElementRef;
+  @ViewChild("videoPlayer") videoPlayer!: ElementRef<HTMLVideoElement>;
 
   movieService = inject(MovieService);
 
@@ -25,18 +24,22 @@ export class HomeComponent {
   }
 
   previewVideo(movieId: number) {
-    this.videoPlayer.nativeElement.pause();
-    this.movieService.selectedMovieIdSig$.set(movieId);
-    let newMovie = this.movieService.allMovies.find(
-      (movie) => movie.id === movieId,
-    );
-    if (newMovie) {
-      this.movieService.selectedMovieSig$.set(newMovie);
-      this.movieService.currentMovie = newMovie;
+    if (this.videoPlayer) {
+      this.videoPlayer.nativeElement.pause();
+      this.movieService.selectedMovieIdSig$.set(movieId);
+      let newMovie = this.movieService.allMovies.find(
+        (movie) => movie.id === movieId,
+      );
+      if (newMovie) {
+        this.movieService.selectedMovieSig$.set(newMovie);
+        this.movieService.currentMovie = newMovie;
+      }
+      setTimeout(() => {
+        this.videoPlayer.nativeElement.load();
+        this.videoPlayer.nativeElement.play();
+      }, 100);
+    } else {
+      console.error("videoPlayer is not defined");
     }
-    setTimeout(() => {
-      this.videoPlayer.nativeElement.load();
-      this.videoPlayer.nativeElement.play();
-    }, 100);
   }
 }
